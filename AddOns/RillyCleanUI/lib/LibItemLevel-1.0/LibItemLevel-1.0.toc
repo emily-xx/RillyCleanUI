@@ -1,0 +1,14 @@
+## Interface: 80000
+## Title: Lib: ItemLevel-1.0
+## Notes: What actual item level is an item? Yes, it's horrible we need a library for this.
+## Author: Kemayo
+## Version: 1.0
+## X-Category: Library
+## OptionalDeps: LibStub
+## X-License: BSD
+
+#@no-lib-strip@
+embeds.xml
+#@end-no-lib-strip@
+
+lib.xml

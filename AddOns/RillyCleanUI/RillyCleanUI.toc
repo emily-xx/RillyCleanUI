@@ -1,0 +1,31 @@
+## Interface: 80100
+## Title: RillyCleanUI
+## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
+## Author: twitch.tv/emilywind - Rilona of Draenor EU
+## Email: emlywind@gmail.com
+
+## OptionalDeps: LibStub, LibSharedMedia-3.0
+
+#@no-lib-strip@
+lib\embeds.xml
+#@end-no-lib-strip@
+
+src\ActionBars.lua
+src\Auras.lua
+src\Buffs.lua
+src\DarkFrames.lua
+src\UnitFrames.lua
+src\Portrait.lua
+src\Minimap.lua
+src\Nameplates.lua
+src\Tooltips.lua
+src\FriendsList.lua
+src\EasyDelete.lua
+src\SafeQueue.lua
+src\DampeningDisplay.lua
+src\SpellNotifications.lua
+src\SpellNotifications.xml
+src\SimpleItemLevel.lua
+src\ObjectiveTrackerFrame.lua
+src\TabBinder.lua
+src\Media.lua
