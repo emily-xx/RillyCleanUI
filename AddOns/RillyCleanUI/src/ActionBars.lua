@@ -48,14 +48,20 @@ else
 end
 
 -- Clean up XP Bar/Azerite Bar appearance
-StatusTrackingBarManager.SingleBarLargeUpper:SetAlpha(0)
-StatusTrackingBarManager.SingleBarLarge:SetAlpha(0)
+local statusBars = {
+	"SingleBarLargeUpper",
+	"SingleBarLarge",
+	"SingleBarSmall",
+	"SingleBarSmallUpper"
+}
+
+for _, statusBar in pairs(statusBars) do
+	_G["StatusTrackingBarManager"][statusBar]:SetAlpha(0)
+end
 
 -- Remove obtrusive artwork from Stance bar when only bottom bar enabled
 SlidingActionBarTexture0:SetAlpha(0)
 SlidingActionBarTexture1:SetAlpha(0)
-
-StatusTrackingBarManager:ClearAllPoints()
 
 -- Fix issue with Blizzard trying to call this
 if not AchievementMicroButton_Update then
