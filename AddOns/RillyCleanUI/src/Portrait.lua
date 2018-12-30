@@ -41,7 +41,7 @@ CF:SetScript("OnEvent", function(self, event)
       		frame.portraitBG:SetFrameStrata("background")
       		frame.portraitBG:SetAllPoints(frame.portraitModel)
 
-      		frame.portraitBG:SetBackdrop( {
+      		frame.portraitBG:SetBackdrop({
       		  bgFile = SQUARE_TEXTURE,
       		  edgeFile = SQUARE_TEXTURE,
       		  tile = false, tileSize = 0, edgeSize = 1,

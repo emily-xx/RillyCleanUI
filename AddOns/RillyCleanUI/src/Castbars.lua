@@ -13,10 +13,10 @@ local backdrop = {
   tileSize = 32,
   edgeSize = 2,
   insets = {
-  left = 0,
-  right = 0,
-  top = 0,
-  bottom = 0,
+  left = 1,
+  right = 1,
+  top = 1,
+  bottom = 1,
   },
 }
 
@@ -84,8 +84,8 @@ CastBars:SetScript(
 
       -- border
       local back = CreateFrame("Frame", nil, b.parent)
-      back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 1)
-      back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 1, -2)
+      back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
+      back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
       back:SetFrameLevel(frame:GetFrameLevel() - 1)
       back:SetBackdrop(backdrop)
       back:SetBackdropBorderColor(0,0,0,1)
