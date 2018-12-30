@@ -164,7 +164,7 @@ local function applyBackground(bu, isLeaveButton)
   bu.bg:SetBackdrop(backdrop)
   bu.bg:SetBackdropColor(backdropcolor)
 
-  bu.bg:SetBackdropBorderColor(0, 0, 0, 1)
+  bu.bg:SetBackdropBorderColor(0, 0, 0, 0)
 
 	-- Remove the normaltexture
 	local nt = bu:GetNormalTexture()
