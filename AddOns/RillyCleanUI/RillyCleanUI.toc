@@ -13,6 +13,7 @@ lib\embeds.xml
 src\ActionBars.lua
 src\Auras.lua
 src\Buffs.lua
+src\Castbars.lua
 src\DarkFrames.lua
 src\UnitFrames.lua
 src\Portrait.lua

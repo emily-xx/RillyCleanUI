@@ -1,6 +1,8 @@
+SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
+
 local backdrop = {
   bgFile = nil,
-  edgeFile = "Interface\\BUTTONS\\WHITE8X8",
+  edgeFile = SQUARE_TEXTURE,
   tile = false,
   tileSize = 32,
   edgeSize = 1,
@@ -46,7 +48,7 @@ CF:SetScript("OnEvent", function(self, event)
 
     --border
     local border = _G[name.."Border"] or b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
-    border:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+    border:SetTexture(SQUARE_TEXTURE)
     border:SetTexCoord(0,1,0,1)
     border:SetDrawLayer("BACKGROUND",-7)
     if tempenchant then
