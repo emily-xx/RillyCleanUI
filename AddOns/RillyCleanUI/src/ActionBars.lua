@@ -33,7 +33,19 @@ local function NoTalkingHeads()
 	end)
 end
 
--- Run function when Blizzard addon is loaded
+-- Move Action bars up slightly to be more in periphery of vision
+if RCConfig.actionBarOffset then
+	ActionButton1:ClearAllPoints()
+	ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCConfig.actionBarOffset)
+	ActionButton1.SetPoint = function() end
+	MultiBarBottomLeftButton1:ClearAllPoints()
+	MultiBarBottomLeftButton1:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
+	MultiBarBottomLeftButton1.SetPoint = function() end
+	PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOPLEFT", 20, 56)
+	PetActionButton1.SetPoint = function() end
+end
+
+-- Hide Talking Head Frame
 if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
 	NoTalkingHeads()
 else

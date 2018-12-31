@@ -10,6 +10,7 @@
 lib\embeds.xml
 #@end-no-lib-strip@
 
+src\Config.lua
 src\ActionBars.lua
 src\Auras.lua
 src\Buffs.lua

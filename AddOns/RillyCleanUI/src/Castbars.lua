@@ -13,10 +13,10 @@ local backdrop = {
   tileSize = 32,
   edgeSize = 2,
   insets = {
-  left = 1,
-  right = 1,
-  top = 1,
-  bottom = 1,
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0
   },
 }
 
@@ -28,12 +28,21 @@ CastBars:SetScript(
 		if addon == "RillyCleanUI" or event == "PLAYER_ENTERING_WORLD" then
 			if not InCombatLockdown() then
 				-- Player Castbar
+        if RCConfig.castbarOffset then
+          CastingBarFrame:SetMovable(true)
+  				CastingBarFrame:ClearAllPoints()
+  				CastingBarFrame:SetScale(1)
+  				CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCConfig.castbarOffset)
+  				CastingBarFrame:SetUserPlaced(true)
+  				CastingBarFrame:SetMovable(false)
+        end
+
 				CastingBarFrame.Icon:Show()
 				CastingBarFrame.Icon:ClearAllPoints()
 				CastingBarFrame.Icon:SetSize(20, 20)
 				CastingBarFrame.Icon:SetPoint("RIGHT", CastingBarFrame, "LEFT", -8, 0)
 				CastingBarFrame.Text:ClearAllPoints()
-				CastingBarFrame.Text:SetPoint("CENTER", 0, 1)
+				CastingBarFrame.Text:SetPoint("CENTER", 0, 0)
 				CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() + 4)
 				CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
 				CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
