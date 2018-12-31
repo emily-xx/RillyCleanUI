@@ -3,11 +3,11 @@ SetCVar("nameplateOtherBottomInset", 0.1);
 SetCVar("nameplateOtherTopInset", 0.08);
 
 -- Increase scale of target nameplate
-if RCConfig.nameplateScale then
+if RCConfig.targetNameplateScale then
   local f = CreateFrame("Frame")
   f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
   f:SetScript("OnEvent", function(self, event, unit)
-    C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCConfig.nameplateScale.target)
+    C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCConfig.targetNameplateScale)
   end)
 end
 
