@@ -33,16 +33,30 @@ local function NoTalkingHeads()
 	end)
 end
 
+AlertFrame:ClearAllPoints()
+AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
+AlertFrame.SetPoint = function() end
+
 -- Move Action bars up slightly to be more in periphery of vision
 if RCConfig.actionBarOffset then
 	ActionButton1:ClearAllPoints()
 	ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCConfig.actionBarOffset)
 	ActionButton1.SetPoint = function() end
-	MultiBarBottomLeftButton1:ClearAllPoints()
-	MultiBarBottomLeftButton1:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
-	MultiBarBottomLeftButton1.SetPoint = function() end
-	PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOPLEFT", 20, 56)
+	MultiBarBottomLeft:ClearAllPoints()
+	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
+	MultiBarBottomLeft.SetPoint = function() end
+
+	PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
 	PetActionButton1.SetPoint = function() end
+
+	ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
+
+	PossessBarFrame:SetMovable(true)
+	PossessBarFrame:ClearAllPoints()
+	PossessBarFrame:SetScale(1)
+	PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 58)
+	PossessBarFrame:SetUserPlaced(true)
+	PossessBarFrame:SetMovable(false)
 end
 
 -- Hide Talking Head Frame
