@@ -71,7 +71,12 @@ CF:SetScript("OnEvent", function(self, event)
 		MinimapZoomIn:Hide()
 		MinimapZoomOut:Hide()
 		MiniMapWorldMapButton:Hide()
-		MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
+
+		if (RCConfig.minimapZoneText) then
+			MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
+		else
+			MinimapZoneText:Hide()
+		end
 
 		GameTimeFrame:Hide()
 		GameTimeFrame:UnregisterAllEvents()

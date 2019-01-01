@@ -54,7 +54,7 @@ if RCConfig.actionBarOffset then
 	PossessBarFrame:SetMovable(true)
 	PossessBarFrame:ClearAllPoints()
 	PossessBarFrame:SetScale(1)
-	PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 58)
+	PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 60)
 	PossessBarFrame:SetUserPlaced(true)
 	PossessBarFrame:SetMovable(false)
 end
