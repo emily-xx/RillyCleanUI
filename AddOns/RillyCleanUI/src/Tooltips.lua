@@ -28,6 +28,10 @@ GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
 	end
 end)
 
+GameTooltip:HookScript("OnUpdate", function(tooltip)
+	GameTooltip:SetBackdropColor(0.13,0.13,0.13) -- Simpler and themed BG color
+end)
+
 -- ttSBar:HookScript("OnValueChanged", function(self, hp)
 -- 		local _, unit = self:GetUnit()
 --
