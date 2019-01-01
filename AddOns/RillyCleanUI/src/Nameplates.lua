@@ -2,30 +2,37 @@
 SetCVar("nameplateOtherBottomInset", 0.1);
 SetCVar("nameplateOtherTopInset", 0.08);
 
-if RCConfig.modNamePlates then
+local NamePlateSetup = CreateFrame("FRAME")
+NamePlateSetup:RegisterEvent("PLAYER_ENTERING_WORLD")
+NamePlateSetup:SetScript("OnEvent", function()
+  local targetNameplateHeight = 45
+
+  C_NamePlate.SetNamePlateFriendlySize(RCConfig.namePlateWidth, targetNameplateHeight)
+  C_NamePlate.SetNamePlateEnemySize(RCConfig.namePlateWidth, targetNameplateHeight)
+end)
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+f:SetScript("OnEvent", function(self, event, unit)
+  C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCConfig.namePlateScale)
+end)
+
+if RCConfig.hideNameplateCastText then
   local CF=CreateFrame("Frame")
   CF:RegisterEvent("NAME_PLATE_CREATED")
   CF:SetScript("OnEvent", function(self, event, ...)
-    if ( event == "NAME_PLATE_CREATED" ) then
       local nameplate = ...
       nameplate.UnitFrame.isNameplate = true
-    end
   end)
 
-  hooksecurefunc("DefaultCompactNamePlateFrameSetup", function(frame, options)
+  local function modifyNamePlates(frame, options)
     if ( frame:IsForbidden() ) then return end
     if ( not frame.isNameplate ) then return end
 
     frame.healthBar:SetHeight(RCConfig.namePlateHeight)
-    frame.healthBar:SetWidth(RCConfig.namePlateWidth)
+  end
 
-    if RCConfig.hideNameplateCastText then
-      frame.castBar.Text:Hide()
-    else
-      frame.castBar:SetHeight(RCConfig.namePlateHeight + 2)
-      frame.castBar.Text:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
-    end
-  end)
+  hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)
 end
 
 -------------------------------------------------------
