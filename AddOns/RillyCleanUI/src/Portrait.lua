@@ -1,5 +1,3 @@
-SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
-
 -- If the camera isn't reset OnShow, it'll show the entire character instead of just the head. Silly, is it not? :D
 local function resetCamera(portraitModel)
 	portraitModel:SetPortraitZoom(1)

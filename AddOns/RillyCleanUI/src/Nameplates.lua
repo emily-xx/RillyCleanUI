@@ -17,7 +17,7 @@ f:SetScript("OnEvent", function(self, event, unit)
   C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCConfig.namePlateScale)
 end)
 
-if RCConfig.hideNameplateCastText then
+if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
   local CF=CreateFrame("Frame")
   CF:RegisterEvent("NAME_PLATE_CREATED")
   CF:SetScript("OnEvent", function(self, event, ...)
@@ -29,7 +29,11 @@ if RCConfig.hideNameplateCastText then
     if ( frame:IsForbidden() ) then return end
     if ( not frame.isNameplate ) then return end
 
-    frame.healthBar:SetHeight(RCConfig.namePlateHeight)
+    if RCConfig.hideNameplateCastText then
+      frame.castBar.Text:Hide()
+    elseif RCConfig.nameplateCastFontSize then
+      frame.castBar.Text:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize)
+    end
   end
 
   hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)

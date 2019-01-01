@@ -1,5 +1,3 @@
-SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
-
 -------------
 -- MINIMAP --
 -------------

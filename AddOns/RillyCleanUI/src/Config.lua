@@ -1,12 +1,13 @@
--- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
+-- Globals - don't edit unless you know what you're doing
+SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
+-- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
 RCConfig = {
   actionBarOffset = 20,
   castbarOffset = 210,
 
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
-  namePlateHeight = 8,
   namePlateWidth = 120,
   namePlateScale = 1.3,
   hideNameplateCastText = false,
