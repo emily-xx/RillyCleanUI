@@ -56,12 +56,12 @@ if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
     if ( frame:IsForbidden() ) then return end
     if ( not frame.isNameplate ) then return end
 
-    frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
+    frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateNameFontSize, "THINOUTLINE")
 
     if RCConfig.nameplateHideServerNames or RCConfig.nameplateNameLength then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
-      if not RCConfig.nameplateHideServerNames then
+      if not RCConfig.nameplateHideServerNames and realm then
         name = name.." - "..realm
       end
 
