@@ -8,9 +8,11 @@ RCConfig = {
 
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
+  nameplateHideServerNames = true,
+  nameplateAbbrevNames = true,
   namePlateWidth = 120,
   namePlateScale = 1.3,
-  hideNameplateCastText = false,
+  nameplateHideCastText = false,
   nameplateCastFontSize = 7,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)

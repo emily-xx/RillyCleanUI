@@ -2,6 +2,20 @@
 SetCVar("nameplateOtherBottomInset", 0.1);
 SetCVar("nameplateOtherTopInset", 0.08);
 
+local len = string.len
+local gsub = string.gsub
+
+function abbrev(str, length)
+    if ( not str ) then
+        return UNKNOWN
+    end
+
+    length = length or 20
+
+    str = (len(str) > length) and gsub(str, "%s?(.[\128-\191]*)%S+%s", "%1. ") or str
+    return str
+end
+
 local NamePlateSetup = CreateFrame("FRAME")
 NamePlateSetup:RegisterEvent("PLAYER_ENTERING_WORLD")
 NamePlateSetup:SetScript("OnEvent", function()
@@ -37,6 +51,27 @@ if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
   end
 
   hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)
+
+  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+    if ( frame:IsForbidden() ) then return end
+    if ( not frame.isNameplate ) then return end
+
+    frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
+
+    if RCConfig.nameplateHideServerNames or RCConfig.nameplateAbbrevNames then
+      local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
+
+      if not RCConfig.nameplateHideServerNames then
+        name = name.." - "..realm
+      end
+
+      if RCConfig.nameplateAbbrevNames then
+        name = abbrev(name, 20)
+      end
+
+      frame.name:SetText(name)
+    end
+  end)
 end
 
 -------------------------------------------------------
