@@ -58,15 +58,15 @@ if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
 
     frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
 
-    if RCConfig.nameplateHideServerNames or RCConfig.nameplateAbbrevNames then
+    if RCConfig.nameplateHideServerNames or RCConfig.nameplateNameLength then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
       if not RCConfig.nameplateHideServerNames then
         name = name.." - "..realm
       end
 
-      if RCConfig.nameplateAbbrevNames then
-        name = abbrev(name, 20)
+      if RCConfig.nameplateNameLength then
+        name = abbrev(name, RCConfig.nameplateNameLength)
       end
 
       frame.name:SetText(name)

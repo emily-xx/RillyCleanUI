@@ -9,7 +9,7 @@ RCConfig = {
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
   nameplateHideServerNames = true,
-  nameplateAbbrevNames = true,
+  nameplateNameLength = 20, -- Set to nil for no abbreviation
   namePlateWidth = 120,
   namePlateScale = 1.3,
   nameplateHideCastText = false,
