@@ -11,6 +11,7 @@ RCConfig = {
   nameplateNameFontSize = 7,
   nameplateHideServerNames = true,
   nameplateNameLength = 20, -- Set to nil for no abbreviation
+  nameplateFriendlyNamesClassColor = true,
   namePlateWidth = 120,
   namePlateScale = 1.3,
   nameplateHideCastText = false,

@@ -31,7 +31,7 @@ f:SetScript("OnEvent", function(self, event, unit)
   C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCConfig.namePlateScale)
 end)
 
-if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
+if RCConfig.modNamePlates then
   local CF=CreateFrame("Frame")
   CF:RegisterEvent("NAME_PLATE_CREATED")
   CF:SetScript("OnEvent", function(self, event, ...)
@@ -46,7 +46,7 @@ if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
     if RCConfig.hideNameplateCastText then
       frame.castBar.Text:Hide()
     elseif RCConfig.nameplateCastFontSize then
-      frame.castBar.Text:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize)
+      frame.castBar.Text:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
     end
   end
 
@@ -57,6 +57,13 @@ if RCConfig.hideNameplateCastText or RCConfig.nameplateCastFontSize then
     if ( not frame.isNameplate ) then return end
 
     frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateNameFontSize, "THINOUTLINE")
+
+    if RCConfig.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
+      local _,className = UnitClass(frame.displayedUnit)
+      local classR, classG, classB = GetClassColor(className)
+
+      frame.name:SetTextColor(classR, classG, classB, 1)
+    end
 
     if RCConfig.nameplateHideServerNames or RCConfig.nameplateNameLength then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
