@@ -10,6 +10,8 @@ local function skin_Blizzard_ObjectiveTracker()
     local _,className = UnitClass("player")
     local classR, classG, classB = GetClassColor(className)
 
+		setFontOutline(arg1)
+
 		if arg2 == "color" and RCConfig.objectivesTitles == "class" then
 			arg1:SetTextColor(classR,classG,classB,1)
 		elseif arg2 == "highlight" and RCConfig.objectivesTitles == "class" then

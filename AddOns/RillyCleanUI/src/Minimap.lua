@@ -72,6 +72,7 @@ CF:SetScript("OnEvent", function(self, event)
 
 		if (RCConfig.minimapZoneText) then
 			MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
+			setFontOutline(MinimapZoneText)
 		else
 			MinimapZoneText:Hide()
 		end

@@ -1,6 +1,3 @@
--- Globals - don't edit unless you know what you're doing
-SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
-
 -- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
 RCConfig = {
   actionBarOffset = 20,
