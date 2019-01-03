@@ -51,7 +51,7 @@ CastBars:SetScript(
 				-- if SUIDB.CBPPlayerT == true then
 				-- Player Timer
 				CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
-				CastingBarFrame.timer:SetFont("Fonts\\FRIZQT__.TTF", 14, "THINOUTLINE")
+				setDefaultFont(CastingBarFrame.timer, 14)
 				CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, 0)
 				CastingBarFrame.update = 0.1
 				-- end
@@ -61,7 +61,7 @@ CastBars:SetScript(
 
 				-- Target Timer
 				TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
-				TargetFrameSpellBar.timer:SetFont("Fonts\\FRIZQT__.TTF", 11, "THINOUTLINE")
+				setDefaultFont(TargetFrameSpellBar.timer, 11)
 				TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
 				TargetFrameSpellBar.update = 0.1
 

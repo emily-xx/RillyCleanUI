@@ -46,7 +46,7 @@ if RCConfig.modNamePlates then
     if RCConfig.hideNameplateCastText then
       frame.castBar.Text:Hide()
     elseif RCConfig.nameplateCastFontSize then
-      frame.castBar.Text:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateCastFontSize, "THINOUTLINE")
+      setDefaultFont(frame.castBar.Text, RCConfig.nameplateCastFontSize)
     end
   end
 
@@ -56,7 +56,7 @@ if RCConfig.modNamePlates then
     if ( frame:IsForbidden() ) then return end
     if ( not frame.isNameplate ) then return end
 
-    frame.name:SetFont("Fonts\\FRIZQT__.TTF", RCConfig.nameplateNameFontSize, "THINOUTLINE")
+    setDefaultFont(frame.name, RCConfig.nameplateNameFontSize)
 
     if RCConfig.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
