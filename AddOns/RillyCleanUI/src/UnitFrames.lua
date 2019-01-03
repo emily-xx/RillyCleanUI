@@ -71,6 +71,8 @@ hooksecurefunc(
 --PLAYER
 function StylePlayerFrame(self)
 	PlayerName:SetPoint("BOTTOM", PlayerFrameHealthBar, "TOP", 0, 3)
+	PlayerName:SetFont("Fonts\\FRIZQT__.TTF", 10, "THINOUTLINE")
+
 	PlayerFrameGroupIndicatorText:ClearAllPoints()
 	PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOP", 0, -20)
 	PlayerFrameGroupIndicatorLeft:Hide()
@@ -130,7 +132,10 @@ function StyleTargetFrame(self, forceNormalTexture)
 	self.manabar:Show()
 	TextStatusBar_UpdateTextString(self.manabar)
 	self.threatIndicator:SetTexture("Interface\\TargetingFrame\\UI-TargetingFrame-Flash")
+
 	self.name:SetPoint("LEFT", self, 15, 36)
+	self.name:SetFont("Fonts\\FRIZQT__.TTF", 10, "THINOUTLINE")
+
 	self.healthbar:SetSize(120, 26)
 	self.healthbar:ClearAllPoints()
 	self.healthbar:SetPoint("TOPLEFT", 5, -24)
@@ -229,6 +234,7 @@ PetFrameHealthBar:SetPoint("BOTTOM", PetFrameManaBar, "TOP", 0, 0)
 PetFrameHealthBar:SetHeight(18)
 
 PetName:SetTextColor(1,1,1)
+PetName:SetFont("Fonts\\FRIZQT__.TTF", 10, "THINOUTLINE")
 PetName:ClearAllPoints()
 PetName:SetPoint("BOTTOM", PetFrameHealthBar, "TOP", 0, 3)
 
