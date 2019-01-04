@@ -5,7 +5,13 @@ function setFontOutline(textObject, outlinestyle)
 
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
-  textObject:SetFont(font, size, "OUTLINE")
+  textObject:SetFont(font, size, outlinestyle)
+end
+
+function setFontSize(textObject, size)
+  local font, _, flags = textObject:GetFont()
+
+  textObject:SetFont(font, size, flags)
 end
 
 function setDefaultFont(textObject, size, outlinestyle)

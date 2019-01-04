@@ -46,7 +46,7 @@ if RCConfig.modNamePlates then
     if RCConfig.hideNameplateCastText then
       frame.castBar.Text:Hide()
     elseif RCConfig.nameplateCastFontSize then
-      setDefaultFont(frame.castBar.Text, RCConfig.nameplateCastFontSize)
+      setFontSize(frame.castBar.Text, RCConfig.nameplateCastFontSize)
     end
   end
 

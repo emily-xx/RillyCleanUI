@@ -85,6 +85,9 @@ for _, statusBar in pairs(statusBars) do
 	_G["StatusTrackingBarManager"][statusBar]:SetAlpha(0)
 end
 
+StatusTrackingBarManager:ClearAllPoints()
+StatusTrackingBarManager:SetPoint("TOP", Screen, "TOP", 0, 0)
+
 -- Remove obtrusive artwork from Stance bar when only bottom bar enabled
 SlidingActionBarTexture0:SetAlpha(0)
 SlidingActionBarTexture1:SetAlpha(0)

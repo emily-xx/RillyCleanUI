@@ -16,5 +16,6 @@ RCConfig = {
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   objectivesTitles = "class", -- Class for class coloured quest titles, or default for default
+  objectivesTextOutline = false,
   minimapZoneText = true, -- True = show zone text, False = hide
 }
