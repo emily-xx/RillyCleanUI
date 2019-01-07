@@ -177,8 +177,9 @@ end)
 
 -- LiteBag support
 if IsAddOnLoaded("LiteBag") then
-  LiteBagItemButton_RegisterHook("LiteBagItemButton_UpdateItem", function(self)
-    UpdateContainerButton(self, self:GetParent():GetID())
+  hooksecurefunc("LiteBagItemButton_Update", function(button)
+    local bag = button:GetParent():GetID()
+    UpdateContainerButton(button, bag)
   end)
 end
 
