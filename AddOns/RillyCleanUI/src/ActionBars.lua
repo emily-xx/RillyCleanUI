@@ -50,6 +50,8 @@ if RCConfig.actionBarOffset then
 	PetActionButton1.SetPoint = function() end
 
 	ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
+	ExtraActionButton1:SetFrameStrata("MEDIUM")
+	ExtraActionButton1:SetFrameLevel(4)
 
 	PossessBarFrame:SetMovable(true)
 	PossessBarFrame:ClearAllPoints()
