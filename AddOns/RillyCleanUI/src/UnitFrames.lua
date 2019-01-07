@@ -236,7 +236,7 @@ PetFrameHealthBar:SetHeight(18)
 PetName:SetTextColor(1,1,1)
 setFontOutline(PetName)
 PetName:ClearAllPoints()
-PetName:SetPoint("BOTTOM", PetFrameHealthBar, "TOP", 0, 3)
+PetName:SetPoint("BOTTOM", PetFrameHealthBar, "TOP", 0, 5)
 
 PetFrameHealthBar:SetWidth(80)
 PetFrameHealthBar.LeftText:SetPoint("LEFT", PetFrameHealthBar, "LEFT", 0, 0)
