@@ -1,6 +1,7 @@
 -- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
 RCConfig = {
   actionBarOffset = 20,
+  disableAutoAddSpells = true,
   castbarOffset = 210,
 
   -- Nameplate Settings

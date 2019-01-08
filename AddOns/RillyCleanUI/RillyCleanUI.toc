@@ -13,6 +13,7 @@ lib\embeds.xml
 src\Common.lua
 src\Config.lua
 src\ActionBars.lua
+src\DisableAutoAddSpells.lua
 src\Auras.lua
 src\Buffs.lua
 src\Castbars.lua
