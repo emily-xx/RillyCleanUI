@@ -1,7 +1,7 @@
 -- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
 RCConfig = {
   actionBarOffset = 20,
-  disableAutoAddSpells = true,
+  disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 210,
 
   -- Nameplate Settings
