@@ -4,6 +4,8 @@ RCConfig = {
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 210,
 
+  damageFont = true, -- Change damage font to something cooler
+
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
   nameplateNameFontSize = 7,

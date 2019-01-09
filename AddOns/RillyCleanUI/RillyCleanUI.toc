@@ -12,6 +12,7 @@ lib\embeds.xml
 
 src\Common.lua
 src\Config.lua
+src\DamageFont.lua
 src\ActionBars.lua
 src\DisableAutoAddSpells.lua
 src\Auras.lua
