@@ -17,9 +17,9 @@ src\DisableAutoAddSpells.lua
 src\Auras.lua
 src\Buffs.lua
 src\Castbars.lua
-src\DarkFrames.lua
 src\UnitFrames.lua
 src\Portrait.lua
+src\RaidFrames.lua
 src\Minimap.lua
 src\Nameplates.lua
 src\Tooltips.lua

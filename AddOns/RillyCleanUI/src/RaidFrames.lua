@@ -1,5 +1,3 @@
--- Modified from MattDF
-
 ---------------------
 -- COLORING FRAMES --
 ---------------------
