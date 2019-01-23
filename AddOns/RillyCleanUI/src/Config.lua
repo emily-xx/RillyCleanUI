@@ -22,3 +22,7 @@ RCConfig = {
   objectivesTextOutline = false,
   minimapZoneText = true, -- True = show zone text, False = hide
 }
+
+-- Fix some bag jank
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(false)
