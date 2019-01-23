@@ -253,6 +253,45 @@ TargetFrameToTTextureFrameName:SetTextColor(1,1,1)
 FocusFrameTextureFrameName:SetTextColor(1,1,1)
 FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
 
+-----------------------
+-- Loot Spec Display --
+-----------------------
+local lootSpecId = nil
+local lootSpecName = ""
+local lootIcon = nil
+local defaultSpecName
+local defaultIcon
+
+local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
+PlayerLootSpecFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOMRIGHT", -120, 32)
+PlayerLootSpecFrame:SetHeight(16)
+PlayerLootSpecFrame:SetWidth(16)
+PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
+setDefaultFont(PlayerLootSpecFrame.specname, 11)
+PlayerLootSpecFrame.specname:SetPoint("LEFT", PlayerLootSpecFrame, "LEFT", 0, 0)
+
+local LootDisplaySetupFrame = CreateFrame("FRAME")
+LootDisplaySetupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+LootDisplaySetupFrame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
+LootDisplaySetupFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
+LootDisplaySetupFrame:SetScript("OnEvent", function(self, event)
+	-- Loot Spec
+	newLootSpecId = GetLootSpecialization()
+
+	if (lootSpecId ~= newLootSpecId or (not LootSpecId and event == "PLAYER_TALENT_UPDATE")) then
+		lootSpecId = newLootSpecId
+
+		if lootSpecId ~= 0 then
+			_,lootSpecName,_,lootIcon = GetSpecializationInfoByID(lootSpecId)
+		else
+			_,lootSpecName,_,lootIcon = GetSpecializationInfo(GetSpecialization())
+		end
+
+		local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
+		PlayerLootSpecFrame.specname:SetFormattedText("%s %s: %s", lootIconText, "Loot", lootSpecName)
+	end
+end)
+
 -- Hide
 hooksecurefunc(
 	"PlayerFrame_UpdateStatus",
@@ -267,6 +306,8 @@ hooksecurefunc(
 		PaladinPowerBarFrame:Hide()
 		PlayerFrameAlternateManaBar:SetAlpha(0)
 		MageArcaneChargesFrame:Hide()
+		MonkHarmonyBarFrame:Hide()
+		RuneFrame:Hide()
 
 		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
 		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
