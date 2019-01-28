@@ -6,6 +6,8 @@ RCConfig = {
 
   pulltimer = true,
 
+  lootSpecDisplay = true, -- Display loot spec under the player frame
+
   damageFont = true, -- Change damage font to something cooler
 
   -- Nameplate Settings
