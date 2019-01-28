@@ -21,6 +21,7 @@ src\Castbars.lua
 src\UnitFrames.lua
 src\Portrait.lua
 src\RaidFrames.lua
+src\PullTimer.lua
 src\Minimap.lua
 src\Nameplates.lua
 src\Tooltips.lua
