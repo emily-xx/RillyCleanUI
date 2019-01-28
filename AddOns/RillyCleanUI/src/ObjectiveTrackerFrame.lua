@@ -130,7 +130,7 @@ local function skin_Blizzard_ObjectiveTracker()
 
 	local function miirgui_ObjectiveTracker_Update()
 			local tracker = ObjectiveTrackerFrame
-			if #tracker.MODULES then
+			if tracker.MODULES and #tracker.MODULES then
 				for i = 1, #tracker.MODULES do
 					if ( tracker.MODULES[i].Header ) then
 						m_fontify(tracker.MODULES[i].Header.Text,"white")
