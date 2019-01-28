@@ -287,6 +287,8 @@ LootDisplaySetupFrame:SetScript("OnEvent", function(self, event)
 			_,lootSpecName,_,lootIcon = GetSpecializationInfo(GetSpecialization())
 		end
 
+		if not lootIcon then return end
+
 		local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
 		PlayerLootSpecFrame.specname:SetFormattedText("%s %s: %s", lootIconText, "Loot", lootSpecName)
 	end
