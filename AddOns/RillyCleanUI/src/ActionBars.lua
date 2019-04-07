@@ -1,31 +1,3 @@
-local hiddenElements = {
-	-- Micro buttons
-	MicroButtonAndBagsBar,
-	MicroButton,
-	CharacterMicroButton,
-	SpellbookMicroButton,
-	TalentMicroButton,
-	AchievementMicroButton,
-	QuestLogMicroButton,
-	GuildMicroButton,
-	LFDMicroButton,
-	CollectionsMicroButton,
-	EJMicroButton,
-	MainMenuMicroButton,
-	-- Action Bars
-	MainMenuBarArtFrameBackground,
-	ActionBarUpButton,
-	ActionBarDownButton,
-	MainMenuBarArtFrame.PageNumber,
-	MainMenuBarArtFrame.LeftEndCap,
-	MainMenuBarArtFrame.RightEndCap
-}
-
-for _, hiddenElement in pairs(hiddenElements) do
-	elementToHide = _G[hiddenElement]
-	hiddenElement:Hide()
-end
-
 -- Function to hide the talking frame
 local function NoTalkingHeads()
 	hooksecurefunc(TalkingHeadFrame, "Show", function(self)
@@ -110,6 +82,41 @@ StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
+	-- Hide stuff
+	local hiddenElements = {
+		-- Micro buttons
+		MicroButtonAndBagsBar,
+		MicroButton,
+		CharacterMicroButton,
+		SpellbookMicroButton,
+		TalentMicroButton,
+		AchievementMicroButton,
+		QuestLogMicroButton,
+		GuildMicroButton,
+		LFDMicroButton,
+		CollectionsMicroButton,
+		EJMicroButton,
+		MainMenuMicroButton,
+		-- Action Bars
+		MainMenuBarArtFrameBackground,
+		ActionBarUpButton,
+		ActionBarDownButton,
+		MainMenuBarArtFrame.PageNumber,
+		MainMenuBarArtFrame.LeftEndCap,
+		MainMenuBarArtFrame.RightEndCap,
+		StanceBarFrame
+	}
+
+	for _, hiddenElement in pairs(hiddenElements) do
+		elementToHide = _G[hiddenElement]
+		hiddenElement:Hide()
+	end
+
+	-- Make sure that stance bar stays hidden
+	StanceBarFrame:SetScript("OnShow",  function()
+		StanceBarFrame:Hide()
+	end)
+
 	hooksecurefunc(
 	    "ActionButton_OnEvent",
 	    function(self, event, ...)
@@ -460,18 +467,10 @@ local function init()
   for i = 1, NUM_PET_ACTION_SLOTS do
     stylePetButton(_G["PetActionButton" .. i])
   end
-  --stancebar buttons
-  for i = 1, NUM_STANCE_SLOTS do
-    styleStanceButton(_G["StanceButton" .. i])
-  end
   --possess buttons
   for i = 1, NUM_POSSESS_SLOTS do
     stylePossessButton(_G["PossessButton" .. i])
   end
-
-  --hide stancebarbackground
-  StanceBarLeft:SetPoint("BOTTOMLEFT", "StanceBarFrame", "BOTTOMLEFT", 0,-2)
-  StanceButton1:SetPoint("BOTTOMLEFT", "StanceBarFrame", "BOTTOMLEFT", 11,2)
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
