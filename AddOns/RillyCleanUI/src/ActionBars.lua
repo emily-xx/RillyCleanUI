@@ -5,6 +5,45 @@ local function NoTalkingHeads()
 	end)
 end
 
+-- Hide stuff
+local hiddenElements = {
+	-- Micro buttons
+	MicroButtonAndBagsBar,
+	MicroButton,
+	CharacterMicroButton,
+	SpellbookMicroButton,
+	TalentMicroButton,
+	AchievementMicroButton,
+	QuestLogMicroButton,
+	GuildMicroButton,
+	LFDMicroButton,
+	CollectionsMicroButton,
+	EJMicroButton,
+	MainMenuMicroButton,
+	-- Action Bars
+	MainMenuBarArtFrameBackground,
+	ActionBarUpButton,
+	ActionBarDownButton,
+	MainMenuBarArtFrame.PageNumber,
+	MainMenuBarArtFrame.LeftEndCap,
+	MainMenuBarArtFrame.RightEndCap,
+	StanceBarFrame
+}
+
+for _, hiddenElement in pairs(hiddenElements) do
+	elementToHide = _G[hiddenElement]
+	hiddenElement:Hide()
+end
+
+-- Make sure that stance bar stays hidden
+hooksecurefunc(
+	StanceBarFrame,
+	"OnShow",
+	function()
+		iStanceBarFrame:Hide()
+	end
+)
+
 AlertFrame:ClearAllPoints()
 AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
 AlertFrame.SetPoint = function() end
@@ -82,41 +121,6 @@ StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
-	-- Hide stuff
-	local hiddenElements = {
-		-- Micro buttons
-		MicroButtonAndBagsBar,
-		MicroButton,
-		CharacterMicroButton,
-		SpellbookMicroButton,
-		TalentMicroButton,
-		AchievementMicroButton,
-		QuestLogMicroButton,
-		GuildMicroButton,
-		LFDMicroButton,
-		CollectionsMicroButton,
-		EJMicroButton,
-		MainMenuMicroButton,
-		-- Action Bars
-		MainMenuBarArtFrameBackground,
-		ActionBarUpButton,
-		ActionBarDownButton,
-		MainMenuBarArtFrame.PageNumber,
-		MainMenuBarArtFrame.LeftEndCap,
-		MainMenuBarArtFrame.RightEndCap,
-		StanceBarFrame
-	}
-
-	for _, hiddenElement in pairs(hiddenElements) do
-		elementToHide = _G[hiddenElement]
-		hiddenElement:Hide()
-	end
-
-	-- Make sure that stance bar stays hidden
-	StanceBarFrame:SetScript("OnShow",  function()
-		StanceBarFrame:Hide()
-	end)
-
 	hooksecurefunc(
 	    "ActionButton_OnEvent",
 	    function(self, event, ...)
