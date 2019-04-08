@@ -36,13 +36,9 @@ for _, hiddenElement in pairs(hiddenElements) do
 end
 
 -- Make sure that stance bar stays hidden
-hooksecurefunc(
-	StanceBarFrame,
-	"OnShow",
-	function()
-		iStanceBarFrame:Hide()
-	end
-)
+StanceBarFrame:SetScript("OnShow",  function()
+	StanceBarFrame:Hide()
+end)
 
 AlertFrame:ClearAllPoints()
 AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
