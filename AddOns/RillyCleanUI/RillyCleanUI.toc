@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80200
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: twitch.tv/emilywind - Rilona of Draenor EU

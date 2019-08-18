@@ -312,6 +312,7 @@ hooksecurefunc(
 		MageArcaneChargesFrame:Hide()
 		MonkHarmonyBarFrame:Hide()
 		RuneFrame:Hide()
+		ComboPointPlayerFrame:SetAlpha(0)
 
 		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
 		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
