@@ -112,7 +112,6 @@ StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
 -------------------
 -- Skinning Code --
 -------------------
-
 -- Color out of range red
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
