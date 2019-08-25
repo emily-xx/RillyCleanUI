@@ -35,11 +35,6 @@ for _, hiddenElement in pairs(hiddenElements) do
 	hiddenElement:Hide()
 end
 
--- Make sure that stance bar stays hidden
-StanceBarFrame:SetScript("OnShow",  function()
-	StanceBarFrame:Hide()
-end)
-
 AlertFrame:ClearAllPoints()
 AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
 AlertFrame.SetPoint = function() end
