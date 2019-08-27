@@ -109,7 +109,7 @@ StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
 -------------------
 -- Color out of range red
 local CF=CreateFrame("Frame")
-CF:RegisterEvent("PLAYER_LOGIN")
+CF:RegisterEvent("ADDON_LOADED")
 CF:SetScript("OnEvent", function(self, event)
 	hooksecurefunc(
 	    "ActionButton_OnEvent",
