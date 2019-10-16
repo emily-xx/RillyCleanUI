@@ -3,6 +3,7 @@ RCConfig = {
   actionBarOffset = 20,
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 210,
+  hideHotkeys = false,
 
   pulltimer = true,
 

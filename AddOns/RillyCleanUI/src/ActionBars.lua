@@ -1,153 +1,114 @@
--- Function to hide the talking frame
-local function NoTalkingHeads()
-	hooksecurefunc(TalkingHeadFrame, "Show", function(self)
-		self:Hide()
-	end)
-end
-
--- Hide stuff
-local hiddenElements = {
-	-- Micro buttons
-	MicroButtonAndBagsBar,
-	MicroButton,
-	CharacterMicroButton,
-	SpellbookMicroButton,
-	TalentMicroButton,
-	AchievementMicroButton,
-	QuestLogMicroButton,
-	GuildMicroButton,
-	LFDMicroButton,
-	CollectionsMicroButton,
-	EJMicroButton,
-	MainMenuMicroButton,
-	-- Action Bars
-	MainMenuBarArtFrameBackground,
-	ActionBarUpButton,
-	ActionBarDownButton,
-	MainMenuBarArtFrame.PageNumber,
-	MainMenuBarArtFrame.LeftEndCap,
-	MainMenuBarArtFrame.RightEndCap,
-	StanceBarFrame
-}
-
-for _, hiddenElement in pairs(hiddenElements) do
-	elementToHide = _G[hiddenElement]
-	hiddenElement:Hide()
-end
-
-AlertFrame:ClearAllPoints()
-AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
-AlertFrame.SetPoint = function() end
-
--- Move Action bars up slightly to be more in periphery of vision
-if RCConfig.actionBarOffset then
-	ActionButton1:ClearAllPoints()
-	ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCConfig.actionBarOffset)
-	ActionButton1.SetPoint = function() end
-	MultiBarBottomLeft:ClearAllPoints()
-	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
-	MultiBarBottomLeft.SetPoint = function() end
-
-	PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
-	PetActionButton1.SetPoint = function() end
-
-	ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
-	ExtraActionButton1:SetFrameStrata("MEDIUM")
-	ExtraActionButton1:SetFrameLevel(4)
-
-	PossessBarFrame:SetMovable(true)
-	PossessBarFrame:ClearAllPoints()
-	PossessBarFrame:SetScale(1)
-	PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 60)
-	PossessBarFrame:SetUserPlaced(true)
-	PossessBarFrame:SetMovable(false)
-end
-
--- Hide Talking Head Frame
-if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
-	NoTalkingHeads()
-else
-	local waitFrame = CreateFrame("FRAME")
-	waitFrame:RegisterEvent("ADDON_LOADED")
-	waitFrame:SetScript("OnEvent", function(self, event, arg1)
-		if arg1 == "Blizzard_TalkingHeadUI" then
-			NoTalkingHeads()
-			waitFrame:UnregisterAllEvents()
-		end
-	end)
-end
-
--- Clean up XP Bar/Azerite Bar appearance
-local statusBars = {
-	"SingleBarLargeUpper",
-	"SingleBarLarge",
-	"SingleBarSmall",
-	"SingleBarSmallUpper"
-}
-
-for _, statusBar in pairs(statusBars) do
-	_G["StatusTrackingBarManager"][statusBar]:SetAlpha(0)
-end
-
-StatusTrackingBarManager:ClearAllPoints()
-StatusTrackingBarManager:SetPoint("TOP", Screen, "TOP", 0, 0)
-
--- Remove obtrusive artwork from Stance bar when only bottom bar enabled
-SlidingActionBarTexture0:SetAlpha(0)
-SlidingActionBarTexture1:SetAlpha(0)
-
--- Fix issue with Blizzard trying to call this
-if not AchievementMicroButton_Update then
-    AchievementMicroButton_Update = function() end
-end
-
--- Store button needs moved off screen as it does not have Hide() for some reason.
-StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
-
--------------------
--- Skinning Code --
--------------------
--- Color out of range red
-local CF=CreateFrame("Frame")
-CF:RegisterEvent("ADDON_LOADED")
-CF:SetScript("OnEvent", function(self, event)
-	hooksecurefunc(
-	    "ActionButton_OnEvent",
-	    function(self, event, ...)
-	        if (event == "PLAYER_TARGET_CHANGED") then
-	            self.newTimer = self.rangeTimer
-	        end
-	    end
-	)
-	hooksecurefunc(
-	    "ActionButton_UpdateUsable",
-	    function(self)
-	        local icon = _G[self:GetName() .. "Icon"]
-	        local valid = IsActionInRange(self.action)
-	        if (valid == false) then
-	            icon:SetVertexColor(1, 0.2, 0.1)
-	        end
-	    end
-	)
-	hooksecurefunc(
-	    "ActionButton_OnUpdate",
-	    function(self, elapsed)
-	        local rangeTimer = self.newTimer
-	        if (rangeTimer) then
-	            rangeTimer = rangeTimer - elapsed
-	            if (rangeTimer <= 0) then
-	                ActionButton_UpdateUsable(self)
-	                rangeTimer = TOOLTIP_UPDATE_TIME
-	            end
-	            self.newTimer = rangeTimer
-	        end
-	    end
-	)
-end)
-
 local addon, ns = ...
 local dominos = IsAddOnLoaded("Dominos")
 local bartender4 = IsAddOnLoaded("Bartender4")
+
+-- Function to hide the talking frame
+if not dominos and not bartender4 then
+  local function NoTalkingHeads()
+  	hooksecurefunc(TalkingHeadFrame, "Show", function(self)
+  		self:Hide()
+  	end)
+  end
+
+  -- Hide stuff
+  local hiddenElements = {
+  	-- Micro buttons
+  	MicroButtonAndBagsBar,
+  	MicroButton,
+  	CharacterMicroButton,
+  	SpellbookMicroButton,
+  	TalentMicroButton,
+  	AchievementMicroButton,
+  	QuestLogMicroButton,
+  	GuildMicroButton,
+  	LFDMicroButton,
+  	CollectionsMicroButton,
+  	EJMicroButton,
+  	MainMenuMicroButton,
+  	-- Action Bars
+  	MainMenuBarArtFrameBackground,
+  	ActionBarUpButton,
+  	ActionBarDownButton,
+  	MainMenuBarArtFrame.PageNumber,
+  	MainMenuBarArtFrame.LeftEndCap,
+  	MainMenuBarArtFrame.RightEndCap,
+  	StanceBarFrame
+  }
+
+  for _, hiddenElement in pairs(hiddenElements) do
+  	elementToHide = _G[hiddenElement]
+  	hiddenElement:Hide()
+  end
+
+  AlertFrame:ClearAllPoints()
+  AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
+  AlertFrame.SetPoint = function() end
+
+  -- Move Action bars up slightly to be more in periphery of vision
+  if RCConfig.actionBarOffset then
+  	ActionButton1:ClearAllPoints()
+  	ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCConfig.actionBarOffset)
+  	ActionButton1.SetPoint = function() end
+  	MultiBarBottomLeft:ClearAllPoints()
+  	MultiBarBottomLeft:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
+  	MultiBarBottomLeft.SetPoint = function() end
+
+  	PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
+  	PetActionButton1.SetPoint = function() end
+
+  	ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
+  	ExtraActionButton1:SetFrameStrata("MEDIUM")
+  	ExtraActionButton1:SetFrameLevel(4)
+
+  	PossessBarFrame:SetMovable(true)
+  	PossessBarFrame:ClearAllPoints()
+  	PossessBarFrame:SetScale(1)
+  	PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 60)
+  	PossessBarFrame:SetUserPlaced(true)
+  	PossessBarFrame:SetMovable(false)
+  end
+
+  -- Hide Talking Head Frame
+  if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
+  	NoTalkingHeads()
+  else
+  	local waitFrame = CreateFrame("FRAME")
+  	waitFrame:RegisterEvent("ADDON_LOADED")
+  	waitFrame:SetScript("OnEvent", function(self, event, arg1)
+  		if arg1 == "Blizzard_TalkingHeadUI" then
+  			NoTalkingHeads()
+  			waitFrame:UnregisterAllEvents()
+  		end
+  	end)
+  end
+
+  -- Clean up XP Bar/Azerite Bar appearance
+  local statusBars = {
+  	"SingleBarLargeUpper",
+  	"SingleBarLarge",
+  	"SingleBarSmall",
+  	"SingleBarSmallUpper"
+  }
+
+  for _, statusBar in pairs(statusBars) do
+  	_G["StatusTrackingBarManager"][statusBar]:SetAlpha(0)
+  end
+
+  StatusTrackingBarManager:ClearAllPoints()
+  StatusTrackingBarManager:SetPoint("TOP", Screen, "TOP", 0, 0)
+
+  -- Remove obtrusive artwork from Stance bar when only bottom bar enabled
+  SlidingActionBarTexture0:SetAlpha(0)
+  SlidingActionBarTexture1:SetAlpha(0)
+
+  -- Fix issue with Blizzard trying to call this
+  if not AchievementMicroButton_Update then
+      AchievementMicroButton_Update = function() end
+  end
+
+  -- Store button needs moved off screen as it does not have Hide() for some reason.
+  StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
+end
 
 --backdrop settings
 local bgfile, edgefile = "", ""
@@ -483,7 +444,7 @@ local function init()
 
   --dominos styling
   if dominos then
-    --print("Dominos found")
+    print("Dominos found")
     for i = 1, 60 do
       styleActionButton(_G["DominosActionButton" .. i])
     end
@@ -498,7 +459,7 @@ local function init()
   end
 
   --hide the hotkeys if needed
-  if not dominos and not bartender4 then
+  if not dominos and not bartender4 and RCConfig.hideHotkeys then
     hooksecurefunc("ActionButton_UpdateHotkeys", updateHotkey)
   end
 end
