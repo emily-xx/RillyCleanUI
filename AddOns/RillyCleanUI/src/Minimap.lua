@@ -77,10 +77,6 @@ CF:SetScript("OnEvent", function(self, event)
 			MinimapZoneText:Hide()
 		end
 
-		GameTimeFrame:Hide()
-		GameTimeFrame:UnregisterAllEvents()
-		GameTimeFrame.Show = kill
-
 		MiniMapTracking:Hide()
 		MiniMapTracking.Show = kill
 		MiniMapTracking:UnregisterAllEvents()
