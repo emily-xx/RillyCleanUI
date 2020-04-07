@@ -1,7 +1,7 @@
-## Interface: 80205
+## Interface: 80300
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
-## Author: twitch.tv/emilywind - Rilona of Draenor EU
+## Author: Rilona of Draenor EU
 ## Email: emlywind@gmail.com
 
 ## OptionalDeps: LibStub, LibSharedMedia-3.0
