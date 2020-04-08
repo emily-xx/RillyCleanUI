@@ -307,12 +307,12 @@ hooksecurefunc(
 		PlayerPrestigePortrait:SetAlpha(0)
 
 		-- Hide Alt Power bars
-		PaladinPowerBarFrame:Hide()
+		PaladinPowerBarFrame:SetAlpha(0)
 		PlayerFrameAlternateManaBar:SetAlpha(0)
-		MageArcaneChargesFrame:Hide()
-		MonkHarmonyBarFrame:Hide()
-		MonkStaggerBar:Hide()
-		RuneFrame:Hide()
+		MageArcaneChargesFrame:SetAlpha(0)
+		MonkHarmonyBarFrame:SetAlpha(0)
+		MonkStaggerBar:SetAlpha(0)
+		RuneFrame:SetAlpha(0)
 		ComboPointPlayerFrame:SetAlpha(0)
 
 		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)

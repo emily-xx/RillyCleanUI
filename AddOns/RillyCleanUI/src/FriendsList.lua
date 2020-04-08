@@ -4,8 +4,6 @@ local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
 
-if not SUIDB.A_FRIENDLIST == true then return end 
-
 local GUILD_INDEX_MAX = 12
 local SMOOTH = {1, 0, 0, 1, 1, 0, 0, 1, 0}
 local myName = UnitName("player")
