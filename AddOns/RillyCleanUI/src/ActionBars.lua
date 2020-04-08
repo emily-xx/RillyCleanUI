@@ -35,7 +35,6 @@ if not dominos and not bartender4 then
   }
 
   for _, hiddenElement in pairs(hiddenElements) do
-  	elementToHide = _G[hiddenElement]
   	hiddenElement:Hide()
   end
 
