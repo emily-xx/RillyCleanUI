@@ -253,30 +253,6 @@ TargetFrameToTTextureFrameName:SetTextColor(1,1,1)
 FocusFrameTextureFrameName:SetTextColor(1,1,1)
 FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
 
--- Hide
-function cleanPlayerFrame()
-	PlayerStatusTexture:Hide()
-	PlayerRestGlow:Hide()
-	PlayerStatusGlow:Hide()
-	PlayerPrestigeBadge:SetAlpha(0)
-	PlayerPrestigePortrait:SetAlpha(0)
-
-	-- Hide Alt Power bars
-	PaladinPowerBarFrame:Hide()
-	PlayerFrameAlternateManaBar:Hide()
-	MageArcaneChargesFrame:Hide()
-	MonkHarmonyBarFrame:Hide()
-	MonkStaggerBar:Hide()
-	RuneFrame:Hide()
-	ComboPointPlayerFrame:Hide()
-	WarlockPowerFrame:Hide()
-
-	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
-	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
-	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
-	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
-end
-
 -----------------------
 -- Loot Spec Display --
 -----------------------
@@ -300,7 +276,6 @@ if RCConfig.lootSpecDisplay then
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
 	LootDisplaySetupFrame:SetScript("OnEvent", function(self, event)
-		cleanPlayerFrame()
 		-- Loot Spec
 		newLootSpecId = GetLootSpecialization()
 
@@ -321,4 +296,37 @@ if RCConfig.lootSpecDisplay then
 	end)
 end
 
+-- Hide
+function cleanPlayerFrame()
+	PlayerStatusTexture:Hide()
+	PlayerRestGlow:Hide()
+	PlayerStatusGlow:Hide()
+	PlayerPrestigeBadge:SetAlpha(0)
+	PlayerPrestigePortrait:SetAlpha(0)
+
+	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
+	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
+	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
+	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
+end
+
 hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
+
+-- Hide Alt Power bars
+local altPowerBars = {
+	PaladinPowerBarFrame,
+	PlayerFrameAlternateManaBar,
+	MageArcaneChargesFrame,
+	MonkHarmonyBarFrame,
+	MonkStaggerBar,
+	RuneFrame,
+	ComboPointPlayerFrame,
+	WarlockPowerFrame
+}
+
+for _, altPowerBar in pairs(altPowerBars) do
+	elementToHide = _G[altPowerBar]
+	hooksecurefunc(altPowerBar, "Show", function(self)
+		self:Hide()
+	end)
+end
