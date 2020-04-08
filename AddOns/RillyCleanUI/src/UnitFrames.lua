@@ -253,6 +253,45 @@ TargetFrameToTTextureFrameName:SetTextColor(1,1,1)
 FocusFrameTextureFrameName:SetTextColor(1,1,1)
 FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
 
+-------------------------
+-- Hide Alt Power bars --
+-------------------------
+local altPowerBars = {
+	PaladinPowerBarFrame,
+	PlayerFrameAlternateManaBar,
+	MageArcaneChargesFrame,
+	MonkHarmonyBarFrame,
+	MonkStaggerBar,
+	RuneFrame,
+	ComboPointPlayerFrame,
+	WarlockPowerFrame
+}
+
+for _, altPowerBar in pairs(altPowerBars) do
+	hooksecurefunc(altPowerBar, "Show", function(self)
+		self:Hide()
+	end)
+end
+
+function cleanPlayerFrame()
+	PlayerStatusTexture:Hide()
+	PlayerRestGlow:Hide()
+	PlayerStatusGlow:Hide()
+	PlayerPrestigeBadge:SetAlpha(0)
+	PlayerPrestigePortrait:SetAlpha(0)
+
+	for _, altPowerBar in pairs(altPowerBars) do
+		altPowerBar:Hide()
+	end
+
+	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
+	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
+	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
+	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
+end
+
+hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
+
 -----------------------
 -- Loot Spec Display --
 -----------------------
@@ -276,6 +315,7 @@ if RCConfig.lootSpecDisplay then
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
 	LootDisplaySetupFrame:SetScript("OnEvent", function(self, event)
+		cleanPlayerFrame() -- Ensure that things stay hidden on spec change
 		-- Loot Spec
 		newLootSpecId = GetLootSpecialization()
 
@@ -295,41 +335,3 @@ if RCConfig.lootSpecDisplay then
 		end
 	end)
 end
-
--- Hide Alt Power bars
-local altPowerBars = {
-	PaladinPowerBarFrame,
-	PlayerFrameAlternateManaBar,
-	MageArcaneChargesFrame,
-	MonkHarmonyBarFrame,
-	MonkStaggerBar,
-	RuneFrame,
-	ComboPointPlayerFrame,
-	WarlockPowerFrame
-}
-
-for _, altPowerBar in pairs(altPowerBars) do
-	hooksecurefunc(altPowerBar, "Show", function(self)
-		self:Hide()
-	end)
-end
-
--- Hide
-function cleanPlayerFrame()
-	PlayerStatusTexture:Hide()
-	PlayerRestGlow:Hide()
-	PlayerStatusGlow:Hide()
-	PlayerPrestigeBadge:SetAlpha(0)
-	PlayerPrestigePortrait:SetAlpha(0)
-
-	for _, altPowerBar in pairs(altPowerBars) do
-		altPowerBar:Hide()
-	end
-
-	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
-	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
-	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
-	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
-end
-
-hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
