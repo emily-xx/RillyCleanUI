@@ -253,6 +253,30 @@ TargetFrameToTTextureFrameName:SetTextColor(1,1,1)
 FocusFrameTextureFrameName:SetTextColor(1,1,1)
 FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
 
+-- Hide
+function cleanPlayerFrame()
+	PlayerStatusTexture:Hide()
+	PlayerRestGlow:Hide()
+	PlayerStatusGlow:Hide()
+	PlayerPrestigeBadge:SetAlpha(0)
+	PlayerPrestigePortrait:SetAlpha(0)
+
+	-- Hide Alt Power bars
+	PaladinPowerBarFrame:Hide()
+	PlayerFrameAlternateManaBar:Hide()
+	MageArcaneChargesFrame:Hide()
+	MonkHarmonyBarFrame:Hide()
+	MonkStaggerBar:Hide()
+	RuneFrame:Hide()
+	ComboPointPlayerFrame:Hide()
+	WarlockPowerFrame:Hide()
+
+	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
+	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
+	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
+	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
+end
+
 -----------------------
 -- Loot Spec Display --
 -----------------------
@@ -276,6 +300,7 @@ if RCConfig.lootSpecDisplay then
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
 	LootDisplaySetupFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
 	LootDisplaySetupFrame:SetScript("OnEvent", function(self, event)
+		cleanPlayerFrame()
 		-- Loot Spec
 		newLootSpecId = GetLootSpecialization()
 
@@ -296,28 +321,4 @@ if RCConfig.lootSpecDisplay then
 	end)
 end
 
--- Hide
-hooksecurefunc(
-	"PlayerFrame_UpdateStatus",
-	function()
-		PlayerStatusTexture:Hide()
-		PlayerRestGlow:Hide()
-		PlayerStatusGlow:Hide()
-		PlayerPrestigeBadge:SetAlpha(0)
-		PlayerPrestigePortrait:SetAlpha(0)
-
-		-- Hide Alt Power bars
-		PaladinPowerBarFrame:SetAlpha(0)
-		PlayerFrameAlternateManaBar:SetAlpha(0)
-		MageArcaneChargesFrame:SetAlpha(0)
-		MonkHarmonyBarFrame:SetAlpha(0)
-		MonkStaggerBar:SetAlpha(0)
-		RuneFrame:SetAlpha(0)
-		ComboPointPlayerFrame:SetAlpha(0)
-
-		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
-		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
-		FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
-		FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
-	end
-)
+hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
