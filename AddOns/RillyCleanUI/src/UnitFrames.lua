@@ -296,22 +296,6 @@ if RCConfig.lootSpecDisplay then
 	end)
 end
 
--- Hide
-function cleanPlayerFrame()
-	PlayerStatusTexture:Hide()
-	PlayerRestGlow:Hide()
-	PlayerStatusGlow:Hide()
-	PlayerPrestigeBadge:SetAlpha(0)
-	PlayerPrestigePortrait:SetAlpha(0)
-
-	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
-	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
-	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
-	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
-end
-
-hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
-
 -- Hide Alt Power bars
 local altPowerBars = {
 	PaladinPowerBarFrame,
@@ -325,8 +309,27 @@ local altPowerBars = {
 }
 
 for _, altPowerBar in pairs(altPowerBars) do
-	elementToHide = _G[altPowerBar]
 	hooksecurefunc(altPowerBar, "Show", function(self)
 		self:Hide()
 	end)
 end
+
+-- Hide
+function cleanPlayerFrame()
+	PlayerStatusTexture:Hide()
+	PlayerRestGlow:Hide()
+	PlayerStatusGlow:Hide()
+	PlayerPrestigeBadge:SetAlpha(0)
+	PlayerPrestigePortrait:SetAlpha(0)
+
+	for _, altPowerBar in pairs(altPowerBars) do
+		altPowerBar:Hide()
+	end
+
+	TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
+	TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
+	FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
+	FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
+end
+
+hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
