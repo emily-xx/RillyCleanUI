@@ -66,9 +66,9 @@ if not dominos and not bartender4 then
       ExtraActionButton1:SetFrameStrata("MEDIUM")
       ExtraActionButton1:SetFrameLevel(4)
       
-      ZoneAbilityFrame:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
-      ZoneAbilityFrame:SetFrameStrata("MEDIUM")
-      ZoneAbilityFrame:SetFrameLevel(4)
+      ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCConfig.actionBarOffset -60))
+      ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
+      ZoneAbilityFrame.SpellButton:SetFrameLevel(4)
 
       PossessBarFrame:SetMovable(true)
       PossessBarFrame:ClearAllPoints()
