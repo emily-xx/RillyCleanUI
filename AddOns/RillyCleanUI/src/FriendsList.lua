@@ -384,13 +384,6 @@ function ParseFormat(temp, raw)
 	return raw
 end
 
-function addon:InitConfig()
-	local varName = addonName .. "DB"
-
-	config = _G[varName] or config
-	_G[varName] = config
-end
-
 function addon:InitAPI()
 	local SetText
 
