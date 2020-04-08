@@ -31,14 +31,18 @@ if not dominos and not bartender4 then
   	ActionBarDownButton,
   	MainMenuBarArtFrame.PageNumber,
   	MainMenuBarArtFrame.LeftEndCap,
-  	MainMenuBarArtFrame.RightEndCap,
-  	StanceBarFrame
+  	MainMenuBarArtFrame.RightEndCap
   }
 
   for _, hiddenElement in pairs(hiddenElements) do
   	elementToHide = _G[hiddenElement]
   	hiddenElement:Hide()
   end
+
+  -- Hide stance bar
+  hooksecurefunc(StanceBarFrame, "Show", function(self)
+    self:Hide()
+  end)
 
   AlertFrame:ClearAllPoints()
   AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
