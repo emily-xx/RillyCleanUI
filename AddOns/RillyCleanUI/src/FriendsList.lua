@@ -1,4 +1,4 @@
-﻿﻿--[[SUI FRIENDLIST v1.0]]
+﻿--[[SUI FRIENDLIST v1.0]]
 
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
