@@ -311,6 +311,7 @@ hooksecurefunc(
 		PlayerFrameAlternateManaBar:SetAlpha(0)
 		MageArcaneChargesFrame:Hide()
 		MonkHarmonyBarFrame:Hide()
+		MonkStaggerBar:Hide()
 		RuneFrame:Hide()
 		ComboPointPlayerFrame:SetAlpha(0)
 
