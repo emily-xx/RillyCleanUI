@@ -10,13 +10,13 @@ local function skin_Blizzard_ObjectiveTracker()
     local _,className = UnitClass("player")
     local classR, classG, classB = GetClassColor(className)
 
-		if RCConfig.objectivesTextOutline then
+		if RCUIDB.objectivesTextOutline then
 			setFontOutline(arg1)
 		end
 
-		if arg2 == "color" and RCConfig.objectivesTitles == "class" then
+		if arg2 == "color" and RCUIDB.objectivesTitles == "class" then
 			arg1:SetTextColor(classR,classG,classB,1)
-		elseif arg2 == "highlight" and RCConfig.objectivesTitles == "class" then
+		elseif arg2 == "highlight" and RCUIDB.objectivesTitles == "class" then
 			arg1:SetTextColor(classR+0.3,classG+0.3,classB+0.3,1)
 		elseif arg2 == "white" then
 			arg1:SetTextColor(1,1,1,1)
@@ -25,7 +25,7 @@ local function skin_Blizzard_ObjectiveTracker()
 		elseif arg2 == "grey" then
 			arg1:SetTextColor(0.5, 0.5, 0.5, 1)
 		else
-			if RCConfig.objectivesTitles == "class" then
+			if RCUIDB.objectivesTitles == "class" then
 				arg1:SetTextColor(classR,classG,classB,1)
 			end
 		end

@@ -12,7 +12,7 @@ CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
   hooksecurefunc("UnitFramePortrait_Update",function(frame)
     if frame.portrait then
-    	if( RCConfig.portraitStyle == "class" ) then -- Flat class icons
+    	if( RCUIDB.portraitStyle == "class" ) then -- Flat class icons
     		if( UnitIsPlayer(frame.unit) ) then
           local t = CLASS_ICON_TCOORDS[select(2, UnitClass(frame.unit))]
           if t then
@@ -22,9 +22,9 @@ CF:SetScript("OnEvent", function(self, event)
     		else
     			frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
     		end
-    	elseif( RCConfig.portraitStyle == "2D" ) then -- Standard 2D character image, but made square
+    	elseif( RCUIDB.portraitStyle == "2D" ) then -- Standard 2D character image, but made square
     		frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
-      elseif (RCConfig.portraitStyle == "3D") then
+      elseif (RCUIDB.portraitStyle == "3D") then
         if( not frame.portraitModel ) then -- Initialize 3D Model Container
     			frame.portraitModel = CreateFrame("PlayerModel", nil, frame)
     			frame.portraitModel:SetScript("OnShow", resetCamera)

@@ -4,7 +4,7 @@ local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
 
-if not RCConfig.pulltimer then return end 
+if not RCUIDB.pulltimer then return end 
 
 cancel = false
 function PullOnChat(time)

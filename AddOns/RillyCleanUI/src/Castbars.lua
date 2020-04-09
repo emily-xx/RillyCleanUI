@@ -26,11 +26,11 @@ CastBars:SetScript(
 		if addon == "RillyCleanUI" or event == "PLAYER_ENTERING_WORLD" then
 			if not InCombatLockdown() then
 				-- Player Castbar
-        if RCConfig.castbarOffset then
+        if RCUIDB.castbarOffset then
           CastingBarFrame:SetMovable(true)
   				CastingBarFrame:ClearAllPoints()
   				CastingBarFrame:SetScale(1)
-  				CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCConfig.castbarOffset)
+  				CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCUIDB.castbarOffset)
   				CastingBarFrame:SetUserPlaced(true)
   				CastingBarFrame:SetMovable(false)
         end
