@@ -19,7 +19,6 @@ local backdrop = {
 }
 
 CastBars:RegisterEvent("ADDON_LOADED")
-CastBars:RegisterEvent("PLAYER_ENTERING_WORLD")
 CastBars:SetScript(
 	"OnEvent",
 	function(self, event, addon)

@@ -48,41 +48,37 @@ local function init()
     AlertFrame.SetPoint = function() end
 
     -- Move Action bars up slightly to be more in periphery of vision
-    local HelloWorld = CreateFrame("FRAME")
-    HelloWorld:RegisterEvent("PLAYER_ENTERING_WORLD")
-    HelloWorld:SetScript("OnEvent", function()
-      if RCUIDB.actionBarOffset then
-        ActionButton1:ClearAllPoints()
-        ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCUIDB.actionBarOffset)
-        ActionButton1.SetPoint = function() end
-        MultiBarBottomLeft:ClearAllPoints()
-        MultiBarBottomLeft:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
-        MultiBarBottomLeft.SetPoint = function() end
+    if RCUIDB.actionBarOffset then
+      ActionButton1:ClearAllPoints()
+      ActionButton1:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 0, RCUIDB.actionBarOffset)
+      ActionButton1.SetPoint = function() end
+      MultiBarBottomLeft:ClearAllPoints()
+      MultiBarBottomLeft:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, 13)
+      MultiBarBottomLeft.SetPoint = function() end
 
-        PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
-        PetActionButton1.SetPoint = function() end
+      PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
+      PetActionButton1.SetPoint = function() end
 
-        ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
-        ExtraActionButton1:SetFrameStrata("MEDIUM")
-        ExtraActionButton1:SetFrameLevel(4)
-        
-        ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
-        ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
-        ZoneAbilityFrame.SpellButton:SetFrameLevel(4)
+      ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
+      ExtraActionButton1:SetFrameStrata("MEDIUM")
+      ExtraActionButton1:SetFrameLevel(4)
+      
+      ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
+      ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
+      ZoneAbilityFrame.SpellButton:SetFrameLevel(4)
 
-        PossessBarFrame:SetMovable(true)
-        PossessBarFrame:ClearAllPoints()
-        PossessBarFrame:SetScale(1)
-        PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 60)
-        PossessBarFrame:SetUserPlaced(true)
-        PossessBarFrame:SetMovable(false)
+      PossessBarFrame:SetMovable(true)
+      PossessBarFrame:ClearAllPoints()
+      PossessBarFrame:SetScale(1)
+      PossessBarFrame:SetPoint("BOTTOMLEFT", ActionButton1, "TOP", 0, 60)
+      PossessBarFrame:SetUserPlaced(true)
+      PossessBarFrame:SetMovable(false)
 
-        PlayerPowerBarAlt:SetMovable(true)
-        PlayerPowerBarAlt:SetUserPlaced(true)
-        PlayerPowerBarAlt:ClearAllPoints()
-        PlayerPowerBarAlt:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset + 90))
-      end
-    end)
+      PlayerPowerBarAlt:SetMovable(true)
+      PlayerPowerBarAlt:SetUserPlaced(true)
+      PlayerPowerBarAlt:ClearAllPoints()
+      PlayerPowerBarAlt:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset + 90))
+    end
 
     -- Hide Talking Head Frame
     if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
