@@ -262,7 +262,7 @@ local function init()
     cooldown:SetAllPoints(icon)
 
     --hotkey
-    if ho then
+    if RCUIDB.hideHotkeys and ho then
       ho:Hide()
     end
 
@@ -307,7 +307,9 @@ local function init()
     ho:ClearAllPoints()
     ho:SetPoint("TOP", bu, 0, 0)
     ho:SetPoint("TOP", bu, 0, 0)
-    ho:Hide()
+    if RCUIDB.hideHotkeys then
+      ho:Hide()
+    end
 
     --macro name
     na:Hide()
