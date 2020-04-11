@@ -31,7 +31,7 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	local function miirgui_SetStringText(_,fontString)
+	local function rcui_SetStringText(_,fontString)
 		local r, g, b = fontString:GetTextColor()
 		local red = floor(r * 255 )
 		local green = floor(g * 255 )
@@ -46,9 +46,9 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"SetStringText", miirgui_SetStringText)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"SetStringText", rcui_SetStringText)
 
-	local function miirgui_OnBlockHeaderEnter(_,block)
+	local function rcui_OnBlockHeaderEnter(_,block)
 		if ( block.HeaderText ) then
 			local r, g, b = block.HeaderText:GetTextColor()
 			local red = floor(r * 255 )
@@ -72,9 +72,9 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"OnBlockHeaderEnter",miirgui_OnBlockHeaderEnter)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"OnBlockHeaderEnter",rcui_OnBlockHeaderEnter)
 
-	local function miirgui_OnBlockHeaderLeave(_,block)
+	local function rcui_OnBlockHeaderLeave(_,block)
 		if ( block.HeaderText ) then
 			local r, g, b = block.HeaderText:GetTextColor()
 			local red = floor(r * 255 )
@@ -99,25 +99,25 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"OnBlockHeaderLeave",miirgui_OnBlockHeaderLeave)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"OnBlockHeaderLeave",rcui_OnBlockHeaderLeave)
 
-	local function miirgui_ObjectiveTracker_Collapse()
+	local function rcui_ObjectiveTracker_Collapse()
 		m_fontify(ObjectiveTrackerFrame.HeaderMenu.Title,"white")
 	end
 
-	hooksecurefunc("ObjectiveTracker_Collapse",miirgui_ObjectiveTracker_Collapse)
+	hooksecurefunc("ObjectiveTracker_Collapse",rcui_ObjectiveTracker_Collapse)
 
-	local function miirgui_AddObjective(self,block,objectiveKey,_,lineType)
+	local function rcui_AddObjective(self,block,objectiveKey,_,lineType)
 		local line = self:GetLine(block, objectiveKey, lineType);
 		if ( line.Dash ) then
 			m_fontify(line.Dash,"white")
 		end
 	end
 
-	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddObjective", miirgui_AddObjective)
+	hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE,"AddObjective", rcui_AddObjective)
 
 
-	local function miirgui_ProgressBar_SetValue(self)
+	local function rcui_ProgressBar_SetValue(self)
 		self.Bar:ClearAllPoints()
 		self.Bar:SetPoint("CENTER",self,22.5,0.5)
 		self.Bar.Icon:SetSize(20,20)
@@ -128,10 +128,10 @@ local function skin_Blizzard_ObjectiveTracker()
 		m_fontify(self.Bar.Label,"white")
 	end
 
-	hooksecurefunc("ScenarioTrackerProgressBar_SetValue",miirgui_ProgressBar_SetValue)
-	hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue",miirgui_ProgressBar_SetValue)
+	hooksecurefunc("ScenarioTrackerProgressBar_SetValue",rcui_ProgressBar_SetValue)
+	hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue",rcui_ProgressBar_SetValue)
 
-	local function miirgui_ObjectiveTracker_Update()
+	local function rcui_ObjectiveTracker_Update()
 			local tracker = ObjectiveTrackerFrame
 			if tracker.MODULES and #tracker.MODULES then
 				for i = 1, #tracker.MODULES do
@@ -142,9 +142,9 @@ local function skin_Blizzard_ObjectiveTracker()
 			end
 	end
 
-	hooksecurefunc("ObjectiveTracker_Update",miirgui_ObjectiveTracker_Update)
+	hooksecurefunc("ObjectiveTracker_Update",rcui_ObjectiveTracker_Update)
 
-	local function miirgui_Update()
+	local function rcui_Update()
 		for i = 1, GetNumAutoQuestPopUps() do
 			local questID = GetAutoQuestPopUp(i);
 			if AUTO_QUEST_POPUP_TRACKER_MODULE:GetExistingBlock(questID) then
@@ -161,7 +161,7 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	hooksecurefunc(AUTO_QUEST_POPUP_TRACKER_MODULE,"Update",miirgui_Update)
+	hooksecurefunc(AUTO_QUEST_POPUP_TRACKER_MODULE,"Update",rcui_Update)
 end
 
 local catchaddon = CreateFrame("FRAME")
