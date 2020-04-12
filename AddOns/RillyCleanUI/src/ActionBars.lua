@@ -61,11 +61,11 @@ local function init()
 
       ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
       ExtraActionButton1:SetFrameStrata("MEDIUM")
-      ExtraActionButton1:SetFrameLevel(4)
+      ExtraActionButton1:SetFrameLevel(5)
       
       ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
       ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
-      ZoneAbilityFrame.SpellButton:SetFrameLevel(4)
+      ZoneAbilityFrame.SpellButton:SetFrameLevel(5)
 
       PossessBarFrame:SetMovable(true)
       PossessBarFrame:ClearAllPoints()
