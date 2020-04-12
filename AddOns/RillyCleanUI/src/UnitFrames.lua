@@ -2,6 +2,45 @@ RillyCleanUnitFrames = CreateFrame("Frame", "RillyCleanUnitFrames")
 RillyCleanUnitFrames:RegisterEvent("PLAYER_LOGIN")
 
 RillyCleanUnitFrames:SetScript("OnEvent", function()
+	-------------------------
+	-- Hide Alt Power bars --
+	-------------------------
+	local altPowerBars = {
+		PaladinPowerBarFrame,
+		PlayerFrameAlternateManaBar,
+		MageArcaneChargesFrame,
+		MonkHarmonyBarFrame,
+		MonkStaggerBar,
+		RuneFrame,
+		ComboPointPlayerFrame,
+		WarlockPowerFrame
+	}
+
+	for _, altPowerBar in pairs(altPowerBars) do
+		hooksecurefunc(altPowerBar, "Show", function(self)
+			self:Hide()
+		end)
+	end
+
+	function cleanPlayerFrame()
+		PlayerStatusTexture:Hide()
+		PlayerRestGlow:Hide()
+		PlayerStatusGlow:Hide()
+		PlayerPrestigeBadge:SetAlpha(0)
+		PlayerPrestigePortrait:SetAlpha(0)
+
+		for _, altPowerBar in pairs(altPowerBars) do
+			altPowerBar:Hide()
+		end
+
+		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
+		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
+		FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
+		FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
+	end
+
+	hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
+
 	--------------------------------------
 	---      Class colored frames      ---
 	--------------------------------------
@@ -73,7 +112,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	)
 
 	--PLAYER
-	function StylePlayerFrame(self)
+	function StylePlayerFrame(isVehicle)
 		PlayerName:SetPoint("BOTTOM", PlayerFrameHealthBar, "TOP", 0, 3)
 		setFontOutline(PlayerName)
 
@@ -121,8 +160,19 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			-4
 		)
 		PlayerFrameManaBar.FullPowerFrame.SpikeFrame.BigSpikeGlow:SetSize(30, 50)
+
+		if isVehicle then
+			PlayerFrameHealthBar:SetWidth(112);
+			PlayerFrameManaBar:SetWidth(112);
+		end
 	end
-	hooksecurefunc("PlayerFrame_ToPlayerArt", StylePlayerFrame)
+	hooksecurefunc("PlayerFrame_ToPlayerArt", function()
+		StylePlayerFrame(false)
+		cleanPlayerFrame()
+	end)
+	hooksecurefunc("PlayerFrame_ToVehicleArt", function()
+		StylePlayerFrame(true)
+	end)
 
 	--TARGET
 	function StyleTargetFrame(self, forceNormalTexture)
@@ -256,45 +306,6 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	TargetFrameToTTextureFrameName:SetTextColor(1,1,1)
 	FocusFrameTextureFrameName:SetTextColor(1,1,1)
 	FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
-
-	-------------------------
-	-- Hide Alt Power bars --
-	-------------------------
-	local altPowerBars = {
-		PaladinPowerBarFrame,
-		PlayerFrameAlternateManaBar,
-		MageArcaneChargesFrame,
-		MonkHarmonyBarFrame,
-		MonkStaggerBar,
-		RuneFrame,
-		ComboPointPlayerFrame,
-		WarlockPowerFrame
-	}
-
-	for _, altPowerBar in pairs(altPowerBars) do
-		hooksecurefunc(altPowerBar, "Show", function(self)
-			self:Hide()
-		end)
-	end
-
-	function cleanPlayerFrame()
-		PlayerStatusTexture:Hide()
-		PlayerRestGlow:Hide()
-		PlayerStatusGlow:Hide()
-		PlayerPrestigeBadge:SetAlpha(0)
-		PlayerPrestigePortrait:SetAlpha(0)
-
-		for _, altPowerBar in pairs(altPowerBars) do
-			altPowerBar:Hide()
-		end
-
-		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
-		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
-		FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
-		FocusFrameTextureFramePrestigePortrait:SetAlpha(0)
-	end
-
-	hooksecurefunc("PlayerFrame_UpdateStatus", cleanPlayerFrame)
 
 	-----------------------
 	-- Loot Spec Display --
