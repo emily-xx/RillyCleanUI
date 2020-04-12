@@ -9,7 +9,6 @@ local function skin_Blizzard_ObjectiveTracker()
 
     local _,className = UnitClass("player")
     local classR, classG, classB = GetClassColor(className)
-
 		if RCUIDB.objectivesTextOutline then
 			setFontOutline(arg1)
 		end

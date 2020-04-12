@@ -1,3 +1,5 @@
+local name, RCUI = ...
+
 -- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
 
 local function rcui_defaults()
@@ -8,13 +10,13 @@ local function rcui_defaults()
     disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
     castbarOffset = 210,
     hideHotkeys = true,
-  
+
     pulltimer = true,
-  
+
     lootSpecDisplay = true, -- Display loot spec under the player frame
-  
+
     damageFont = true, -- Change damage font to something cooler
-  
+
     -- Nameplate Settings
     modNamePlates = true, -- Set to false to ignore all nameplate customization
     nameplateNameFontSize = 7,
@@ -25,7 +27,7 @@ local function rcui_defaults()
     namePlateScale = 1.3,
     nameplateHideCastText = false,
     nameplateCastFontSize = 6,
-  
+
     portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
     objectivesTitles = "class", -- Class for class coloured quest titles, or default for default
     objectivesTextOutline = false,
@@ -62,6 +64,8 @@ local function rcui_defaults()
 	rcui ={}
 
 end
+
+RCUI.info = {}
 
 local rc_catch = CreateFrame("Frame")
 rc_catch:RegisterEvent("PLAYER_LOGIN")
@@ -120,15 +124,36 @@ local function rcui_options()
 
 	local version = GetAddOnMetadata("RillyCleanUI", "Version")
 
-	local versiontext = rcui.childpanel:CreateFontString()
-	TextFactory(versiontext,14,"RillyCleanUI Settings (Version "..version..")","TOPLEFT",rcuiChild,6,-10,"color")
+  local rcuiTitle = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  rcuiTitle:SetPoint("LEFT", rcui.childpanel, "TOPLEFT", 10, -20)
+  rcuiTitle:SetText("RillyCleanUI ("..version..")")
 
-	-- local colorsettings = rcui.childpanel:CreateFontString()
-  -- TextFactory(colorsettings,12,"+ Color Settings + (reload required)","TOPLEFT",rcuiChild,6,-26,"white")
-  
-  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", rcui.childpanel, "InputBoxTemplate");
+  local portraitText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  portraitText:SetText("Portrait Style")
+  portraitText:SetPoint("LEFT", rcui.childpanel, "TOPLEFT", 10, -50)
+
+  local portraitSelect = CreateFrame("Frame", "RCUI_Portrait", rcui.childpanel, "UIDropDownMenuTemplate")
+  portraitSelect:SetPoint("TOPLEFT", 0, -60)
+  RCUI_PortraitMiddle:SetWidth(50)
+  RCUI_PortraitText:SetText(RCUIDB.portraitStyle)
+  portraitSelect.initialize = function()
+    local selected, info = RCUI_PortraitText:GetText(), wipe(RCUI.info)
+    info.func = function(v) RCUI_PortraitText:SetText(v:GetText())
+      RCUIDB.portraitStyle = v.value
+    end
+    local tbl = {"3D", "2D", "class"}
+    for i=1, #tbl do
+      info.text = tbl[i]
+      info.checked = info.text == selected
+      UIDropDownMenu_AddButton(info)
+      tbl[i] = nil
+    end
+    tbl = nil
+  end
+
+  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", portraitSelect, "InputBoxTemplate");
 	actionBarOffset:SetAutoFocus(false)
-	actionBarOffset:SetPoint("TOPLEFT", 10,-40);
+	actionBarOffset:SetPoint("TOPLEFT", 20,-40);
   actionBarOffset:SetSize(40,20)
 	actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
 	actionBarOffset:SetCursorPosition(0)
@@ -169,8 +194,23 @@ local function rcui_options()
 			RCUIDB.minimapZoneText = false
 		end
   end)
-  
-  local disableAutoAddSpells = CreateFrame("CheckButton", "disableAutoAddSpells",minimapZoneText,"UICheckButtonTemplate")
+
+	local objectivesTitles = CreateFrame("CheckButton", "objectivesTitles",minimapZoneText,"UICheckButtonTemplate")
+	objectivesTitles:SetPoint("CENTER",0,-30)
+	objectivesTitles.text:SetText("Class coloured Quest Tracker")
+	m_fontify(objectivesTitles.text,"white")
+	if RCUIDB.objectivesTitles == "class" then
+		objectivesTitles:SetChecked(true)
+	end
+	objectivesTitles:SetScript("OnClick", function()
+		if objectivesTitles:GetChecked() then
+			RCUIDB.objectivesTitles = "class"
+		else
+			RCUIDB.objectivesTitles = "default"
+		end
+  end)
+
+  local disableAutoAddSpells = CreateFrame("CheckButton", "disableAutoAddSpells",objectivesTitles,"UICheckButtonTemplate")
 	disableAutoAddSpells:SetPoint("CENTER",0,-30)
 	disableAutoAddSpells.text:SetText("Disable Auto Adding of Spells")
 	m_fontify(disableAutoAddSpells.text,"white")
@@ -184,11 +224,11 @@ local function rcui_options()
 			RCUIDB.disableAutoAddSpells = false
 		end
   end)
-  
+
 	--reload button
 
-	local reload = CreateFrame("Button","reload",disableAutoAddSpells,"UIPanelButtonTemplate")
-	reload:SetPoint("CENTER",37,-30)
+	local reload = CreateFrame("Button","reload",rcui.childpanel,"UIPanelButtonTemplate")
+	reload:SetPoint("BOTTOMRIGHT", rcui.childpanel, "BOTTOMRIGHT", -10, 10)
 	reload:SetSize(100,22)
 	reload:SetText("Reload")
 	reload:SetScript("OnClick", function()
