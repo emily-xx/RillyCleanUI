@@ -1,8 +1,5 @@
--- Setting any value here to nil will result in Blizzard defaults, if you want those instead.
-
 local function rcui_defaults()
   -- This table defines the addon's default settings:
-
   local defaults = {
     actionBarOffset = 20,
     disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
@@ -29,7 +26,7 @@ local function rcui_defaults()
     portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
     objectivesTitles = "class", -- Class for class coloured quest titles, or default for default
     objectivesTextOutline = false,
-    minimapZoneText = true, -- True = show zone text, False = hide
+    hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
   }
 
   -- This function copies values from one table into another:
@@ -71,9 +68,7 @@ SetSortBagsRightToLeft(true)
 SetInsertItemsLeftToRight(false)
 
 local function rcui_options()
-
   -- Creation of the options menu
-
   rcui.panel = CreateFrame( "Frame", "rcuiPanel", UIParent)
   rcui.panel.name = "RillyCleanUI";
   InterfaceOptions_AddCategory(rcui.panel);
@@ -93,32 +88,6 @@ local function rcui_options()
     check.tooltipText = label
     check.tooltipRequirement = description
     return check
-  end
-
-  -- TextFactory
-
-  local function TextFactory(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-    arg1:SetFont("Fonts\\FRIZQT__.TTF", arg2,"OUTLINE")
-    arg1:SetText(arg3)
-    arg1:SetPoint(arg4,arg5,arg6,arg7)
-    arg1:SetTextColor(1,1,1,1)
-  end
-
-  -- ButtonFactory
-
-  local function ButtonFactory(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8)
-    local arg1 = CreateFrame("Button",arg1,rcui.childpanel,"UIPanelButtonTemplate")
-    arg1:SetPoint(arg2,arg3,arg4,arg5)
-    arg1:SetSize(arg6,arg7)
-    arg1:SetText(arg8)
-  end
-
-  --- InputBox Factory
-
-  local function InputFactory(arg1,arg2,arg3,arg4,arg5,arg6,arg7)
-    local arg1 = CreateFrame("EditBox", arg1, arg2, "InputBoxTemplate");
-    arg1:SetPoint(arg3,arg2,arg4,arg5);
-    arg1:SetSize(arg6,arg7)
   end
 
   local version = GetAddOnMetadata("RillyCleanUI", "Version")
@@ -174,15 +143,15 @@ local function rcui_options()
   hideHotkeys:SetChecked(RCUIDB.hideHotkeys)
   hideHotkeys:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 0, -16)
 
-  local minimapZoneText = newCheckbox(
-    "Show Minimap Zone Text",
-    "Whether or not to show Zone text at the top of the Minimap.",
+  local hideMinimapZoneText = newCheckbox(
+    "Hide Minimap Zone Text",
+    "Hides the Zone text at the top of the Minimap.",
     function(self, value)
-      RCUIDB.minimapZoneText = value
+      RCUIDB.hideMinimapZoneText = value
     end
   )
-  minimapZoneText:SetChecked(RCUIDB.minimapZoneText)
-  minimapZoneText:SetPoint("TOPLEFT", hideHotkeys, "BOTTOMLEFT", 0, -8)
+  hideMinimapZoneText:SetChecked(RCUIDB.hideMinimapZoneText)
+  hideMinimapZoneText:SetPoint("TOPLEFT", hideHotkeys, "BOTTOMLEFT", 0, -8)
 
   local objectivesTitles = newCheckbox(
     "Class coloured Quest Tracker",
@@ -196,7 +165,7 @@ local function rcui_options()
     end
   )
   objectivesTitles:SetChecked(RCUIDB.objectivesTitles == "class")
-  objectivesTitles:SetPoint("TOPLEFT", minimapZoneText, "BOTTOMLEFT", 0, -8)
+  objectivesTitles:SetPoint("TOPLEFT", hideMinimapZoneText, "BOTTOMLEFT", 0, -8)
 
   local disableAutoAddSpells = newCheckbox(
     "Disable Auto Adding of Spells",

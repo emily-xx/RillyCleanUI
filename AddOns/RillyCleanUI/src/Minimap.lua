@@ -60,7 +60,7 @@ CF:SetScript("OnEvent", function(self, event)
 	MinimapZoomOut:Hide()
 	MiniMapWorldMapButton:Hide()
 
-	if (RCUIDB.minimapZoneText) then
+	if not RCUIDB.hideMinimapZoneText then
 		MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
 		setFontOutline(MinimapZoneText)
 	else
