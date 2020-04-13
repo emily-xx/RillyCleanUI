@@ -82,6 +82,11 @@ local function rcui_options()
     check:SetScript("OnClick", function(self)
       local tick = self:GetChecked()
       onClick(self, tick and true or false)
+      if tick then
+        PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
+      else
+        PlaySound(857) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF
+      end
     end)
     check.label = _G[check:GetName() .. "Text"]
     check.label:SetText(label)
