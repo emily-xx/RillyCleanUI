@@ -4,16 +4,6 @@
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
-	for i,v in pairs({
-		MinimapBorder,
-		MiniMapMailBorder,
-		QueueStatusMinimapButtonBorder,
-		select(1, TimeManagerClockButton:GetRegions()),
-          		}) do
-        v:SetVertexColor(0, 0, 0)
-		select(2, TimeManagerClockButton:GetRegions()):SetVertexColor(1,1,1)
-	end
-
 	--------------------------------------------------------------------
 	-- MINIMAP BORDER
 	--------------------------------------------------------------------
@@ -80,7 +70,11 @@ CF:SetScript("OnEvent", function(self, event)
 	MiniMapTracking:Hide()
 	MiniMapTracking.Show = kill
 	MiniMapTracking:UnregisterAllEvents()
+
+	-- Hide Calendar
 	GameTimeFrame:Hide()
+
+	-- Mousewheel Zoom
 	Minimap:EnableMouseWheel(true)
 	Minimap:SetScript("OnMouseWheel", function(self, z)
 		local c = Minimap:GetZoom()
@@ -90,6 +84,8 @@ CF:SetScript("OnEvent", function(self, event)
 			Minimap:SetZoom(c - 1)
 		end
 	end)
+
+	-- Mouse shortcuts
 	Minimap:SetScript("OnMouseUp", function(self, btn)
 		if btn == "RightButton" then
 			_G.GameTimeFrame:Click()
