@@ -70,12 +70,12 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       frame.name:SetTextColor(classR, classG, classB, 1)
     end
 
-    if RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength then
+    if RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0 then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
       if not RCUIDB.nameplateHideServerNames and realm then
         name = name.." - "..realm
-      elseif RCUIDB.nameplateNameLength then
+      elseif RCUIDB.nameplateNameLength > 0 then
         name = abbrev(name, RCUIDB.nameplateNameLength)
       end
 
