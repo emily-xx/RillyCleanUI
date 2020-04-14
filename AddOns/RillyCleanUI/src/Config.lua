@@ -148,7 +148,7 @@ local function rcui_options()
   )
 
   local damageFont = newCheckbox(
-    "Use Custom Damage Font",
+    "Use Custom Damage Font (Requires Game Restart)",
     "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
     RCUIDB.damageFont,
     function(self, value)
