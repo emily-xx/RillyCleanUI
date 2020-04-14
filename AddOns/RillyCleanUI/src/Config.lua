@@ -207,7 +207,7 @@ local function rcui_options()
 
   local objectivesTextOutline = newCheckbox(
     "Outline Quest Track Text",
-    "Puts an outline around the font in the Objectives Tracker.",
+    "Puts an outline around the text in the Objectives Tracker.",
     RCUIDB.objectivesTextOutline,
     function(self, value)
       RCUIDB.objectivesTextOutline = value
