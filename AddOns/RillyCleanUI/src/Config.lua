@@ -2,31 +2,29 @@ local function rcui_defaults()
   -- This table defines the addon's default settings:
   local defaults = {
     actionBarOffset = 20,
-    disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
+    disableAutoAddSpells = true, -- DONE Whether or not to disable the automatic addition of spells to bars when changing talents and etc
     castbarOffset = 210,
-    hideHotkeys = true,
+    hideHotkeys = true, -- DONE
 
-    pulltimer = true,
+    lootSpecDisplay = true, -- DONE Display loot spec under the player frame
 
-    lootSpecDisplay = true, -- Display loot spec under the player frame
-
-    damageFont = true, -- Change damage font to something cooler
+    damageFont = true, -- DONE Change damage font to something cooler
 
     -- Nameplate Settings
     modNamePlates = true, -- Set to false to ignore all nameplate customization
     nameplateNameFontSize = 7,
     nameplateHideServerNames = true,
-    nameplateNameLength = 20, -- Set to nil for no abbreviation
-    nameplateFriendlyNamesClassColor = true,
+    nameplateNameLength = 20, -- DONE Set to nil for no abbreviation
+    nameplateFriendlyNamesClassColor = true, -- DONE
     namePlateWidth = 120,
     namePlateScale = 1.3,
-    nameplateHideCastText = false,
+    nameplateHideCastText = false, -- DONE
     nameplateCastFontSize = 6,
 
-    portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
-    objectivesTitles = "class", -- Class for class coloured quest titles, or default for default
-    objectivesTextOutline = false,
-    hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
+    portraitStyle = "3D", -- DONE 3D, 2D, or class (for class icons)
+    objectivesTitles = "class", -- DONE Class for class coloured quest titles, or default for default
+    objectivesTextOutline = false, -- DONE
+    hideMinimapZoneText = false, -- DONE True = hide zone text, False = show zone text
   }
 
   -- This function copies values from one table into another:
@@ -77,11 +75,11 @@ local function rcui_options()
   rcui.childpanel:SetPoint("BOTTOMRIGHT",rcuiPanel,0,0)
   InterfaceOptions_AddCategory(rcui.childpanel)
 
-  local function newCheckbox(label, description, onClick)
+  local function newCheckbox(label, description, initialValue, onChange, relativeEl)
     local check = CreateFrame("CheckButton", "RCUICheck" .. label, rcui.childpanel, "InterfaceOptionsCheckButtonTemplate")
     check:SetScript("OnClick", function(self)
       local tick = self:GetChecked()
-      onClick(self, tick and true or false)
+      onChange(self, tick and true or false)
       if tick then
         PlaySound(856) -- SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON
       else
@@ -92,6 +90,8 @@ local function rcui_options()
     check.label:SetText(label)
     check.tooltipText = label
     check.tooltipRequirement = description
+    check:SetChecked(initialValue)
+    check:SetPoint("TOPLEFT", relativeEl, "BOTTOMLEFT", 0, -8)
     return check
   end
 
@@ -135,65 +135,143 @@ local function rcui_options()
       RCUIDB.portraitStyle = value
     end
   )
-  portraitSelect:SetPoint("TOPLEFT", portraitText, "BOTTOMLEFT", -16, -8)
+  portraitSelect:SetPoint("TOPLEFT", portraitText, "BOTTOMLEFT", 0, -8)
 
-  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", portraitSelect, "InputBoxTemplate");
-  actionBarOffset:SetAutoFocus(false)
-  actionBarOffset:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 26, -8);
-  actionBarOffset:SetSize(40,20)
-  actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
-  actionBarOffset:SetCursorPosition(0)
-  function setActionBarOffset()
-    actionBarOffset:ClearFocus()
-    RCUIDB.actionBarOffset = actionBarOffset:GetNumber()
-  end
-  actionBarOffset:SetScript("OnEditFocusLost", setActionBarOffset)
-  actionBarOffset:SetScript("OnEnterPressed", setActionBarOffset)
+  local lootSpecDisplay = newCheckbox(
+    "Display Loot Spec",
+    "Display loot spec and icon under your player frame.",
+    RCUIDB.lootSpecDisplay,
+    function(self, value)
+      RCUIDB.lootSpecDisplay = value
+    end,
+    portraitSelect
+  )
+
+  local damageFont = newCheckbox(
+    "Use Custom Damage Font",
+    "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
+    RCUIDB.damageFont,
+    function(self, value)
+      RCUIDB.damageFont = value
+    end,
+    lootSpecDisplay
+  )
+
+  -- local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", portraitSelect, "InputBoxTemplate");
+  -- actionBarOffset:SetAutoFocus(false)
+  -- actionBarOffset:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 26, -8);
+  -- actionBarOffset:SetSize(40,20)
+  -- actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
+  -- actionBarOffset:SetCursorPosition(0)
+  -- function setActionBarOffset()
+  --   actionBarOffset:ClearFocus()
+  --   RCUIDB.actionBarOffset = actionBarOffset:GetNumber()
+  -- end
+  -- actionBarOffset:SetScript("OnEditFocusLost", setActionBarOffset)
+  -- actionBarOffset:SetScript("OnEnterPressed", setActionBarOffset)
 
 
   local hideHotkeys = newCheckbox(
     "Hide Hotkeys on Action Bars",
-    "Hide Hotkeys on Action Bars",
+    "Hides keybinding text on your action bar buttons.",
+    RCUIDB.hideHotkeys,
     function(self, value)
       RCUIDB.hideHotkeys = value
-    end
+    end,
+    damageFont
   )
-  hideHotkeys:SetChecked(RCUIDB.hideHotkeys)
-  hideHotkeys:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -8)
 
   local hideMinimapZoneText = newCheckbox(
     "Hide Minimap Zone Text",
     "Hides the Zone text at the top of the Minimap.",
+    RCUIDB.hideMinimapZoneText,
     function(self, value)
       RCUIDB.hideMinimapZoneText = value
-    end
+    end,
+    hideHotkeys
   )
-  hideMinimapZoneText:SetChecked(RCUIDB.hideMinimapZoneText)
-  hideMinimapZoneText:SetPoint("TOPLEFT", hideHotkeys, "BOTTOMLEFT", 0, -8)
 
   local objectivesTitles = newCheckbox(
-    "Class coloured Quest Tracker",
+    "Class Coloured Quest Tracker",
     "Colours quest titles with the colour of your character's class in the tracker under the minimap.",
+    RCUIDB.objectivesTitles == "class",
     function(self, value)
       if (value == true) then
         RCUIDB.objectivesTitles = "class"
       else
         RCUIDB.objectivesTitles = "default"
       end
-    end
+    end,
+    hideMinimapZoneText
   )
-  objectivesTitles:SetChecked(RCUIDB.objectivesTitles == "class")
-  objectivesTitles:SetPoint("TOPLEFT", hideMinimapZoneText, "BOTTOMLEFT", 0, -8)
+
+  local objectivesTextOutline = newCheckbox(
+    "Outline Quest Track Text",
+    "Puts an outline around the font in the Objectives Tracker.",
+    RCUIDB.objectivesTextOutline,
+    function(self, value)
+      RCUIDB.objectivesTextOutline = value
+    end,
+    objectivesTitles
+  )
 
   local disableAutoAddSpells = newCheckbox(
     "Disable Auto Adding of Spells",
     "Disables automatic adding of spells to action bars when learning new spells.",
+    RCUIDB.disableAutoAddSpells,
     function(self, value)
       RCUIDB.disableAutoAddSpells = value
-    end
+    end,
+    objectivesTextOutline
   )
-  disableAutoAddSpells:SetChecked(RCUIDB.disableAutoAddSpells)
-  disableAutoAddSpells:SetPoint("TOPLEFT", objectivesTitles, "BOTTOMLEFT", 0, -8)
+
+  local nameplateText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  nameplateText:SetText("Nameplates")
+  nameplateText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
+
+  local nameplateNameLength = newCheckbox(
+    "Abbreviate Unit Names",
+    "Abbreviate long NPC names on nameplates.",
+    RCUIDB.nameplateNameLength ~= nil,
+    function(self, value)
+      if (value) then
+        RCUIDB.nameplateNameLength = 20
+      else
+        RCUIDB.nameplateNameLength = nil
+      end
+    end,
+    nameplateText
+  )
+
+  local nameplateHideServerNames = newCheckbox(
+    "Hide Server Names (Must rezone to see change).",
+    "Hide server names for players from different servers to reduce clutter.",
+    RCUIDB.nameplateHideServerNames,
+    function(self, value)
+      RCUIDB.nameplateHideServerNames = value
+    end,
+    nameplateNameLength
+  )
+
+  local nameplateFriendlyNamesClassColor = newCheckbox(
+    "Class Colour Friendly Names",
+    "Colours friendly players' names on their nameplates.",
+    RCUIDB.nameplateFriendlyNamesClassColor,
+    function(self, value)
+      RCUIDB.nameplateFriendlyNamesClassColor = value
+    end,
+    nameplateHideServerNames
+  )
+
+  local nameplateHideCastText = newCheckbox(
+    "Hide Cast Text",
+    "Hide cast text from nameplate castbars.",
+    RCUIDB.nameplateHideCastText,
+    function(self, value)
+      RCUIDB.nameplateHideCastText = value
+    end,
+    nameplateFriendlyNamesClassColor
+  )
 
   --reload button
 
