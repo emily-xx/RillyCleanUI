@@ -232,12 +232,12 @@ local function rcui_options()
   local nameplateNameLength = newCheckbox(
     "Abbreviate Unit Names",
     "Abbreviate long NPC names on nameplates.",
-    RCUIDB.nameplateNameLength ~= nil,
+    RCUIDB.nameplateNameLength ~= false,
     function(self, value)
-      if (value) then
+      if value == true then
         RCUIDB.nameplateNameLength = 20
       else
-        RCUIDB.nameplateNameLength = nil
+        RCUIDB.nameplateNameLength = false
       end
     end,
     nameplateText
