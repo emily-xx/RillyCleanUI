@@ -22,51 +22,47 @@ CastBars:RegisterEvent("ADDON_LOADED")
 CastBars:SetScript(
 	"OnEvent",
 	function(self, event, addon)
-		if addon == "RillyCleanUI" or event == "PLAYER_ENTERING_WORLD" then
-			if not InCombatLockdown() then
-				-- Player Castbar
-        if not RCUIDB or RCUIDB.castbarOffset then
-          CastingBarFrame:SetMovable(true)
-  				CastingBarFrame:ClearAllPoints()
-  				CastingBarFrame:SetScale(1)
-  				CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCUIDB.castbarOffset)
-  				CastingBarFrame:SetUserPlaced(true)
-  				CastingBarFrame:SetMovable(false)
-        end
+		if addon == "RillyCleanUI" then
+      -- Player Castbar
+      if not RCUIDB or RCUIDB.castbarOffset then
+        CastingBarFrame:SetMovable(true)
+        CastingBarFrame:ClearAllPoints()
+        CastingBarFrame:SetScale(1)
+        CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCUIDB.castbarOffset)
+        CastingBarFrame:SetUserPlaced(true)
+        CastingBarFrame:SetMovable(false)
+      end
 
-				CastingBarFrame.Icon:Show()
-				CastingBarFrame.Icon:ClearAllPoints()
-				CastingBarFrame.Icon:SetSize(20, 20)
-				CastingBarFrame.Icon:SetPoint("RIGHT", CastingBarFrame, "LEFT", -8, 0)
-				CastingBarFrame.Text:ClearAllPoints()
-				CastingBarFrame.Text:SetPoint("CENTER", 0, 0)
-				CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() + 4)
-				CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
-				CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
-				CastingBarFrame.Border:SetPoint("TOP", 0, 26)
-				CastingBarFrame.Flash:SetPoint("TOP", 0, 26)
-				CastingBarFrame.BorderShield:SetPoint("TOP", 0, 26)
+      CastingBarFrame.Icon:Show()
+      CastingBarFrame.Icon:ClearAllPoints()
+      CastingBarFrame.Icon:SetSize(20, 20)
+      CastingBarFrame.Icon:SetPoint("RIGHT", CastingBarFrame, "LEFT", -8, 0)
+      CastingBarFrame.Text:ClearAllPoints()
+      CastingBarFrame.Text:SetPoint("CENTER", 0, 0)
+      CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() + 4)
+      CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
+      CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
+      CastingBarFrame.Border:SetPoint("TOP", 0, 26)
+      CastingBarFrame.Flash:SetPoint("TOP", 0, 26)
+      CastingBarFrame.BorderShield:SetPoint("TOP", 0, 26)
 
-				-- if SUIDB.CBPPlayerT == true then
-				-- Player Timer
-				CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
-				setDefaultFont(CastingBarFrame.timer, 14)
-				CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, 0)
-				CastingBarFrame.update = 0.1
-				-- end
+      -- Player Timer
+      CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
+      setDefaultFont(CastingBarFrame.timer, 14)
+      CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, 0)
+      CastingBarFrame.update = 0.1
+      -- end
 
-				-- Target Castbar
-				TargetFrameSpellBar.Icon:SetPoint("RIGHT", TargetFrameSpellBar, "LEFT", -5, 0)
+      -- Target Castbar
+      TargetFrameSpellBar.Icon:SetPoint("RIGHT", TargetFrameSpellBar, "LEFT", -5, 0)
 
-				-- Target Timer
-				TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
-				setDefaultFont(TargetFrameSpellBar.timer, 11)
-				TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
-				TargetFrameSpellBar.update = 0.1
+      -- Target Timer
+      TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
+      setDefaultFont(TargetFrameSpellBar.timer, 11)
+      TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
+      TargetFrameSpellBar.update = 0.1
 
-				self:UnregisterEvent("ADDON_LOADED")
-				self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			end
+      self:UnregisterEvent("ADDON_LOADED")
 		end
 
     -----------------------------
