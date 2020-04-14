@@ -7,7 +7,7 @@ end
 RillyNiceDamage:RegisterEvent("ADDON_LOADED")
 
 RillyNiceDamage:SetScript("OnEvent", function()
-  if (RCUIDB.damageFont) then
+  if (not RCUIDB or RCUIDB.damageFont) then
     RillyNiceDamage:ApplySystemFonts()
   end
 end)
