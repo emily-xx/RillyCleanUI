@@ -28,7 +28,7 @@ CastBars:SetScript(
         CastingBarFrame:SetMovable(true)
         CastingBarFrame:ClearAllPoints()
         CastingBarFrame:SetScale(1)
-        CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, RCUIDB.castbarOffset)
+        CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, not RCUIDB ? RCUIDBDefaults.castbarOffset : RCUIDB.castbarOffset)
         CastingBarFrame:SetUserPlaced(true)
         CastingBarFrame:SetMovable(false)
       end

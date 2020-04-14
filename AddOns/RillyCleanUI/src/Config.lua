@@ -1,32 +1,32 @@
+-- This table defines the addon's default settings:
+RCUIDBDefaults = {
+  actionBarOffset = 20,
+  disableAutoAddSpells = true, -- DONE Whether or not to disable the automatic addition of spells to bars when changing talents and etc
+  castbarOffset = 210,
+  hideHotkeys = true, -- DONE
+
+  lootSpecDisplay = true, -- DONE Display loot spec under the player frame
+
+  damageFont = true, -- DONE Change damage font to something cooler
+
+  -- Nameplate Settings
+  modNamePlates = true, -- Set to false to ignore all nameplate customization
+  nameplateNameFontSize = 7,
+  nameplateHideServerNames = true,
+  nameplateNameLength = 20, -- DONE Set to nil for no abbreviation
+  nameplateFriendlyNamesClassColor = true, -- DONE
+  namePlateWidth = 120,
+  namePlateScale = 1.3,
+  nameplateHideCastText = false, -- DONE
+  nameplateCastFontSize = 6,
+
+  portraitStyle = "3D", -- DONE 3D, 2D, or class (for class icons)
+  objectivesTitles = "class", -- DONE Class for class coloured quest titles, or default for default
+  objectivesTextOutline = false, -- DONE
+  hideMinimapZoneText = false, -- DONE True = hide zone text, False = show zone text
+}
+
 local function rcui_defaults()
-  -- This table defines the addon's default settings:
-  local defaults = {
-    actionBarOffset = 20,
-    disableAutoAddSpells = true, -- DONE Whether or not to disable the automatic addition of spells to bars when changing talents and etc
-    castbarOffset = 210,
-    hideHotkeys = true, -- DONE
-
-    lootSpecDisplay = true, -- DONE Display loot spec under the player frame
-
-    damageFont = true, -- DONE Change damage font to something cooler
-
-    -- Nameplate Settings
-    modNamePlates = true, -- Set to false to ignore all nameplate customization
-    nameplateNameFontSize = 7,
-    nameplateHideServerNames = true,
-    nameplateNameLength = 20, -- DONE Set to nil for no abbreviation
-    nameplateFriendlyNamesClassColor = true, -- DONE
-    namePlateWidth = 120,
-    namePlateScale = 1.3,
-    nameplateHideCastText = false, -- DONE
-    nameplateCastFontSize = 6,
-
-    portraitStyle = "3D", -- DONE 3D, 2D, or class (for class icons)
-    objectivesTitles = "class", -- DONE Class for class coloured quest titles, or default for default
-    objectivesTextOutline = false, -- DONE
-    hideMinimapZoneText = false, -- DONE True = hide zone text, False = show zone text
-  }
-
   -- This function copies values from one table into another:
   local function copyDefaults(src, dst)
     -- If no source (defaults) is specified, return an empty table:
@@ -52,7 +52,7 @@ local function rcui_defaults()
   -- Copy the values from the defaults table into the saved variables table
   -- if it exists, and assign the result to the saved variable:
 
-  RCUIDB = copyDefaults(defaults, RCUIDB)
+  RCUIDB = copyDefaults(RCUIDBDefaults, RCUIDB)
 
   rcui ={}
 end
