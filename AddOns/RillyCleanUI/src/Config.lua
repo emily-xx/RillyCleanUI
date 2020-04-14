@@ -95,6 +95,28 @@ local function rcui_options()
     return check
   end
 
+  local function newDropdown(label, options, initialValue, onChange)
+    local dropdown = CreateFrame("Frame", "RCUIDropdown" .. label, rcui.childpanel, "UIDropdownMenuTemplate")
+    _G[dropdown:GetName() .. "Middle"]:SetWidth(50)
+    local displayText = _G[dropdown:GetName() .. "Text"]
+    displayText:SetText(options[initialValue])
+
+    dropdown.initialize = function()
+      local selected, info = displayText:GetText(), {}
+      info.func = function(v)
+        displayText:SetText(v:GetText())
+        onChange(v.value)
+      end
+      for value, label in pairs(options) do
+        info.text = label
+        info.value = value
+        info.checked = info.value == initialValue
+        UIDropDownMenu_AddButton(info)
+      end
+    end
+    return dropdown
+  end
+
   local version = GetAddOnMetadata("RillyCleanUI", "Version")
 
   local rcuiTitle = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -105,28 +127,19 @@ local function rcui_options()
   portraitText:SetText("Portrait Style")
   portraitText:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
 
-  local portraitSelect = CreateFrame("Frame", "RCUI_Portrait", rcui.childpanel, "UIDropDownMenuTemplate")
+  local portraitSelect = newDropdown(
+    "Portrait Style",
+    {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class"},
+    RCUIDB.portraitStyle,
+    function(value)
+      RCUIDB.portraitStyle = value
+    end
+  )
   portraitSelect:SetPoint("TOPLEFT", portraitText, "BOTTOMLEFT", -16, -8)
-  RCUI_PortraitMiddle:SetWidth(50)
-  local portraitOptions = {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class"}
-  RCUI_PortraitText:SetText(portraitOptions[RCUIDB.portraitStyle])
-  portraitSelect.initialize = function()
-    local selected, info = RCUI_PortraitText:GetText(), {}
-    info.func = function(v)
-      RCUI_PortraitText:SetText(v:GetText())
-      RCUIDB.portraitStyle = v.value
-    end
-    for value,label in pairs(portraitOptions) do
-      info.text = label
-      info.value = value
-      info.checked = info.value == RCUIDB.portraitStyle
-      UIDropDownMenu_AddButton(info)
-    end
-  end
 
   local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", portraitSelect, "InputBoxTemplate");
   actionBarOffset:SetAutoFocus(false)
-  actionBarOffset:SetPoint("TOPLEFT", 20,-40);
+  actionBarOffset:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 26, -8);
   actionBarOffset:SetSize(40,20)
   actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
   actionBarOffset:SetCursorPosition(0)
@@ -146,7 +159,7 @@ local function rcui_options()
     end
   )
   hideHotkeys:SetChecked(RCUIDB.hideHotkeys)
-  hideHotkeys:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 0, -16)
+  hideHotkeys:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -8)
 
   local hideMinimapZoneText = newCheckbox(
     "Hide Minimap Zone Text",
