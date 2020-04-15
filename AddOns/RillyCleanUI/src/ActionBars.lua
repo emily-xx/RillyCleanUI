@@ -31,7 +31,8 @@ local function init()
       ActionBarDownButton,
       MainMenuBarArtFrame.PageNumber,
       MainMenuBarArtFrame.LeftEndCap,
-      MainMenuBarArtFrame.RightEndCap
+      MainMenuBarArtFrame.RightEndCap,
+      StanceBarFrame
     }
 
     for _, hiddenElement in pairs(hiddenElements) do
@@ -62,7 +63,7 @@ local function init()
       ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
       ExtraActionButton1:SetFrameStrata("MEDIUM")
       ExtraActionButton1:SetFrameLevel(5)
-      
+
       ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
       ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
       ZoneAbilityFrame.SpellButton:SetFrameLevel(5)
