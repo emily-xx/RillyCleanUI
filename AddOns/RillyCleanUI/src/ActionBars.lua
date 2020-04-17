@@ -31,8 +31,7 @@ local function init()
       ActionBarDownButton,
       MainMenuBarArtFrame.PageNumber,
       MainMenuBarArtFrame.LeftEndCap,
-      MainMenuBarArtFrame.RightEndCap,
-      StanceBarFrame
+      MainMenuBarArtFrame.RightEndCap
     }
 
     for _, hiddenElement in pairs(hiddenElements) do
@@ -40,9 +39,7 @@ local function init()
     end
 
     -- Hide stance bar
-    hooksecurefunc(StanceBarFrame, "Show", function(self)
-      self:Hide()
-    end)
+    RegisterStateDriver(StanceBarFrame, "visibility", "hide")
 
     AlertFrame:ClearAllPoints()
     AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
