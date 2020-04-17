@@ -17,9 +17,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	}
 
 	for _, altPowerBar in pairs(altPowerBars) do
-		hooksecurefunc(altPowerBar, "Show", function(self)
-			self:Hide()
-		end)
+		RegisterStateDriver(altPowerBar, "visibility", "hide")
 	end
 
 	function cleanPlayerFrame()
@@ -28,10 +26,6 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		PlayerStatusGlow:Hide()
 		PlayerPrestigeBadge:SetAlpha(0)
 		PlayerPrestigePortrait:SetAlpha(0)
-
-		for _, altPowerBar in pairs(altPowerBars) do
-			altPowerBar:Hide()
-		end
 
 		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
 		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
