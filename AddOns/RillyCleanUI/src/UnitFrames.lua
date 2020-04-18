@@ -13,10 +13,12 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		MonkStaggerBar,
 		RuneFrame,
 		ComboPointPlayerFrame,
-		WarlockPowerFrame
+		WarlockPowerFrame,
+		TotemFrame
 	}
 
 	for _, altPowerBar in pairs(altPowerBars) do
+		altPowerBar:SetAlpha(0)
 		RegisterStateDriver(altPowerBar, "visibility", "hide")
 	end
 

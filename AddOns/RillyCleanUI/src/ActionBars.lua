@@ -39,6 +39,7 @@ local function init()
     end
 
     -- Hide stance bar
+    StanceBarFrame:SetAlpha(0)
     RegisterStateDriver(StanceBarFrame, "visibility", "hide")
 
     AlertFrame:ClearAllPoints()
@@ -355,15 +356,6 @@ local function init()
     if not bu or (bu and bu.rabs_styled) then
       return
     end
-    --local region = select(1, bu:GetRegions())
-    local name = bu:GetName()
-    -- local bo = bu:CreateTexture(name .. "Border", "BACKGROUND", nil, -7)
-    --
-    -- bo:SetTexCoord(0, 1, 0, 1)
-    -- bo:SetDrawLayer("BACKGROUND", -7)
-    -- bo:SetVertexColor(0.4, 0.35, 0.35)
-    -- bo:ClearAllPoints()
-    -- bo:SetAllPoints(bu)
 
     --shadows+background
     if not bu.bg then
@@ -461,6 +453,7 @@ local function init()
     styleActionButton(_G["OverrideActionBarButton" .. i])
   end
   --style leave button
+  styleLeaveButton(OverrideActionBarLeaveFrameLeaveButton)
   styleLeaveButton(MainMenuBarVehicleLeaveButton)
   styleLeaveButton(rABS_LeaveVehicleButton)
   --petbar buttons
