@@ -453,7 +453,6 @@ local function init()
     styleActionButton(_G["OverrideActionBarButton" .. i])
   end
   --style leave button
-  styleLeaveButton(OverrideActionBarLeaveFrameLeaveButton)
   styleLeaveButton(MainMenuBarVehicleLeaveButton)
   styleLeaveButton(rABS_LeaveVehicleButton)
   --petbar buttons
