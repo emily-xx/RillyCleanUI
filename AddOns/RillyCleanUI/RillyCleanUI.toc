@@ -28,6 +28,7 @@ src\Nameplates.lua
 src\Tooltips.lua
 src\FriendsList.lua
 src\EasyDelete.lua
+src\LFGTimer.lua
 src\SafeQueue.lua
 src\DampeningDisplay.lua
 src\SpellNotifications.lua
