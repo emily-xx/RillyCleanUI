@@ -27,7 +27,7 @@ function init()
   timerBar.Spark:SetTexture(130877) -- "Interface\\CastingBar\\UI-CastingBar-Spark"
   timerBar.Spark:SetSize(32, 32)
   timerBar.Spark:SetBlendMode("ADD")
-  timerBar.Spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 0)
+  timerBar.Spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 4)
 
   timerBar.Border = timerBar:CreateTexture(nil, "ARTWORK")
   timerBar.Border:SetTexture(130874) -- "Interface\\CastingBar\\UI-CastingBar-Border"
