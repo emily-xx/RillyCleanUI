@@ -40,20 +40,21 @@ CastBars:SetScript(
       CastingBarFrame.Icon:Show()
       CastingBarFrame.Icon:ClearAllPoints()
       CastingBarFrame.Icon:SetSize(20, 20)
-      CastingBarFrame.Icon:SetPoint("RIGHT", CastingBarFrame, "LEFT", -8, 0)
+      CastingBarFrame.Icon:SetPoint("RIGHT", CastingBarFrame, "LEFT", -8, -1)
       CastingBarFrame.Text:ClearAllPoints()
       CastingBarFrame.Text:SetPoint("CENTER", 0, 0)
-      CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() + 4)
-      CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
-      CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
+      -- CastingBarFrame.Border:SetWidth(CastingBarFrame.Border:GetWidth() + 4)
+      -- CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
+      -- CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
       CastingBarFrame.Border:SetPoint("TOP", 0, 26)
       CastingBarFrame.Flash:SetPoint("TOP", 0, 26)
       CastingBarFrame.BorderShield:SetPoint("TOP", 0, 26)
+      CastingBarFrame.Spark:SetPoint("LEFT", CastingBarFrame:GetStatusBarTexture(), "RIGHT", -15, 1)
 
       -- Player Timer
       CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
       setDefaultFont(CastingBarFrame.timer, 14)
-      CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, 0)
+      CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, -1)
       CastingBarFrame.update = 0.1
       -- end
 
