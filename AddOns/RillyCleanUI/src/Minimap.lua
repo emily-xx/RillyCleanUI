@@ -1,6 +1,16 @@
 -------------
 -- MINIMAP --
 -------------
+function handleMinimapZoneText()
+	if not RCUIDB.hideMinimapZoneText then
+		MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
+		setFontOutline(MinimapZoneText)
+		MinimapZoneText:Show()
+	else
+		MinimapZoneText:Hide()
+	end
+end
+
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
@@ -60,12 +70,8 @@ CF:SetScript("OnEvent", function(self, event)
 	MinimapZoomOut:Hide()
 	MiniMapWorldMapButton:Hide()
 
-	if not RCUIDB.hideMinimapZoneText then
-		MinimapZoneText:SetPoint("CENTER", Minimap, 0, 80)
-		setFontOutline(MinimapZoneText)
-	else
-		MinimapZoneText:Hide()
-	end
+	-- Hide/unhide Minimap zone text
+	handleMinimapZoneText()
 
 	MiniMapTracking:Hide()
 	MiniMapTracking.Show = kill

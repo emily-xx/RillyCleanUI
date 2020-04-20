@@ -8,7 +8,7 @@ CF:SetScript("OnEvent", function(self, event)
 	    self:ClearAllPoints()
 	    self:SetPoint(unpack({"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -200, 220}))
 		else
-			self:SetOwner(parent, "ANCHOR_CURSOR")
+			self:SetOwner(parent, RCUIDB.tooltipAnchor)
 		end
 	end)
 

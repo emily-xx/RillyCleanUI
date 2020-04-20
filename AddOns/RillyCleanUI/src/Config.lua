@@ -9,6 +9,8 @@ RCUIDBDefaults = {
 
   damageFont = true, -- DONE Change damage font to something cooler
 
+  tooltipAnchor = "ANCHOR_CURSOR_LEFT",
+
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
   nameplateNameFontSize = 7,
@@ -95,9 +97,13 @@ local function rcui_options()
     return check
   end
 
-  local function newDropdown(label, options, initialValue, onChange)
+  local function newDropdown(label, options, initialValue, width, onChange)
+    local dropdownText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    dropdownText:SetText(label)
+
     local dropdown = CreateFrame("Frame", "RCUIDropdown" .. label, rcui.childpanel, "UIDropdownMenuTemplate")
-    _G[dropdown:GetName() .. "Middle"]:SetWidth(50)
+    _G[dropdown:GetName() .. "Middle"]:SetWidth(width)
+    dropdown:SetPoint("TOPLEFT", dropdownText, "BOTTOMLEFT", 0, -8)
     local displayText = _G[dropdown:GetName() .. "Text"]
     displayText:SetText(options[initialValue])
 
@@ -110,11 +116,11 @@ local function rcui_options()
       for value, label in pairs(options) do
         info.text = label
         info.value = value
-        info.checked = info.value == initialValue
+        info.checked = info.text == selected
         UIDropDownMenu_AddButton(info)
       end
     end
-    return dropdown
+    return dropdownText, dropdown
   end
 
   local version = GetAddOnMetadata("RillyCleanUI", "Version")
@@ -123,19 +129,27 @@ local function rcui_options()
   rcuiTitle:SetPoint("TOPLEFT", 16, -16)
   rcuiTitle:SetText("RillyCleanUI ("..version..")")
 
-  local portraitText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  portraitText:SetText("Portrait Style")
-  portraitText:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
-
-  local portraitSelect = newDropdown(
+  local portraitSelect, portraitDropdown = newDropdown(
     "Portrait Style",
     {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class"},
     RCUIDB.portraitStyle,
+    50,
     function(value)
       RCUIDB.portraitStyle = value
     end
   )
-  portraitSelect:SetPoint("TOPLEFT", portraitText, "BOTTOMLEFT", 0, -8)
+  portraitSelect:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
+
+  local tooltipAnchor = newDropdown(
+    "Tooltip Cursor Anchor",
+    {["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left"},
+    RCUIDB.tooltipAnchor,
+    100,
+    function(value)
+      RCUIDB.tooltipAnchor = value
+    end
+  )
+  tooltipAnchor:SetPoint("LEFT", portraitSelect, "RIGHT", 200, 0)
 
   local lootSpecDisplay = newCheckbox(
     "Display Loot Spec",
@@ -144,7 +158,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.lootSpecDisplay = value
     end,
-    portraitSelect
+    portraitDropdown
   )
 
   local damageFont = newCheckbox(
@@ -187,6 +201,7 @@ local function rcui_options()
     RCUIDB.hideMinimapZoneText,
     function(self, value)
       RCUIDB.hideMinimapZoneText = value
+      handleMinimapZoneText()
     end,
     hideHotkeys
   )
