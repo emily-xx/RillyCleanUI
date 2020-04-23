@@ -11,29 +11,27 @@ function handleMinimapZoneText()
 	end
 end
 
-local CF=CreateFrame("Frame")
-CF:RegisterEvent("PLAYER_LOGIN")
-CF:SetScript("OnEvent", function(self, event)
+function init(self, event)
 	--------------------------------------------------------------------
 	-- MINIMAP BORDER
 	--------------------------------------------------------------------
-	local Panel = CreateFrame("Frame", mapborder, Minimap)
-	Panel:SetFrameLevel(0)
-	Panel:SetFrameStrata("background")
-	Panel:SetHeight(142)
-	Panel:SetWidth(142)
-	Panel:SetPoint("center",0,0)
-	Panel:SetScale(1)
+	local RillyCleanMapBorder = CreateFrame("Frame", mapborder, Minimap)
+	RillyCleanMapBorder:SetFrameLevel(0)
+	RillyCleanMapBorder:SetFrameStrata("background")
+	RillyCleanMapBorder:SetHeight(142)
+	RillyCleanMapBorder:SetWidth(142)
+	RillyCleanMapBorder:SetPoint("center",0,0)
+	RillyCleanMapBorder:SetScale(1)
 
-	Panel:SetBackdrop( {
+	RillyCleanMapBorder:SetBackdrop( {
 		bgFile = SQUARE_TEXTURE,
 		edgeFile = SQUARE_TEXTURE,
 		tile = false, tileSize = 0, edgeSize = 1,
 		insets = { left = -1, right = -1, top = -1, bottom = -1 }
 	})
-	Panel:SetBackdropColor(0,0,0,1)
-	Panel:SetBackdropBorderColor(0,0,0,1)
-	Panel:Show()
+	RillyCleanMapBorder:SetBackdropColor(0,0,0,1)
+	RillyCleanMapBorder:SetBackdropBorderColor(0,0,0,1)
+	RillyCleanMapBorder:Show()
 
 	-- Square Minimap
 	Minimap:SetMaskTexture(SQUARE_TEXTURE)
@@ -60,7 +58,72 @@ CF:SetScript("OnEvent", function(self, event)
 
 	-- Clock Positioning
 	self.ClearAllPoints(TimeManagerClockButton)
-	self.SetPoint(TimeManagerClockButton, "TOP", Panel, "BOTTOM", 0, 3)
+	self.SetPoint(TimeManagerClockButton, "TOP", RillyCleanMapBorder, "BOTTOM", 0, 3)
+
+	---------------------------
+	-- Artifact progress bar --
+	---------------------------
+	if (UnitLevel("player") >= 110) then
+		local BD = {
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+			tile = true,
+			tileSize = 32,
+			insets = {left = 0, right = 0, top = 0, bottom = 0},
+		}
+
+		local artifactBar = CreateFrame("StatusBar", nil, RillyCleanMapBorder)
+		artifactBar:SetOrientation("Vertical")
+		artifactBar:SetPoint("RIGHT", RillyCleanMapBorder, "LEFT", 0, 0)
+		artifactBar:SetStatusBarTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+		artifactBar:SetSize(12, 143)
+		artifactBar:SetStatusBarColor((230/255), (204/255), (128/255), 1)
+		artifactBar:SetBackdrop(BD)
+		artifactBar:Hide()
+
+		-- artifactBar.Text = artifactBar:CreateFontString(nil, "OVERLAY")
+		-- artifactBar.Text:SetFontObject(GameFontHighlight)
+		-- artifactBar.Text:SetPoint("CENTER", artifactBar, "CENTER")
+
+		local artifactInfo = {
+			xpToNextLevel = 0,
+			xp = 0,
+			totalLevelXP = 2000,
+			tPercent = 0
+		}
+		local function getBarData()
+			local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
+			if (not azeriteItemLocation) then
+				artifactBar:Hide()
+				return false
+			end
+			local xp, totalLevelXP = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItemLocation)
+			artifactInfo.xpToNextLevel = totalLevelXP - xp
+
+			artifactInfo.xp = xp
+			artifactInfo.totalLevelXP = totalLevelXP
+			artifactInfo.tPercent = xp / totalLevelXP * 100
+
+			artifactBar:SetMinMaxValues(0, artifactInfo.totalLevelXP)
+			artifactBar:SetValue(artifactInfo.xp)
+			artifactBar:Show()
+		end
+
+		local function barUpdate(self, elapsed)
+			getBarData()
+		end
+		-- artifactBar:SetScript("OnUpdate", getBarData)
+
+		local function OnEvent(self, event, ...)
+			getBarData()
+		end
+
+		local eventFrame = CreateFrame("Frame")
+		eventFrame:RegisterEvent("AZERITE_ITEM_EXPERIENCE_CHANGED")
+		eventFrame:RegisterEvent("ARTIFACT_XP_UPDATE")
+		eventFrame:SetScript("OnEvent", OnEvent)
+
+		getBarData()
+	end
 
 	-- Hide Border
 	MinimapBorder:Hide()
@@ -101,4 +164,8 @@ CF:SetScript("OnEvent", function(self, event)
 			_G.Minimap_OnClick(self)
 		end
 	end)
-end)
+end
+
+local CF=CreateFrame("Frame")
+CF:RegisterEvent("PLAYER_LOGIN")
+CF:SetScript("OnEvent", init)

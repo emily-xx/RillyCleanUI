@@ -54,8 +54,8 @@ function init()
     timerBar:Show()
   end
 
-  local eventFrame = CreateFrame"Frame"
-  eventFrame:RegisterEvent"LFG_PROPOSAL_SHOW"
+  local eventFrame = CreateFrame("Frame")
+  eventFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
   eventFrame:SetScript("OnEvent", OnEvent)
 end
 

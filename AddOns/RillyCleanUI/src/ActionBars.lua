@@ -31,7 +31,8 @@ local function init()
       ActionBarDownButton,
       MainMenuBarArtFrame.PageNumber,
       MainMenuBarArtFrame.LeftEndCap,
-      MainMenuBarArtFrame.RightEndCap
+      MainMenuBarArtFrame.RightEndCap,
+      StatusTrackingBarManager
     }
 
     for _, hiddenElement in pairs(hiddenElements) do
