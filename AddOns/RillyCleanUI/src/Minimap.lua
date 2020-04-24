@@ -15,12 +15,12 @@ function init(self, event)
 	--------------------------------------------------------------------
 	-- MINIMAP BORDER
 	--------------------------------------------------------------------
-	local RillyCleanMapBorder = CreateFrame("Frame", mapborder, Minimap)
+	local RillyCleanMapBorder = CreateFrame("Frame", "RillyCleanMapBorder", Minimap)
 	RillyCleanMapBorder:SetFrameLevel(0)
 	RillyCleanMapBorder:SetFrameStrata("background")
 	RillyCleanMapBorder:SetHeight(142)
 	RillyCleanMapBorder:SetWidth(142)
-	RillyCleanMapBorder:SetPoint("center",0,0)
+	RillyCleanMapBorder:SetPoint("CENTER",0,0)
 	RillyCleanMapBorder:SetScale(1)
 
 	RillyCleanMapBorder:SetBackdrop( {
@@ -64,21 +64,18 @@ function init(self, event)
 	-- Artifact progress bar --
 	---------------------------
 	if (UnitLevel("player") >= 110) then
-		local BD = {
-			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-			tile = true,
-			tileSize = 32,
-			insets = {left = 0, right = 0, top = 0, bottom = 0},
-		}
-
-		local artifactBar = CreateFrame("StatusBar", nil, RillyCleanMapBorder)
+		local artifactBar = CreateFrame("StatusBar", "RillyCleanArtifactBar", RillyCleanMapBorder)
 		artifactBar:SetOrientation("Vertical")
 		artifactBar:SetPoint("RIGHT", RillyCleanMapBorder, "LEFT", 0, 0)
-		artifactBar:SetStatusBarTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+		local tex = artifactBar:CreateTexture()
+		tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+		artifactBar:SetStatusBarTexture(tex)
 		artifactBar:SetSize(12, 143)
 		artifactBar:SetStatusBarColor((230/255), (204/255), (128/255), 1)
-		artifactBar:SetBackdrop(BD)
-		artifactBar:Hide()
+
+		local bg = artifactBar:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(artifactBar)
+		bg:SetColorTexture(0, 0, 0, 0.7)
 
 		-- artifactBar.Text = artifactBar:CreateFontString(nil, "OVERLAY")
 		-- artifactBar.Text:SetFontObject(GameFontHighlight)
@@ -108,21 +105,13 @@ function init(self, event)
 			artifactBar:Show()
 		end
 
-		local function barUpdate(self, elapsed)
-			getBarData()
-		end
-		-- artifactBar:SetScript("OnUpdate", getBarData)
-
-		local function OnEvent(self, event, ...)
-			getBarData()
-		end
+		-- Initialise bar
+		getBarData()
 
 		local eventFrame = CreateFrame("Frame")
 		eventFrame:RegisterEvent("AZERITE_ITEM_EXPERIENCE_CHANGED")
 		eventFrame:RegisterEvent("ARTIFACT_XP_UPDATE")
-		eventFrame:SetScript("OnEvent", OnEvent)
-
-		getBarData()
+		eventFrame:SetScript("OnEvent", getBarData)
 	end
 
 	-- Hide Border
