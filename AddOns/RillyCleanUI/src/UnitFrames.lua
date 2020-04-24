@@ -303,6 +303,66 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	FocusFrameTextureFrameName:SetTextColor(1,1,1)
 	FocusFrameToTTextureFrameName:SetTextColor(1,1,1)
 
+	------------
+	-- XP Bar --
+	------------
+	local xpInfo = {
+		xp = 0,
+		totalLevelXP = 0,
+		xpToNextLevel = 0,
+		tPercent = 0
+	}
+	local maxPlayerLevel = MAX_PLAYER_LEVEL_TABLE[GetAccountExpansionLevel()]
+	if (UnitLevel("player") < maxPlayerLevel) then
+		local xpBar = CreateFrame("StatusBar", "RillyCleanXpBar", PlayerFrame)
+		xpBar:SetOrientation("Vertical")
+		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
+		local tex = xpBar:CreateTexture()
+		tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+		xpBar:SetStatusBarTexture(tex)
+		xpBar:SetSize(12, 67)
+		xpBar:SetStatusBarColor(0, 1, 0, 1)
+
+		local bg = xpBar:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(xpBar)
+		bg:SetColorTexture(0, 0, 0, 0.7)
+
+		-- artifactBar.Text = artifactBar:CreateFontString(nil, "OVERLAY")
+		-- artifactBar.Text:SetFontObject(GameFontHighlight)
+		-- artifactBar.Text:SetPoint("CENTER", artifactBar, "CENTER")
+
+		local artifactInfo = {
+			xpToNextLevel = 0,
+			xp = 0,
+			totalLevelXP = 2000,
+			tPercent = 0
+		}
+		local function getBarData()
+			if (UnitLevel("player") == maxPlayerLevel) then
+				xpBar:Hide()
+				return
+			end
+			local xp = UnitXP("player")
+			local totalLevelXP = UnitXPMax("player")
+			xpInfo.xpToNextLevel = totalLevelXP - xp
+
+			xpInfo.xp = xp
+			xpInfo.totalLevelXP = totalLevelXP
+			xpInfo.tPercent = xp / totalLevelXP * 100
+
+			xpBar:SetMinMaxValues(0, xpInfo.totalLevelXP)
+			xpBar:SetValue(xpInfo.xp)
+			xpBar:Show()
+		end
+
+		-- Initialise bar
+		getBarData()
+
+		local eventFrame = CreateFrame("Frame")
+		eventFrame:RegisterEvent("PLAYER_XP_UPDATE")
+		eventFrame:SetScript("OnEvent", getBarData)
+	end
+
 	-----------------------
 	-- Loot Spec Display --
 	-----------------------
