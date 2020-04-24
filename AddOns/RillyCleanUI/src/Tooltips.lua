@@ -1,3 +1,18 @@
+local function GetDifficultyLevelColor(level)
+	level = (level - tt.playerLevel);
+	if (level > 4) then
+		return "|cffff2020"; -- red
+	elseif (level > 2) then
+		return "|cffff8040"; -- orange
+	elseif (level >= -2) then
+		return "|cffffff00"; -- yellow
+	elseif (level >= -GetQuestGreenRange()) then
+		return "|cff40c040"; -- green
+	else
+		return "|cff808080"; -- gray
+	end
+end
+
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
@@ -28,11 +43,24 @@ CF:SetScript("OnEvent", function(self, event)
 		local _, unit = tooltip:GetUnit()
 
 		if UnitIsPlayer(unit) then
-			local _, class = UnitClass(unit)
+			local className, class = UnitClass(unit)
 			local r, g, b = GetClassColor(class)
+			local level = UnitLevel(unit)
+			local race = UnitRace(unit)
+
+			if (level == -1) then
+				level = "??"
+			end
 
 			local text = GameTooltipTextLeft1:GetText()
 			GameTooltipTextLeft1:SetFormattedText("|cff%02x%02x%02x%s|r", r * 255, g * 255, b * 255, text:match("|cff\x\x\x\x\x\x(.+)|r") or text)
+
+			local guild, guildRank = GetGuildInfo(unit)
+			local PlayerInfoLine = GameTooltipTextLeft2
+			if (guild) then
+				PlayerInfoLine = GameTooltipTextLeft3
+			end
+			PlayerInfoLine:SetText(level .. " " .. race .. " " .. className)
 		end
 	end)
 
