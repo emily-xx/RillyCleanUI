@@ -8,20 +8,17 @@ function init()
 
   local TIMEOUT = 40
 
-  local BD = {
-    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-    tile = true,
-    tileSize = 32,
-    insets = {left = 0, right = 0, top = 0, bottom = 0},
-  }
-
   local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
   timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
-  timerBar:SetSize(194, 14)
-  timerBar:SetStatusBarTexture(137012, "BORDER") -- "Interface\\TargetingFrame\\UI-StatusBar"
+  local tex = timerBar:CreateTexture()
+  tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+  timerBar:SetStatusBarTexture(tex, "BORDER")
   timerBar:SetStatusBarColor(1, 0.1, 0)
-  timerBar:SetBackdrop(BD)
-  timerBar:Hide()
+  timerBar:SetSize(194, 14)
+
+  local bg = timerBar:CreateTexture(nil, "BACKGROUND")
+  bg:SetAllPoints(timerBar)
+  bg:SetColorTexture(0, 0, 0, 0.7)
 
   timerBar.Spark = timerBar:CreateTexture(nil, "OVERLAY")
   timerBar.Spark:SetTexture(130877) -- "Interface\\CastingBar\\UI-CastingBar-Spark"
