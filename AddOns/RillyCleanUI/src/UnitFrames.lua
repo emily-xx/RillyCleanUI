@@ -321,6 +321,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			14, 67,
 			{ r = 0.6, g = 0, b = 0.6 }
 		)
+		xpBar:SetFrameStrata("medium")
 		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
 
 		xpBar:SetScript("OnEnter", function()

@@ -39,7 +39,7 @@ end
 function createStatusBar(name, parentFrame, width, height, color)
   local barBorder = CreateFrame("Frame", (name .. "Border"), parentFrame)
 	barBorder:SetFrameLevel(0)
-	barBorder:SetFrameStrata("background")
+	barBorder:SetFrameStrata("low")
 	barBorder:SetSize(width, height)
 	barBorder:SetScale(1)
 
@@ -68,6 +68,10 @@ function createStatusBar(name, parentFrame, width, height, color)
   return barBorder
 end
 
+function round(what, precision)
+  return math.floor(what*math.pow(10,precision)+0.5) / math.pow(10,precision)
+end
+
 function abbrNumber(number)
   local punit={"","K","M","B","T","Q"};
   local unitcp = 1;
@@ -76,9 +80,5 @@ function abbrNumber(number)
       unitcp = unitcp + 1
   end
 
-  return number .. punit[unitcp]
-end
-
-function round(what, precision)
-  return math.floor(what*math.pow(10,precision)+0.5) / math.pow(10,precision)
+  return round(number, 0) .. punit[unitcp]
 end

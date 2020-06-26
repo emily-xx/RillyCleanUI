@@ -211,7 +211,7 @@ function init(self, event)
 	repBar:SetScript("OnEnter", function()
 		GameTooltip:SetOwner(repBar);
 		GameTooltip:AddLine(repInfo.factionName .. ": " .. repInfo.factionStanding)
-		GameTooltip:AddLine(abbrNumber(repInfo.factionCur) .. "/" .. abbrNumber(repInfo.factionMax) .. " (" .. round(repInfo.factionPercent, 1) .. "%)", 1, 1, 1)
+		GameTooltip:AddLine(repInfo.factionCur .. "/" .. repInfo.factionMax .. " (" .. round(repInfo.factionPercent, 1) .. "%)", 1, 1, 1)
 		GameTooltip:Show()
 	end)
 
