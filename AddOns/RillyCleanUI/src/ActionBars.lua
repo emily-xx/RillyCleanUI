@@ -77,7 +77,8 @@ local function init()
       PlayerPowerBarAlt:SetMovable(true)
       PlayerPowerBarAlt:SetUserPlaced(true)
       PlayerPowerBarAlt:ClearAllPoints()
-      PlayerPowerBarAlt:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset + 90))
+      PlayerPowerBarAlt:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset + 120))
+      PlayerPowerBarAlt:SetMovable(false)
     end
 
     -- Hide Talking Head Frame
