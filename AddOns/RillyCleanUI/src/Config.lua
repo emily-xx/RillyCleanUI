@@ -171,20 +171,6 @@ local function rcui_options()
     lootSpecDisplay
   )
 
-  -- local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", portraitSelect, "InputBoxTemplate");
-  -- actionBarOffset:SetAutoFocus(false)
-  -- actionBarOffset:SetPoint("TOPLEFT", portraitSelect, "BOTTOMLEFT", 26, -8);
-  -- actionBarOffset:SetSize(40,20)
-  -- actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
-  -- actionBarOffset:SetCursorPosition(0)
-  -- function setActionBarOffset()
-  --   actionBarOffset:ClearFocus()
-  --   RCUIDB.actionBarOffset = actionBarOffset:GetNumber()
-  -- end
-  -- actionBarOffset:SetScript("OnEditFocusLost", setActionBarOffset)
-  -- actionBarOffset:SetScript("OnEnterPressed", setActionBarOffset)
-
-
   local hideHotkeys = newCheckbox(
     "Hide Hotkeys on Action Bars",
     "Hides keybinding text on your action bar buttons.",
@@ -288,6 +274,19 @@ local function rcui_options()
     nameplateFriendlyNamesClassColor
   )
 
+  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", nameplateHideCastText, "InputBoxTemplate");
+  actionBarOffset:SetAutoFocus(false)
+  actionBarOffset:SetPoint("TOPLEFT", nameplateHideCastText, "BOTTOMLEFT", 26, -8);
+  actionBarOffset:SetSize(40,20)
+  actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
+  actionBarOffset:SetCursorPosition(0)
+  function setActionBarOffset()
+    actionBarOffset:ClearFocus()
+    RCUIDB.actionBarOffset = actionBarOffset:GetNumber()
+  end
+  actionBarOffset:SetScript("OnEditFocusLost", setActionBarOffset)
+  actionBarOffset:SetScript("OnEnterPressed", setActionBarOffset)
+
   --reload button
 
   local reload = CreateFrame("Button","reload",rcui.childpanel,"UIPanelButtonTemplate")
@@ -311,21 +310,6 @@ local function rcui_options()
 
   -- blue:SetScript("OnLeave", function()
   -- 	GameTooltip:Hide()
-  -- end)
-
-  -- grey:SetScript("OnClick", function()
-  -- 	RCUIDB.color.enable = false
-  -- 	RCUIDB.grey = true
-  -- 	RCUIDB.blue = false
-  -- 	blue:Enable()
-  -- 	grey:Disable()
-  -- 	misc:Enable()
-  -- 	RCUIDB.color.r = 0.301
-  -- 	RCUIDB.color.g = 0.301
-  -- 	RCUIDB.color.b = 0.301
-  -- 	RCUIDB.color.hr = 0.695
-  -- 	RCUIDB.color.hg = 0.695
-  -- 	RCUIDB.color.hb = 0.695
   -- end)
 
   -- grey:SetScript("OnEnter", function()

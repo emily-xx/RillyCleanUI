@@ -113,7 +113,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		setFontOutline(PlayerName)
 
 		PlayerFrameGroupIndicatorText:ClearAllPoints()
-		PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOP", 0, -20)
+		PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOPLEFT", 42, -10)
 		PlayerFrameGroupIndicatorLeft:Hide()
 		PlayerFrameGroupIndicatorMiddle:Hide()
 		PlayerFrameGroupIndicatorRight:Hide()
@@ -274,7 +274,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	-- PetFrame placement --
 	------------------------
 	PetFrame:ClearAllPoints()
-	PetFrame:SetPoint("BOTTOMLEFT", MainMenuBar, "TOPLEFT", 40, 200)
+	PetFrame:SetPoint("BOTTOMLEFT", PetActionButton1, "TOPLEFT", -20, 20)
 
 	PetFrameManaBar:ClearAllPoints()
 	PetFrameManaBar:SetPoint("TOPLEFT", PetPortrait, "TOPRIGHT", 2, -24)
@@ -306,26 +306,33 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	------------
 	-- XP Bar --
 	------------
-	local xpInfo = {
-		xp = 0,
-		totalLevelXP = 0,
-		xpToNextLevel = 0,
-		tPercent = 0
-	}
 	local maxPlayerLevel = MAX_PLAYER_LEVEL_TABLE[GetAccountExpansionLevel()]
 	if (UnitLevel("player") < maxPlayerLevel) then
-		local xpBar = CreateFrame("StatusBar", "RillyCleanXpBar", PlayerFrame)
-		xpBar:SetOrientation("Vertical")
-		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
-		local tex = xpBar:CreateTexture()
-		tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
-		xpBar:SetStatusBarTexture(tex)
-		xpBar:SetSize(12, 67)
-		xpBar:SetStatusBarColor(0, 1, 0, 1)
+		local xpInfo = {
+			xp = 0,
+			totalLevelXP = 0,
+			xpToNextLevel = 0,
+			tPercent = 0
+		}
 
-		local bg = xpBar:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(xpBar)
-		bg:SetColorTexture(0, 0, 0, 0.7)
+		local xpBar = createStatusBar(
+			"RillyCleanXp",
+			PlayerFrame,
+			14, 67,
+			{ r = 0.6, g = 0, b = 0.6 }
+		)
+		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
+
+		xpBar:SetScript("OnEnter", function()
+			GameTooltip:SetOwner(xpBar);
+			GameTooltip:AddLine("Experience")
+			GameTooltip:AddLine(abbrNumber(xpInfo.xp) .. "/" .. abbrNumber(xpInfo.totalLevelXP) .. " (" .. round(xpInfo.tPercent, 1) .. "%)", 1, 1, 1)
+			GameTooltip:Show()
+		end)
+
+		xpBar:SetScript("OnLeave", function()
+			GameTooltip:Hide()
+		end)
 
 		-- artifactBar.Text = artifactBar:CreateFontString(nil, "OVERLAY")
 		-- artifactBar.Text:SetFontObject(GameFontHighlight)
@@ -350,8 +357,8 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			xpInfo.totalLevelXP = totalLevelXP
 			xpInfo.tPercent = xp / totalLevelXP * 100
 
-			xpBar:SetMinMaxValues(0, xpInfo.totalLevelXP)
-			xpBar:SetValue(xpInfo.xp)
+			xpBar.Status:SetMinMaxValues(0, xpInfo.totalLevelXP)
+			xpBar.Status:SetValue(xpInfo.xp)
 			xpBar:Show()
 		end
 
