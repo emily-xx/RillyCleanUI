@@ -41,14 +41,15 @@ CF:SetScript("OnEvent", function(self, event)
 	-- Class colours
 	GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
 		local _, unit = tooltip:GetUnit()
+		if  not unit then return end
+		local level = UnitLevel(unit)
 
 		if UnitIsPlayer(unit) then
 			local className, class = UnitClass(unit)
 			local r, g, b = GetClassColor(class)
-			local level = UnitLevel(unit)
 			local race = UnitRace(unit)
 
-			if (level == -1) then
+			if (level == -1 or level == "-1") then
 				level = "??"
 			end
 
@@ -61,6 +62,11 @@ CF:SetScript("OnEvent", function(self, event)
 				PlayerInfoLine = GameTooltipTextLeft3
 			end
 			PlayerInfoLine:SetText(level .. " " .. race .. " " .. className)
+		end
+
+		local family = UnitCreatureFamily(unit)
+		if (family) then -- UnitIsBattlePetCompanion(unit);
+			GameTooltipTextLeft2:SetText(level .. " " .. family)
 		end
 	end)
 
