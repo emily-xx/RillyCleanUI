@@ -2,7 +2,7 @@
 RCUIDBDefaults = {
   actionBarOffset = 20,
   disableAutoAddSpells = true, -- DONE Whether or not to disable the automatic addition of spells to bars when changing talents and etc
-  castbarOffset = 210,
+  castbarOffset = 170,
   hideHotkeys = true, -- DONE
 
   lootSpecDisplay = true, -- DONE Display loot spec under the player frame

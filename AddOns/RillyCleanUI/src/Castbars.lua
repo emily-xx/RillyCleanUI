@@ -24,18 +24,21 @@ CastBars:SetScript(
 	function(self, event, addon)
 		if addon == "RillyCleanUI" then
       -- Player Castbar
-      if not RCUIDB or RCUIDB.castbarOffset then
-        local castbarOffset = RCUIDBDefaults.castbarOffset
-        if RCUIDB then
-          castbarOffset = RCUIDB.castbarOffset
-        end
-        CastingBarFrame:SetMovable(true)
-        CastingBarFrame:ClearAllPoints()
-        CastingBarFrame:SetScale(1)
-        CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, castbarOffset)
-        CastingBarFrame:SetUserPlaced(true)
-        CastingBarFrame:SetMovable(false)
+      local castbarOffset = 0
+      local actionBarOffset = 0
+      if not RCUIDB or not RCUIDB.castbarOffset then
+        castbarOffset = RCUIDBDefaults.castbarOffset
+        actionBarOffset = RCUIDBDefaults.actionBarOffset
+      elseif RCUIDB then
+        castbarOffset = RCUIDB.castbarOffset
+        actionBarOffset = RCUIDB.actionBarOffset
       end
+      CastingBarFrame:SetMovable(true)
+      CastingBarFrame:ClearAllPoints()
+      CastingBarFrame:SetScale(1)
+      CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, (actionBarOffset + castbarOffset))
+      CastingBarFrame:SetUserPlaced(true)
+      CastingBarFrame:SetMovable(false)
 
       CastingBarFrame.Icon:Show()
       CastingBarFrame.Icon:ClearAllPoints()
