@@ -29,6 +29,7 @@ src\Tooltips.lua
 src\FriendsList.lua
 src\EasyDelete.lua
 src\LFGTimer.lua
+src\AutoKeystone.lua
 src\SafeQueue.lua
 src\DampeningDisplay.lua
 src\SpellNotifications.lua
