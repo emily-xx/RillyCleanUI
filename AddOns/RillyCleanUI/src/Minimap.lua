@@ -135,6 +135,7 @@ function init(self, event)
 	-- artifactBar.Text:SetPoint("CENTER", artifactBar, "CENTER")
 
 	local artifactInfo = {
+		level = 0,
 		xpToNextLevel = 0,
 		xp = 0,
 		totalLevelXP = 2000,
@@ -143,7 +144,8 @@ function init(self, event)
 
 	artifactBar:SetScript("OnEnter", function()
 		GameTooltip:SetOwner(artifactBar);
-		GameTooltip:AddLine("Artifact Power")
+		GameTooltip:AddLine("Heart of Azeroth")
+		GameTooltip:AddLine("Level " .. artifactInfo.level, 1, 1, 1)
 		GameTooltip:AddLine(abbrNumber(artifactInfo.xp) .. "/" .. abbrNumber(artifactInfo.totalLevelXP) .. " (" .. round(artifactInfo.tPercent, 1) .. "%)", 1, 1, 1)
 		GameTooltip:Show()
 	end)
@@ -172,6 +174,9 @@ function init(self, event)
 
 		local xp, totalLevelXP = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItemLocation)
 		artifactInfo.xpToNextLevel = totalLevelXP - xp
+
+		local level = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
+		artifactInfo.level = level
 
 		artifactInfo.xp = xp
 		artifactInfo.totalLevelXP = totalLevelXP

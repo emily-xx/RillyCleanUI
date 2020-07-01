@@ -80,5 +80,5 @@ function abbrNumber(number)
       unitcp = unitcp + 1
   end
 
-  return round(number, 0) .. punit[unitcp]
+  return round(number, 1) .. punit[unitcp]
 end
