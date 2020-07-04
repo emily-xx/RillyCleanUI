@@ -4,7 +4,6 @@
 function init()
   local bigWigs = IsAddOnLoaded("BigWigs")
   local lfgProposalTime = IsAddOnLoaded("LFG_ProposalTime")
-  if bigWigs or lfgProposalTime then return end -- No need to run when using these addons
 
   local TIMEOUT = 40
 
@@ -31,9 +30,11 @@ function init()
   timerBar.Border:SetSize(256, 64)
   timerBar.Border:SetPoint("TOP", timerBar, 0, 27)
 
-  timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
-  timerBar.Text:SetFontObject(GameFontHighlight)
-  timerBar.Text:SetPoint("CENTER", timerBar, "CENTER")
+  if not bigWigs and not lfgProposalTime then
+    timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
+    timerBar.Text:SetFontObject(GameFontHighlight)
+    timerBar.Text:SetPoint("CENTER", timerBar, "CENTER")
+  end
 
   local timeLeft = 0
   local function barUpdate(self, elapsed)
@@ -41,7 +42,9 @@ function init()
     if(timeLeft <= 0) then return self:Hide() end
 
     self:SetValue(timeLeft)
-    self.Text:SetFormattedText("%.1f", timeLeft)
+    if not bigWigs and not lfgProposalTime then
+      self.Text:SetFormattedText("%.1f", timeLeft)
+    end
   end
   timerBar:SetScript("OnUpdate", barUpdate)
 
