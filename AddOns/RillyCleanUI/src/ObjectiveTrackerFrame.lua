@@ -160,7 +160,7 @@ local function skin_Blizzard_ObjectiveTracker()
 		end
 	end
 
-	hooksecurefunc(AUTO_QUEST_POPUP_TRACKER_MODULE,"Update",rcui_Update)
+	-- hooksecurefunc(AUTO_QUEST_POPUP_TRACKER_MODULE,"Update",rcui_Update) TODO: Fix
 end
 
 local catchaddon = CreateFrame("FRAME")

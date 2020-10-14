@@ -8,17 +8,18 @@ local function resetGUID(portraitModel)
 end
 
 local function makePortraitBG(frame, r, g, b)
-  frame.portraitBG = CreateFrame("Frame", nil, frame)
+  frame.portraitBG = CreateFrame("Frame", nil, frame, "BackdropTemplate")
   frame.portraitBG:SetFrameLevel(0)
   frame.portraitBG:SetFrameStrata("background")
   frame.portraitBG:SetAllPoints(frame.portrait)
 
-  frame.portraitBG:SetBackdrop({
+  frame.portraitBG.backdropInfo = {
     bgFile = SQUARE_TEXTURE,
     edgeFile = SQUARE_TEXTURE,
     tile = false, tileSize = 0, edgeSize = 1,
     insets = { left = -1, right = -1, top = -1, bottom = -1 }
-  })
+  }
+  frame.portraitBG:ApplyBackdrop()
   frame.portraitBG:SetBackdropColor(r,g,b,1)
   frame.portraitBG:SetBackdropBorderColor(r,g,b,1)
   frame.portraitBG:Show()

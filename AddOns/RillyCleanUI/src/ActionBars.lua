@@ -63,9 +63,10 @@ local function init()
       ExtraActionButton1:SetFrameStrata("MEDIUM")
       ExtraActionButton1:SetFrameLevel(5)
 
-      ZoneAbilityFrame.SpellButton:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
-      ZoneAbilityFrame.SpellButton:SetFrameStrata("MEDIUM")
-      ZoneAbilityFrame.SpellButton:SetFrameLevel(5)
+      ZoneAbilityFrame.Style:Hide()
+      ZoneAbilityFrame.SpellButtonContainer:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset -60))
+      ZoneAbilityFrame.SpellButtonContainer:SetFrameStrata("MEDIUM")
+      ZoneAbilityFrame.SpellButtonContainer:SetFrameLevel(5)
 
       PossessBarFrame:SetMovable(true)
       PossessBarFrame:ClearAllPoints()
@@ -122,39 +123,39 @@ local function init()
     -- Store button needs moved off screen as it does not have Hide() for some reason.
     StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
 
-    -- Color out of range red
-    hooksecurefunc(
-        "ActionButton_OnEvent",
-        function(self, event, ...)
-            if (event == "PLAYER_TARGET_CHANGED") then
-                self.newTimer = self.rangeTimer
-            end
-        end
-    )
-    hooksecurefunc(
-        "ActionButton_UpdateUsable",
-        function(self)
-            local icon = _G[self:GetName() .. "Icon"]
-            local valid = IsActionInRange(self.action)
-            if (valid == false) then
-                icon:SetVertexColor(1, 0.2, 0.1)
-            end
-        end
-    )
-    hooksecurefunc(
-        "ActionButton_OnUpdate",
-        function(self, elapsed)
-            local rangeTimer = self.newTimer
-            if (rangeTimer) then
-                rangeTimer = rangeTimer - elapsed
-                if (rangeTimer <= 0) then
-                    ActionButton_UpdateUsable(self)
-                    rangeTimer = TOOLTIP_UPDATE_TIME
-                end
-                self.newTimer = rangeTimer
-            end
-        end
-    )
+    -- Color out of range red TODO: Fix
+    -- hooksecurefunc(
+    --     "ActionButton_OnEvent",
+    --     function(self, event, ...)
+    --         if (event == "PLAYER_TARGET_CHANGED") then
+    --             self.newTimer = self.rangeTimer
+    --         end
+    --     end
+    -- )
+    -- hooksecurefunc(
+    --     "ActionButton_UpdateUsable",
+    --     function(self)
+    --         local icon = _G[self:GetName() .. "Icon"]
+    --         local valid = IsActionInRange(self.action)
+    --         if (valid == false) then
+    --             icon:SetVertexColor(1, 0.2, 0.1)
+    --         end
+    --     end
+    -- )
+    -- hooksecurefunc(
+    --     "ActionButton_OnUpdate",
+    --     function(self, elapsed)
+    --         local rangeTimer = self.newTimer
+    --         if (rangeTimer) then
+    --             rangeTimer = rangeTimer - elapsed
+    --             if (rangeTimer <= 0) then
+    --                 ActionButton_UpdateUsable(self)
+    --                 rangeTimer = TOOLTIP_UPDATE_TIME
+    --             end
+    --             self.newTimer = rangeTimer
+    --         end
+    --     end
+    -- )
   end
 
   --backdrop settings
@@ -195,13 +196,14 @@ local function init()
       bu:SetFrameLevel(1)
     end
 
-    bu.bg = CreateFrame("Frame", nil, bu)
+    bu.bg = CreateFrame("Frame", nil, bu, "BackdropTemplate")
     -- bu.bg:SetAllPoints(bu)
     bu.bg:SetPoint("TOPLEFT", bu, "TOPLEFT", 0, 0)
     bu.bg:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 0, 0)
     bu.bg:SetFrameLevel(bu:GetFrameLevel() - 1)
 
-    bu.bg:SetBackdrop(backdrop)
+    bu.bg.backdropInfo = backdrop
+    bu.bg:ApplyBackdrop()
     bu.bg:SetBackdropColor(backdropcolor)
 
     bu.bg:SetBackdropBorderColor(0, 0, 0, 0)
@@ -230,6 +232,15 @@ local function init()
   local function styleExtraActionButton(bu)
     if not bu or (bu and bu.rabs_styled) then
       return
+    end
+    if not bu.Icon and not bu.icon then
+      for key in pairs(bu) do
+        print(key)
+        if bu[key].Icon then
+          bu = bu[key]
+          break
+        end
+      end
     end
     local name = bu:GetName() or bu:GetParent():GetName()
     local style = bu.style or bu.Style
@@ -468,7 +479,7 @@ local function init()
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
-  styleExtraActionButton(ZoneAbilityFrame.SpellButton)
+  -- styleExtraActionButton(ZoneAbilityFrame.SpellButtonContainer)-- TODO: Fix
   --spell flyout
   SpellFlyoutBackgroundEnd:SetTexture(nil)
   SpellFlyoutHorizontalBackground:SetTexture(nil)
@@ -497,10 +508,10 @@ local function init()
     end
   end
 
-  --hide the hotkeys if needed
-  if not dominos and not bartender4 and RCUIDB.hideHotkeys then
-    hooksecurefunc("ActionButton_UpdateHotkeys", updateHotkey)
-  end
+  --hide the hotkeys if needed TODO: Fix
+  -- if not dominos and not bartender4 and RCUIDB.hideHotkeys then
+  --   hooksecurefunc("ActionButton_UpdateHotkeys", updateHotkey)
+  -- end
 end
 
 local a = CreateFrame("Frame")

@@ -93,11 +93,12 @@ CastBars:SetScript(
       b:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
       -- border
-      local back = CreateFrame("Frame", nil, b.parent)
+      local back = CreateFrame("Frame", nil, b.parent, "BackdropTemplate")
       back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
       back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
       back:SetFrameLevel(frame:GetFrameLevel() - 1)
-      back:SetBackdrop(backdrop)
+      back.backdropInfo = backdrop
+      back:ApplyBackdrop()
       back:SetBackdropBorderColor(0,0,0,1)
       b.bg = back
       --set button styled variable

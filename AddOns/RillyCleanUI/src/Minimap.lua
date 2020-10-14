@@ -15,7 +15,7 @@ function init(self, event)
 	--------------------------------------------------------------------
 	-- MINIMAP BORDER
 	--------------------------------------------------------------------
-	local RillyCleanMapBorder = CreateFrame("Frame", "RillyCleanMapBorder", Minimap)
+	local RillyCleanMapBorder = CreateFrame("Frame", "RillyCleanMapBorder", Minimap, "BackdropTemplate")
 	RillyCleanMapBorder:SetFrameLevel(0)
 	RillyCleanMapBorder:SetFrameStrata("background")
 	RillyCleanMapBorder:SetHeight(142)
@@ -23,12 +23,13 @@ function init(self, event)
 	RillyCleanMapBorder:SetPoint("CENTER",0,0)
 	RillyCleanMapBorder:SetScale(1)
 
-	RillyCleanMapBorder:SetBackdrop( {
+	RillyCleanMapBorder.backdropInfo = {
 		bgFile = SQUARE_TEXTURE,
 		edgeFile = SQUARE_TEXTURE,
 		tile = false, tileSize = 0, edgeSize = 1,
 		insets = { left = -1, right = -1, top = -1, bottom = -1 }
-	})
+	}
+	RillyCleanMapBorder:ApplyBackdrop()
 	RillyCleanMapBorder:SetBackdropColor(0,0,0,1)
 	RillyCleanMapBorder:SetBackdropBorderColor(0,0,0,1)
 	RillyCleanMapBorder:Show()
@@ -39,19 +40,20 @@ function init(self, event)
 	-- Better looking mail icon
 	MiniMapMailIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	MiniMapMailIcon:SetScale(0.9)
-	local mailBg = CreateFrame("Frame", nil, MiniMapMailFrame)
+	local mailBg = CreateFrame("Frame", nil, MiniMapMailFrame, "BackdropTemplate")
 	mailBg:SetFrameStrata("low")
 	mailBg:SetFrameLevel(3)
 	mailBg:SetHeight(20)
 	mailBg:SetWidth(20)
 	mailBg:SetPoint("center",-2,2)
 
-	mailBg:SetBackdrop( {
+	mailBg.backdropInfo = {
 		bgFile = SQUARE_TEXTURE,
 		edgeFile = SQUARE_TEXTURE,
 		tile = false, tileSize = 0, edgeSize = 1,
 		insets = { left = -1, right = -1, top = -1, bottom = -1 }
-	})
+	}
+	mailBg:ApplyBackdrop()
 	mailBg:SetBackdropColor(0,0,0,1)
 	mailBg:SetBackdropBorderColor(0,0,0,1)
 	mailBg:Show()

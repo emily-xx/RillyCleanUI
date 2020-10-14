@@ -7,8 +7,5 @@
 ## OptionalDeps: LibStub
 ## X-License: BSD
 
-#@no-lib-strip@
-embeds.xml
-#@end-no-lib-strip@
 
 lib.xml

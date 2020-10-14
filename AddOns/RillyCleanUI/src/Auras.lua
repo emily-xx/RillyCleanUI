@@ -59,11 +59,12 @@ CF:SetScript("OnEvent", function(self, event)
     b.border = border
 
     --shadow
-    local back = CreateFrame("Frame", nil, b)
+    local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
     back:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
     back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 0, 0)
     back:SetFrameLevel(b:GetFrameLevel() - 1)
-    back:SetBackdrop(backdrop)
+    back.backdropInfo = backdrop
+    back:ApplyBackdrop()
     back:SetBackdropBorderColor(0,0,0,1)
     b.bg = back
     --set button styled variable

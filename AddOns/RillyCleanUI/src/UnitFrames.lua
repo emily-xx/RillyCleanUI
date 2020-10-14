@@ -306,7 +306,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	------------
 	-- XP Bar --
 	------------
-	local maxPlayerLevel = MAX_PLAYER_LEVEL_TABLE[GetAccountExpansionLevel()]
+	local maxPlayerLevel = GetMaxLevelForPlayerExpansion()
 	if (UnitLevel("player") < maxPlayerLevel) then
 		local xpInfo = {
 			xp = 0,

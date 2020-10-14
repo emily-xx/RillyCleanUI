@@ -37,17 +37,18 @@ function setDefaultFont(textObject, size, outlinestyle)
 end
 
 function createStatusBar(name, parentFrame, width, height, color)
-  local barBorder = CreateFrame("Frame", (name .. "Border"), parentFrame)
+  local barBorder = CreateFrame("Frame", (name .. "Border"), parentFrame, "BackdropTemplate")
 	barBorder:SetFrameLevel(0)
 	barBorder:SetFrameStrata("low")
 	barBorder:SetSize(width, height)
 	barBorder:SetScale(1)
 
-	barBorder:SetBackdrop({
+	barBorder.backdropInfo = {
 		edgeFile = SQUARE_TEXTURE,
 		tile = false, tileSize = 0, edgeSize = 2,
 		insets = { left = 0, right = 0, top = 0, bottom = 0 }
-	})
+  }
+  barBorder:ApplyBackdrop()
 	barBorder:SetBackdropBorderColor(0,0,0,1)
 	barBorder:Show()
 

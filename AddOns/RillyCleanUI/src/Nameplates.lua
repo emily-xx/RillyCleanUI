@@ -36,16 +36,18 @@ RillyCleanNameplates:SetScript("OnEvent", function()
   end)
 
   if RCUIDB.modNamePlates then
-    local CF=CreateFrame("Frame")
-    CF:RegisterEvent("NAME_PLATE_CREATED")
-    CF:SetScript("OnEvent", function(self, event, ...)
-        local nameplate = ...
-        nameplate.UnitFrame.isNameplate = true
-    end)
+    -- local CF=CreateFrame("Frame")
+    -- CF:RegisterEvent("NAME_PLATE_CREATED")
+    -- CF:SetScript("OnEvent", function(self, event, ...)
+    --     local nameplate = ...
+    --     if (nameplate.UnitFrame) then
+    --       nameplate.UnitFrame.isNameplate = true
+    --     end
+    -- end)
 
     local function modifyNamePlates(frame, options)
       if ( frame:IsForbidden() ) then return end
-      if ( not frame.isNameplate ) then return end
+      -- if ( not frame.isNameplate ) then return end
 
       if RCUIDB.nameplateHideCastText then
         frame.castBar.Text:Hide()
@@ -59,7 +61,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if ( frame:IsForbidden() ) then return end
-    if ( not frame.isNameplate ) then return end
+    -- if ( not frame.isNameplate ) then return end
 
     setDefaultFont(frame.name, RCUIDB.nameplateNameFontSize)
 
