@@ -122,40 +122,6 @@ local function init()
 
     -- Store button needs moved off screen as it does not have Hide() for some reason.
     StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
-
-    -- Color out of range red TODO: Fix
-    -- hooksecurefunc(
-    --     "ActionButton_OnEvent",
-    --     function(self, event, ...)
-    --         if (event == "PLAYER_TARGET_CHANGED") then
-    --             self.newTimer = self.rangeTimer
-    --         end
-    --     end
-    -- )
-    -- hooksecurefunc(
-    --     "ActionButton_UpdateUsable",
-    --     function(self)
-    --         local icon = _G[self:GetName() .. "Icon"]
-    --         local valid = IsActionInRange(self.action)
-    --         if (valid == false) then
-    --             icon:SetVertexColor(1, 0.2, 0.1)
-    --         end
-    --     end
-    -- )
-    -- hooksecurefunc(
-    --     "ActionButton_OnUpdate",
-    --     function(self, elapsed)
-    --         local rangeTimer = self.newTimer
-    --         if (rangeTimer) then
-    --             rangeTimer = rangeTimer - elapsed
-    --             if (rangeTimer <= 0) then
-    --                 ActionButton_UpdateUsable(self)
-    --                 rangeTimer = TOOLTIP_UPDATE_TIME
-    --             end
-    --             self.newTimer = rangeTimer
-    --         end
-    --     end
-    -- )
   end
 
   --backdrop settings
@@ -507,11 +473,6 @@ local function init()
       stylePetButton(_G["BT4PetButton" .. i])
     end
   end
-
-  --hide the hotkeys if needed TODO: Fix
-  -- if not dominos and not bartender4 and RCUIDB.hideHotkeys then
-  --   hooksecurefunc("ActionButton_UpdateHotkeys", updateHotkey)
-  -- end
 end
 
 local a = CreateFrame("Frame")
