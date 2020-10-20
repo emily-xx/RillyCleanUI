@@ -161,11 +161,6 @@ function init(self, event)
 			return
 		end
 
-		if UnitLevel("player") < 110 then
-			artifactBar:Hide()
-			return
-		end
-
 		local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
 		if (not azeriteItemLocation) then
 			artifactBar:Hide()

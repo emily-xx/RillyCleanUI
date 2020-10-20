@@ -2,7 +2,7 @@
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Rilona of Draenor EU
-## Version: 9.0.1b
+## Version: 9.0.1-4
 ## SavedVariables: RCUIDB
 ## Email: emlywind@gmail.com
 
@@ -39,3 +39,4 @@ src\SimpleItemLevel.lua
 src\ObjectiveTrackerFrame.lua
 src\TabBinder.lua
 src\Media.lua
+src\AfkCam.lua
