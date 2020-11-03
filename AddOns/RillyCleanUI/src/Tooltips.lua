@@ -16,6 +16,10 @@ end
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
+	if IsAddOnLoaded('TinyTooltip') then
+		return
+	end
+
 	-- Tooltips anchored on mouse
 	hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 		if (InCombatLockdown()) then

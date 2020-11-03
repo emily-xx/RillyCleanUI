@@ -2,6 +2,29 @@ RillyCleanNameplates = CreateFrame("Frame", "RillyCleanNameplates")
 RillyCleanNameplates:RegisterEvent("PLAYER_LOGIN")
 
 RillyCleanNameplates:SetScript("OnEvent", function()
+  -------------------------------------------------------
+  -- Red color when below 30% on Personal Resource Bar --
+  -------------------------------------------------------
+  hooksecurefunc("CompactUnitFrame_UpdateHealth", function(frame)
+    if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
+      local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
+
+      if C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player") then
+        if healthPercentage == 100 then
+          frame.healthBar:SetStatusBarColor(0, 1, 0)
+        elseif healthPercentage < 100 and healthPercentage >= 30 then
+          frame.healthBar:SetStatusBarColor(0, 1, 0)
+        elseif healthPercentage < 30 then
+          frame.healthBar:SetStatusBarColor(1, 0, 0)
+        end
+      end
+    end
+  end)
+
+   if IsAddOnLoaded('TidyPlates_ThreatPlates') then
+    return
+   end
+
   -- Keep nameplates on screen
   SetCVar("nameplateOtherBottomInset", 0.1);
   SetCVar("nameplateOtherTopInset", 0.08);
@@ -20,21 +43,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       return str
   end
 
-  local NamePlateSetup = CreateFrame("FRAME")
-  NamePlateSetup:RegisterEvent("PLAYER_ENTERING_WORLD")
-  NamePlateSetup:SetScript("OnEvent", function()
-    local targetNameplateHeight = 45
-
-    C_NamePlate.SetNamePlateFriendlySize(RCUIDB.namePlateWidth, targetNameplateHeight)
-    C_NamePlate.SetNamePlateEnemySize(RCUIDB.namePlateWidth, targetNameplateHeight)
-  end)
-
-  local f = CreateFrame("Frame")
-  f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-  f:SetScript("OnEvent", function(self, event, unit)
-    C_NamePlate.GetNamePlateForUnit(unit).UnitFrame:SetScale(RCUIDB.namePlateScale)
-  end)
-
   if RCUIDB.modNamePlates then
     -- local CF=CreateFrame("Frame")
     -- CF:RegisterEvent("NAME_PLATE_CREATED")
@@ -51,8 +59,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
       if RCUIDB.nameplateHideCastText then
         frame.castBar.Text:Hide()
-      elseif RCUIDB.nameplateCastFontSize then
-        setFontSize(frame.castBar.Text, RCUIDB.nameplateCastFontSize)
       end
     end
 
@@ -62,8 +68,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if ( frame:IsForbidden() ) then return end
     -- if ( not frame.isNameplate ) then return end
-
-    setDefaultFont(frame.name, RCUIDB.nameplateNameFontSize)
 
     if RCUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
@@ -82,25 +86,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       end
 
       frame.name:SetText(name)
-    end
-  end)
-
-  -------------------------------------------------------
-  -- Red color when below 30% on Personal Resource Bar --
-  -------------------------------------------------------
-  hooksecurefunc("CompactUnitFrame_UpdateHealth", function(frame)
-    if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
-      local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
-
-      if C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player") then
-        if healthPercentage == 100 then
-          frame.healthBar:SetStatusBarColor(0, 1, 0)
-        elseif healthPercentage < 100 and healthPercentage >= 30 then
-          frame.healthBar:SetStatusBarColor(0, 1, 0)
-        elseif healthPercentage < 30 then
-          frame.healthBar:SetStatusBarColor(1, 0, 0)
-        end
-      end
     end
   end)
 end)
