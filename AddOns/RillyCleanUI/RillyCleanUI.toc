@@ -1,8 +1,8 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Rilona of Draenor EU
-## Version: 9.0.1-5
+## Version: 9.0.2-1
 ## SavedVariables: RCUIDB
 ## Email: emlywind@gmail.com
 
