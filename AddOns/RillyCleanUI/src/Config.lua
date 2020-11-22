@@ -1,13 +1,13 @@
 -- This table defines the addon's default settings:
 RCUIDBDefaults = {
   actionBarOffset = 20,
-  disableAutoAddSpells = true, -- DONE Whether or not to disable the automatic addition of spells to bars when changing talents and etc
+  disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 170,
-  hideHotkeys = true, -- DONE
+  hideHotkeys = true,
 
-  lootSpecDisplay = true, -- DONE Display loot spec under the player frame
+  lootSpecDisplay = true, -- Display loot spec under the player frame
 
-  damageFont = true, -- DONE Change damage font to something cooler
+  damageFont = true, -- Change damage font to something cooler
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 
@@ -15,17 +15,13 @@ RCUIDBDefaults = {
   modNamePlates = true, -- Set to false to ignore all nameplate customization
   nameplateNameFontSize = 7,
   nameplateHideServerNames = true,
-  nameplateNameLength = 20, -- DONE Set to nil for no abbreviation
-  nameplateFriendlyNamesClassColor = true, -- DONE
-  namePlateWidth = 120,
-  namePlateScale = 1.3,
-  nameplateHideCastText = false, -- DONE
+  nameplateNameLength = 20, -- Set to nil for no abbreviation
+  nameplateFriendlyNamesClassColor = true,
+  nameplateHideCastText = false,
   nameplateCastFontSize = 6,
 
-  portraitStyle = "3D", -- DONE 3D, 2D, or class (for class icons)
-  objectivesTitles = "class", -- DONE Class for class coloured quest titles, or default for default
-  objectivesTextOutline = false, -- DONE
-  hideMinimapZoneText = false, -- DONE True = hide zone text, False = show zone text
+  portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
+  hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
 }
 
 local function rcui_defaults()
@@ -192,30 +188,6 @@ local function rcui_options()
     hideHotkeys
   )
 
-  -- local objectivesTitles = newCheckbox(
-  --   "Class Coloured Quest Tracker",
-  --   "Colours quest titles with the colour of your character's class in the tracker under the minimap.",
-  --   RCUIDB.objectivesTitles == "class",
-  --   function(self, value)
-  --     if (value == true) then
-  --       RCUIDB.objectivesTitles = "class"
-  --     else
-  --       RCUIDB.objectivesTitles = "default"
-  --     end
-  --   end,
-  --   hideMinimapZoneText
-  -- )
-
-  -- local objectivesTextOutline = newCheckbox(
-  --   "Outline Quest Track Text",
-  --   "Puts an outline around the text in the Objectives Tracker.",
-  --   RCUIDB.objectivesTextOutline,
-  --   function(self, value)
-  --     RCUIDB.objectivesTextOutline = value
-  --   end,
-  --   objectivesTitles
-  -- )
-
   local disableAutoAddSpells = newCheckbox(
     "Disable Auto Adding of Spells",
     "Disables automatic adding of spells to action bars when learning new spells.",
@@ -274,9 +246,17 @@ local function rcui_options()
     nameplateFriendlyNamesClassColor
   )
 
+  ------------
+  -- Layout --
+  ------------
+  local nameplateText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  nameplateText:SetText("Layout Options")
+  nameplateText:SetPoint("TOPLEFT", nameplateHideCastText, "BOTTOMLEFT", 0, -16)
+
+  -- Action Bar Offset
   local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", nameplateHideCastText, "InputBoxTemplate")
   actionBarOffset:SetAutoFocus(false)
-  actionBarOffset:SetPoint("TOPLEFT", nameplateHideCastText, "BOTTOMLEFT", 12, -8)
+  actionBarOffset:SetPoint("TOPLEFT", nameplateText, "BOTTOMLEFT", 12, -8)
   actionBarOffset:SetSize(40, 20)
   actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
   actionBarOffset:SetCursorPosition(0)
@@ -292,8 +272,28 @@ local function rcui_options()
   actionBarOffsetText:SetTextColor( 1, 1, 1 )
   actionBarOffsetText:SetPoint("LEFT", actionBarOffset, "RIGHT", 6, 0)
 
-  --reload button
+  -- Castbar Offset
+  local castBarOffset = CreateFrame("EditBox", "castBarOffset", actionBarOffset, "InputBoxTemplate")
+  castBarOffset:SetAutoFocus(false)
+  castBarOffset:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -8)
+  castBarOffset:SetSize(40, 20)
+  castBarOffset:SetNumber(RCUIDB.castbarOffset)
+  castBarOffset:SetCursorPosition(0)
+  function setcastBarOffset()
+    castBarOffset:ClearFocus()
+    RCUIDB.castbarOffset = castBarOffset:GetNumber()
+  end
+  castBarOffset:SetScript("OnEditFocusLost", setcastBarOffset)
+  castBarOffset:SetScript("OnEnterPressed", setcastBarOffset)
 
+  local castBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  castBarOffsetText:SetText("CastBar Offset (Vertical)")
+  castBarOffsetText:SetTextColor( 1, 1, 1 )
+  castBarOffsetText:SetPoint("LEFT", castBarOffset, "RIGHT", 6, 0)
+
+  ------------------
+  --Reload Button --
+  ------------------
   local reload = CreateFrame("Button", "reload", rcui.childpanel, "UIPanelButtonTemplate")
   reload:SetPoint("BOTTOMRIGHT", rcui.childpanel, "BOTTOMRIGHT", -10, 10)
   reload:SetSize(100,22)
