@@ -34,10 +34,11 @@ RillyCleanNameplates:SetScript("OnEvent", function()
   end)
 
   hooksecurefunc("CompactUnitFrame_SetUnit", function(frame, unit)
-    if ( not frame.isNameplate or not frame.castBar ) then return end
+    local castFrame = frame.castBar
+    if ( not frame.isNameplate or not castFrame ) then return end
     
-    if ( not frame.castBar.timer ) then
-      addCastbarTimer(frame.castBar, 12, 2, 0)
+    if ( not castFrame.timer ) then
+      addCastbarTimer(castFrame, 12, 2, 0)
     end
   end)
 
