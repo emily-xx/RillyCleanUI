@@ -20,7 +20,8 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
     if frame.isNameplate and not frame:IsForbidden() then
       if not frame.healthPercentage then
-        frame.healthPercentage = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormal")
+        frame.healthPercentage = frame.healthBar:CreateFontString(nil)
+        setDefaultFont(frame.healthPercentage, RCUIDB.nameplateNameFontSize - 1)
         frame.healthPercentage:SetTextColor( 1, 1, 1 )
         frame.healthPercentage:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
       end
@@ -39,6 +40,12 @@ RillyCleanNameplates:SetScript("OnEvent", function()
     
     if ( not castFrame.timer ) then
       addCastbarTimer(castFrame, 12, 2, 0)
+    end
+
+    if ( not unit or UnitIsFriend("player", unit) ) then
+      castFrame.timer:Hide()
+    else
+      castFrame.timer:Show()
     end
   end)
 
@@ -90,11 +97,13 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
     local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
     if ( isPersonal ) then
-      if ( frame.unitLevel ) then
-        frame.unitLevel:SetText('')
+      if ( frame.levelText ) then
+        frame.levelText:SetText('')
       end
       return
     end
+
+    setDefaultFont(frame.name, RCUIDB.nameplateNameFontSize)
 
     if RCUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
@@ -103,19 +112,23 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       frame.name:SetTextColor(classR, classG, classB, 1)
     end
 
-    if not frame.unitLevel then
-      frame.unitLevel = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormal")
-      frame.unitLevel:SetTextColor( 1, 1, 1 )
-      frame.unitLevel:SetPoint("RIGHT", frame.healthBar, "RIGHT", 0, 0)
+    if not frame.levelText then
+      frame.levelText = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormalSmall")
+      frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
     end
-    frame.unitLevel:SetText(UnitLevel(frame.unit))
+    frame.unitLevel = UnitEffectiveLevel(frame.unit)
+    local c = GetCreatureDifficultyColor(frame.unitLevel)
+    frame.levelText:SetTextColor( c.r, c.g, c.b )
+    frame.levelText:SetText(frame.unitLevel)
 
     if RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0 then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
       if not RCUIDB.nameplateHideServerNames and realm then
-        name = name.." - "..realm
-      elseif RCUIDB.nameplateNameLength > 0 then
+        name = name.." - "..realm 
+      end
+
+      if RCUIDB.nameplateNameLength > 0 then
         name = abbrev(name, RCUIDB.nameplateNameLength)
       end
 
