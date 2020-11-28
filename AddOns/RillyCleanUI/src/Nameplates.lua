@@ -6,10 +6,10 @@ RillyCleanNameplates:SetScript("OnEvent", function()
   -- Red color when below 30% on Personal Resource Bar --
   -------------------------------------------------------
   hooksecurefunc("CompactUnitFrame_UpdateHealth", function(frame)
+    local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
+    local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
     if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
-      local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
-
-      if C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player") then
+      if isPersonal then
         if healthPercentage == 100 then
           frame.healthBar:SetStatusBarColor(0, 1, 0)
         elseif healthPercentage < 100 and healthPercentage >= 30 then
@@ -17,6 +17,20 @@ RillyCleanNameplates:SetScript("OnEvent", function()
         elseif healthPercentage < 30 then
           frame.healthBar:SetStatusBarColor(1, 0, 0)
         end
+      end
+    end
+
+    if frame.isNameplate and not frame:IsForbidden() then
+      if not frame.healthPercentage then
+        frame.healthPercentage = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormal")
+        frame.healthPercentage:SetTextColor( 1, 1, 1 )
+        frame.healthPercentage:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
+      end
+
+      if healthPercentage ~= 100 then
+        frame.healthPercentage:SetText(healthPercentage .. '%')
+      else
+        frame.healthPercentage:SetText('')
       end
     end
   end)
@@ -63,8 +77,17 @@ RillyCleanNameplates:SetScript("OnEvent", function()
   end
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if ( frame:IsForbidden() ) then return end
-    if ( not frame.isNameplate ) then return end
+    if ( not frame.unit ) or ( not frame.isNameplate ) or ( frame:IsForbidden() ) then
+      return
+    end
+
+    local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
+    if ( isPersonal ) then
+      if ( frame.unitLevel ) then
+        frame.unitLevel:SetText('')
+      end
+      return
+    end
 
     if RCUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
@@ -72,6 +95,13 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
       frame.name:SetTextColor(classR, classG, classB, 1)
     end
+
+    if not frame.unitLevel then
+      frame.unitLevel = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormal")
+      frame.unitLevel:SetTextColor( 1, 1, 1 )
+      frame.unitLevel:SetPoint("RIGHT", frame.healthBar, "RIGHT", 0, 0)
+    end
+    frame.unitLevel:SetText(UnitLevel(frame.unit))
 
     if RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0 then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
