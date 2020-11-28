@@ -10,9 +10,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
     if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
       if isPersonal then
-        if healthPercentage == 100 then
-          frame.healthBar:SetStatusBarColor(0, 1, 0)
-        elseif healthPercentage < 100 and healthPercentage >= 30 then
+        if healthPercentage <= 100 and healthPercentage >= 30 then
           frame.healthBar:SetStatusBarColor(0, 1, 0)
         elseif healthPercentage < 30 then
           frame.healthBar:SetStatusBarColor(1, 0, 0)
@@ -32,6 +30,14 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       else
         frame.healthPercentage:SetText('')
       end
+    end
+  end)
+
+  hooksecurefunc("CompactUnitFrame_SetUnit", function(frame, unit)
+    if ( not frame.isNameplate or not frame.castBar ) then return end
+    
+    if ( not frame.castBar.timer ) then
+      addCastbarTimer(frame.castBar, 12, 2, 0)
     end
   end)
 

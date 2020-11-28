@@ -18,6 +18,37 @@ local backdrop = {
   },
 }
 
+-- CastBar timer function
+local function CastingBarFrame_OnUpdate_Hook(self, elapsed)
+	if not self.timer then
+		return
+	end
+	if self.update and self.update < elapsed then
+		if self.casting then
+			self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+		elseif self.channeling then
+			self.timer:SetText(format("%.1f", max(self.value, 0)))
+		else
+			self.timer:SetText("")
+		end
+		self.update = .1
+	else
+		self.update = self.update - elapsed
+	end
+end
+
+function addCastbarTimer(castingFrame, fontSize, xOffset, yOffset, point, relativePoint)
+  if ( not point ) then point = "LEFT" end
+  if ( not relativePoint ) then relativePoint = "RIGHT" end
+
+  castingFrame.timer = castingFrame:CreateFontString(nil)
+  setDefaultFont(castingFrame.timer, fontSize)
+  castingFrame.timer:SetPoint(point, castingFrame, relativePoint, xOffset, yOffset)
+  castingFrame.update = 0.1
+
+  castingFrame:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
+end
+
 CastBars:RegisterEvent("ADDON_LOADED")
 CastBars:SetScript(
 	"OnEvent",
@@ -55,20 +86,13 @@ CastBars:SetScript(
       CastingBarFrame.Spark:SetPoint("LEFT", CastingBarFrame:GetStatusBarTexture(), "RIGHT", -15, 1)
 
       -- Player Timer
-      CastingBarFrame.timer = CastingBarFrame:CreateFontString(nil)
-      setDefaultFont(CastingBarFrame.timer, 14)
-      CastingBarFrame.timer:SetPoint("LEFT", CastingBarFrame, "RIGHT", 5, -1)
-      CastingBarFrame.update = 0.1
-      -- end
+      addCastbarTimer(CastingBarFrame, 14, 5, -1)
 
       -- Target Castbar
       TargetFrameSpellBar.Icon:SetPoint("RIGHT", TargetFrameSpellBar, "LEFT", -5, 0)
 
-      -- Target Timer
-      TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
-      setDefaultFont(TargetFrameSpellBar.timer, 11)
-      TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
-      TargetFrameSpellBar.update = 0.1
+      -- Target 
+      addCastbarTimer(TargetFrameSpellBar, 11, 4, 0)
 
       self:UnregisterEvent("ADDON_LOADED")
 		end
@@ -127,25 +151,3 @@ CastBars:SetScript(
     castSkinTimer:SetScript("OnUpdate", UpdateTimer)
 	end
 )
-
--- CastBar timer function
-local function CastingBarFrame_OnUpdate_Hook(self, elapsed)
-	if not self.timer then
-		return
-	end
-	if self.update and self.update < elapsed then
-		if self.casting then
-			self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
-		elseif self.channeling then
-			self.timer:SetText(format("%.1f", max(self.value, 0)))
-		else
-			self.timer:SetText("")
-		end
-		self.update = .1
-	else
-		self.update = self.update - elapsed
-	end
-end
-
-CastingBarFrame:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
-TargetFrameSpellBar:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
