@@ -36,7 +36,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
   hooksecurefunc("CompactUnitFrame_SetUnit", function(frame, unit)
     local castFrame = frame.castBar
-    if ( not frame.isNameplate or not castFrame ) then return end
+    if ( not frame.isNameplate or not castFrame or frame:IsForbidden() ) then return end
     
     if ( not castFrame.timer ) then
       addCastbarTimer(castFrame, 12, 2, 0)
@@ -46,6 +46,32 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       castFrame.timer:Hide()
     else
       castFrame.timer:Show()
+    end
+  end)
+
+  hooksecurefunc("CompactUnitFrame_UpdatePower", function(frame)
+    if ( not frame.isNameplate or frame:IsForbidden() ) then return end
+    local unit = frame.displayedUnit
+    local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
+
+    if ( not isPersonal or not frame.powerBar) then
+      if ( frame.powerPercentage ) then
+        frame.powerPercentage:SetText('')
+      end
+      return
+    end
+
+    local powerPercentage = ceil((UnitPower(unit) / UnitPowerMax(unit) * 100))
+    if ( not frame.powerPercentage ) then
+      frame.powerPercentage = frame.powerBar:CreateFontString(nil, "HIGH", "GameFontNormal")
+      frame.powerPercentage:SetTextColor( 1, 1, 1 )
+      frame.powerPercentage:SetPoint("CENTER", frame.powerBar, "CENTER", 0, 0)
+    end
+
+    if (powerPercentage ~= 100) then
+      frame.powerPercentage:SetText(powerPercentage .. '%')
+    else
+      frame.powerPercentage:SetText('')
     end
   end)
 
