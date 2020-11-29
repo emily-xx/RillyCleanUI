@@ -108,8 +108,12 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       if ( frame:IsForbidden() ) then return end
       if ( not frame.isNameplate ) then return end
 
-      if RCUIDB.nameplateHideCastText then
-        frame.castBar.Text:Hide()
+      if (frame.castBar) then
+        if RCUIDB.nameplateHideCastText then
+          frame.castBar.Text:Hide()
+        end
+
+        setDefaultFont(frame.castBar.Text, RCUIDB.nameplateNameFontSize - 1)
       end
     end
 

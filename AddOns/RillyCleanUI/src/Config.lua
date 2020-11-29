@@ -1,10 +1,12 @@
 -- This table defines the addon's default settings:
+local name, RCUI = ...
 RCUIDBDefaults = {
   actionBarOffset = 20,
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 170,
   hideHotkeys = true,
 
+  hideAltPower = true,
   lootSpecDisplay = true, -- Display loot spec under the player frame
 
   damageFont = true, -- Change damage font to something cooler
@@ -13,12 +15,14 @@ RCUIDBDefaults = {
 
   -- Nameplate Settings
   modNamePlates = true, -- Set to false to ignore all nameplate customization
-  nameplateNameFontSize = 7,
+  nameplateNameFontSize = 9,
   nameplateHideServerNames = true,
   nameplateNameLength = 20, -- Set to nil for no abbreviation
   nameplateFriendlyNamesClassColor = true,
   nameplateHideCastText = false,
+  nameplateShowLevel = true,
   nameplateCastFontSize = 6,
+  nameplateShowCastTime = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
@@ -63,9 +67,20 @@ rc_catch:SetScript("OnEvent", rcui_defaults)
 SetSortBagsRightToLeft(true)
 SetInsertItemsLeftToRight(false)
 
+local onShow = function(frame)
+  
+end
+
+local makePanel = function(frameName, mainpanel, panelName)
+  local panel = CreateFrame("Frame", frameName, mainpanel)
+  panel.name, panel.parent = panelName, name
+  panel:SetScript("OnShow", onShow)
+  InterfaceOptions_AddCategory(panel)
+end
+
 local function rcui_options()
   -- Creation of the options menu
-  rcui.panel = CreateFrame( "Frame", "rcuiPanel", UIParent)
+  rcui.panel = CreateFrame( "Frame", "rcuiPanel", UIParent )
   rcui.panel.name = "RillyCleanUI";
   InterfaceOptions_AddCategory(rcui.panel);
   rcui.childpanel = CreateFrame( "Frame", "rcuiChild", rcui.panel)
@@ -73,8 +88,12 @@ local function rcui_options()
   rcui.childpanel:SetPoint("BOTTOMRIGHT",rcuiPanel,0,0)
   InterfaceOptions_AddCategory(rcui.childpanel)
 
-  local function newCheckbox(label, description, initialValue, onChange, relativeEl)
-    local check = CreateFrame("CheckButton", "RCUICheck" .. label, rcui.childpanel, "InterfaceOptionsCheckButtonTemplate")
+  local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame)
+    if ( not frame ) then
+      frame = rcui.childpanel
+    end
+
+    local check = CreateFrame("CheckButton", "RCUICheck" .. label, frame, "InterfaceOptionsCheckButtonTemplate")
     check:SetScript("OnClick", function(self)
       local tick = self:GetChecked()
       onChange(self, tick and true or false)
@@ -89,7 +108,11 @@ local function rcui_options()
     check.tooltipText = label
     check.tooltipRequirement = description
     check:SetChecked(initialValue)
-    check:SetPoint("TOPLEFT", relativeEl, "BOTTOMLEFT", 0, -8)
+    if (relativeEl) then
+      check:SetPoint("TOPLEFT", relativeEl, "BOTTOMLEFT", 0, -8)
+    else
+      check:SetPoint("TOPLEFT", 16, -16)
+    end
     return check
   end
 
@@ -198,9 +221,29 @@ local function rcui_options()
     hideMinimapZoneText
   )
 
-  local nameplateText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  ----------------
+  -- Nameplates --
+  ----------------
+  makePanel("RCUI_Nameplates", rcui.panel, "Nameplates")
+
+  local nameplateText = RCUI_Nameplates:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   nameplateText:SetText("Nameplates")
-  nameplateText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
+  nameplateText:SetPoint("TOPLEFT", 16, -16)
+
+  local nameplateFontSlider = CreateFrame("Slider", "RCUI_NameplateFontSize", RCUI_Nameplates, "OptionsSliderTemplate")
+  nameplateFontSlider:SetMinMaxValues(6, 20)
+  nameplateFontSlider:SetValue(RCUIDB.nameplateNameFontSize)
+  nameplateFontSlider:SetValueStep(1)
+  nameplateFontSlider:SetWidth(110)
+  nameplateFontSlider:SetScript("OnValueChanged", function(_, v)
+    v = floor(v)
+    RCUI_NameplateFontSizeText:SetFormattedText(FONT_SIZE.." "..FONT_SIZE_TEMPLATE, v)
+    RCUIDB.nameplateNameFontSize = v
+  end)
+  RCUI_NameplateFontSizeHigh:SetText(20)
+  RCUI_NameplateFontSizeLow:SetText(6)
+  RCUI_NameplateFontSizeText:SetFormattedText(FONT_SIZE.." "..FONT_SIZE_TEMPLATE, RCUIDB.nameplateNameFontSize)
+  nameplateFontSlider:SetPoint("TOPLEFT", nameplateText, "BOTTOMLEFT", 4, -24)
 
   local nameplateNameLength = newCheckbox(
     "Abbreviate Unit Names",
@@ -213,7 +256,8 @@ local function rcui_options()
         RCUIDB.nameplateNameLength = 0
       end
     end,
-    nameplateText
+    nameplateFontSlider,
+    RCUI_Nameplates
   )
 
   local nameplateHideServerNames = newCheckbox(
@@ -223,7 +267,8 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateHideServerNames = value
     end,
-    nameplateNameLength
+    nameplateNameLength,
+    RCUI_Nameplates
   )
 
   local nameplateFriendlyNamesClassColor = newCheckbox(
@@ -233,7 +278,8 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateFriendlyNamesClassColor = value
     end,
-    nameplateHideServerNames
+    nameplateHideServerNames,
+    RCUI_Nameplates
   )
 
   local nameplateHideCastText = newCheckbox(
@@ -243,7 +289,8 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateHideCastText = value
     end,
-    nameplateFriendlyNamesClassColor
+    nameplateFriendlyNamesClassColor,
+    RCUI_Nameplates
   )
 
   ------------
@@ -251,10 +298,10 @@ local function rcui_options()
   ------------
   local nameplateText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   nameplateText:SetText("Layout Options")
-  nameplateText:SetPoint("TOPLEFT", nameplateHideCastText, "BOTTOMLEFT", 0, -16)
+  nameplateText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
 
   -- Action Bar Offset
-  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", nameplateHideCastText, "InputBoxTemplate")
+  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", disableAutoAddSpells, "InputBoxTemplate")
   actionBarOffset:SetAutoFocus(false)
   actionBarOffset:SetPoint("TOPLEFT", nameplateText, "BOTTOMLEFT", 12, -8)
   actionBarOffset:SetSize(40, 20)
