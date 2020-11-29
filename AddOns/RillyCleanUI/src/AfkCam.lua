@@ -107,12 +107,6 @@ AFKPanel.Text:SetPoint("CENTER", AFKPanel, "CENTER", 0, 15 )
 AFKPanel.Text:SetFont( font, 110, "OUTLINE" )
 AFKPanel.Text:SetText( "|cffb07aebRC|r|cff009cffUI|r" )
 
-AFKPanel.Text = AFKPanelTop:CreateFontString( nil, "OVERLAY" )
-AFKPanel.Text:SetPoint("CENTER", AFKPanel, "CENTER", 0, -40 )
-AFKPanel.Text:SetFont( font, 22, "OUTLINE" )
-local version = GetAddOnMetadata("RillyCleanUI", "Version")
-AFKPanel.Text:SetText( "|cffb07aebv|r|cff009cff" .. version .. "|r" )
-
 -- Set Up the Player Model
 AFKPanel.playerModel = CreateFrame('PlayerModel', nil, AFKPanel);
 AFKPanel.playerModel:SetSize(800, 1000)
