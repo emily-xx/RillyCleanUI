@@ -89,11 +89,11 @@ AFKPanelTop.Text:SetText( "AFK" )
 AFKPanelTop.Text:SetTextColor( color.r, color.g, color.b )
 
 AFKPanelTop.DateText = AFKPanelTop:CreateFontString( nil, "OVERLAY" )
-AFKPanelTop.DateText:SetPoint( "BOTTOMLEFT", AFKPanelTop, "BOTTOMRIGHT", -100, 44 )
+AFKPanelTop.DateText:SetPoint( "BOTTOMRIGHT", AFKPanelTop, "BOTTOMRIGHT", -20, 44 )
 AFKPanelTop.DateText:SetFont( font, 15, "OUTLINE" )
 
 AFKPanelTop.ClockText = AFKPanelTop:CreateFontString( nil, "OVERLAY" )
-AFKPanelTop.ClockText:SetPoint( "BOTTOMLEFT", AFKPanelTop, "BOTTOMRIGHT", -100, 20 )
+AFKPanelTop.ClockText:SetPoint( "BOTTOMRIGHT", AFKPanelTop, "BOTTOMRIGHT", -20, 20 )
 AFKPanelTop.ClockText:SetFont( font, 20, "OUTLINE" )
 
 AFKPanelTop.PlayerNameText = AFKPanelTop:CreateFontString( nil, "OVERLAY" )
@@ -147,7 +147,7 @@ AFKPanelTop:SetScript( "OnUpdate", function( self, elapsed )
 	interval = interval - elapsed
 	if( interval <= 0 ) then
 		AFKPanelTop.ClockText:SetText( format("%s", date( "%H:%M:%S" ) ) )
-		AFKPanelTop.DateText:SetText( format("%s", date( "%a %b/%d" ) ) )
+		AFKPanelTop.DateText:SetText( format("%s", date( "%d %b" ) ) )
 		interval = 0.5
 	end
 end )
