@@ -103,7 +103,7 @@ AFKPanelTop.PlayerNameText:SetText( PName )
 AFKPanelTop.PlayerNameText:SetTextColor( color.r, color.g, color.b )
 
 AFKPanel.Text = AFKPanelTop:CreateFontString( nil, "OVERLAY" )
-AFKPanel.Text:SetPoint("CENTER", AFKPanel, "CENTER", 0, 15 )
+AFKPanel.Text:SetPoint("CENTER", AFKPanel, "CENTER", 0, 0 )
 AFKPanel.Text:SetFont( font, 110, "OUTLINE" )
 AFKPanel.Text:SetText( "|cffb07aebRC|r|cff009cffUI|r" )
 
