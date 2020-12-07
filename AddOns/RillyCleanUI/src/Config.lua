@@ -201,15 +201,19 @@ local function rcui_options()
     portraitDropdown
   )
 
-  local damageFont = newCheckbox(
-    "Use Custom Damage Font (Requires Game Restart)",
-    "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
-    RCUIDB.damageFont,
+  local hideAltPower = newCheckbox(
+    "Hide Alt Power (Requires reload)",
+    "Hides alt power bars on character frame such as combo points or holy power to clean it up, preferring their view on personal resource display.",
+    RCUIDB.hideAltPower,
     function(self, value)
-      RCUIDB.damageFont = value
+      RCUIDB.hideAltPower = value
     end,
     lootSpecDisplay
   )
+
+  local actionbarText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  actionbarText:SetText("Action Bar Options")
+  actionbarText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
 
   local hideHotkeys = newCheckbox(
     "Hide Hotkeys on Action Bars",
@@ -218,7 +222,31 @@ local function rcui_options()
     function(self, value)
       RCUIDB.hideHotkeys = value
     end,
-    damageFont
+    actionbarText
+  )
+
+  local disableAutoAddSpells = newCheckbox(
+    "Disable Auto Adding of Spells",
+    "Disables automatic adding of spells to action bars when learning new spells.",
+    RCUIDB.disableAutoAddSpells,
+    function(self, value)
+      RCUIDB.disableAutoAddSpells = value
+    end,
+    hideHotkeys
+  )
+
+  local miscText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  miscText:SetText("Misc. Options")
+  miscText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -12)
+
+  local damageFont = newCheckbox(
+    "Use Custom Damage Font (Requires Game Restart)",
+    "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
+    RCUIDB.damageFont,
+    function(self, value)
+      RCUIDB.damageFont = value
+    end,
+    miscText
   )
 
   local hideMinimapZoneText = newCheckbox(
@@ -229,17 +257,7 @@ local function rcui_options()
       RCUIDB.hideMinimapZoneText = value
       handleMinimapZoneText()
     end,
-    hideHotkeys
-  )
-
-  local disableAutoAddSpells = newCheckbox(
-    "Disable Auto Adding of Spells",
-    "Disables automatic adding of spells to action bars when learning new spells.",
-    RCUIDB.disableAutoAddSpells,
-    function(self, value)
-      RCUIDB.disableAutoAddSpells = value
-    end,
-    hideMinimapZoneText
+    damageFont
   )
 
   ----------------
@@ -336,7 +354,7 @@ local function rcui_options()
   ------------
   local layoutText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   layoutText:SetText("Layout Options")
-  layoutText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
+  layoutText:SetPoint("TOPLEFT", hideMinimapZoneText, "BOTTOMLEFT", 0, -12)
 
   -- Action Bar Offset
   local actionBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")

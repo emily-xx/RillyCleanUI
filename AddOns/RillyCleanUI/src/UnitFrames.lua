@@ -384,7 +384,11 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		local defaultIcon
 
 		local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
-		PlayerLootSpecFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOMRIGHT", -120, 32)
+		local yVal = 32
+		if (not RCUIDB.hideAltPower) then
+			yVal = 10
+		end
+		PlayerLootSpecFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOMRIGHT", -120, yVal)
 		PlayerLootSpecFrame:SetHeight(16)
 		PlayerLootSpecFrame:SetWidth(16)
 		PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
