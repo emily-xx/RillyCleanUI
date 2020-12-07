@@ -5,21 +5,23 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	-------------------------
 	-- Hide Alt Power bars --
 	-------------------------
-	local altPowerBars = {
-		PaladinPowerBarFrame,
-		PlayerFrameAlternateManaBar,
-		MageArcaneChargesFrame,
-		MonkHarmonyBarFrame,
-		MonkStaggerBar,
-		RuneFrame,
-		ComboPointPlayerFrame,
-		WarlockPowerFrame,
-		TotemFrame
-	}
+	if (RCUIDB.hideAltPower) then
+		local altPowerBars = {
+			PaladinPowerBarFrame,
+			PlayerFrameAlternateManaBar,
+			MageArcaneChargesFrame,
+			MonkHarmonyBarFrame,
+			MonkStaggerBar,
+			RuneFrame,
+			ComboPointPlayerFrame,
+			WarlockPowerFrame,
+			TotemFrame
+		}
 
-	for _, altPowerBar in pairs(altPowerBars) do
-		altPowerBar:SetAlpha(0)
-		RegisterStateDriver(altPowerBar, "visibility", "hide")
+		for _, altPowerBar in pairs(altPowerBars) do
+			altPowerBar:SetAlpha(0)
+			RegisterStateDriver(altPowerBar, "visibility", "hide")
+		end
 	end
 
 	function cleanPlayerFrame()

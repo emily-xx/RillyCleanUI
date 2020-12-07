@@ -16,7 +16,7 @@ end
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
-	if IsAddOnLoaded('TinyTooltip') then
+	if IsAddOnLoaded('TinyTooltip') or IsAddOnLoaded('TipTac') then
 		return
 	end
 

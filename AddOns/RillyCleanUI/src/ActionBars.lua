@@ -78,7 +78,7 @@ local function init()
       PlayerPowerBarAlt:SetMovable(true)
       PlayerPowerBarAlt:SetUserPlaced(true)
       PlayerPowerBarAlt:ClearAllPoints()
-      PlayerPowerBarAlt:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (RCUIDB.actionBarOffset + 120))
+      PlayerPowerBarAlt:SetPoint("TOP", SCREEN, "TOP", 0, -160)
       PlayerPowerBarAlt:SetMovable(false)
     end
 
@@ -198,15 +198,6 @@ local function init()
   local function styleExtraActionButton(bu)
     if not bu or (bu and bu.rabs_styled) then
       return
-    end
-    if not bu.Icon and not bu.icon then
-      for key in pairs(bu) do
-        print(key)
-        if bu[key].Icon then
-          bu = bu[key]
-          break
-        end
-      end
     end
     local name = bu:GetName() or bu:GetParent():GetName()
     local style = bu.style or bu.Style
@@ -357,7 +348,6 @@ local function init()
     nt:SetAllPoints(bu)
 
     --cut the default border of the icons and make them shiny
-    --cut the default border of the icons and make them shiny
     ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
     ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
@@ -445,7 +435,7 @@ local function init()
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
-  -- styleExtraActionButton(ZoneAbilityFrame.SpellButtonContainer)-- TODO: Fix
+  styleExtraActionButton(ZoneAbilityFrame.SpellButton)-- TODO: Fix
   --spell flyout
   SpellFlyoutBackgroundEnd:SetTexture(nil)
   SpellFlyoutHorizontalBackground:SetTexture(nil)

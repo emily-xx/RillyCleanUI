@@ -22,6 +22,7 @@ RCUIDBDefaults = {
   nameplateHideCastText = false,
   nameplateShowLevel = true,
   nameplateCastFontSize = 6,
+  nameplateHealthPercent = true,
   nameplateShowCastTime = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
@@ -142,6 +143,26 @@ local function rcui_options()
     return dropdownText, dropdown
   end
 
+  local function newSlider(frameName, label, configVar, min, max, relativeEl, frame)
+    local slider = CreateFrame("Slider", frameName, frame, "OptionsSliderTemplate")
+    slider:SetMinMaxValues(min, max)
+    slider:SetValue(RCUIDB[configVar])
+    slider:SetValueStep(1)
+    slider:SetWidth(110)
+    local textFrame = (frameName .. 'Text')
+    slider:SetScript("OnValueChanged", function(_, v)
+      v = floor(v)
+      _G[textFrame]:SetFormattedText(label, v)
+      RCUIDB[configVar] = v
+    end)
+    _G[(frameName .. 'Low')]:SetText(min)
+    _G[(frameName .. 'High')]:SetText(max)
+    _G[textFrame]:SetFormattedText(label, RCUIDB[configVar])
+    slider:SetPoint("TOPLEFT", relativeEl, "BOTTOMLEFT", 0, -24)
+
+    return slider
+  end
+
   local version = GetAddOnMetadata("RillyCleanUI", "Version")
 
   local rcuiTitle = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -230,20 +251,15 @@ local function rcui_options()
   nameplateText:SetText("Nameplates")
   nameplateText:SetPoint("TOPLEFT", 16, -16)
 
-  local nameplateFontSlider = CreateFrame("Slider", "RCUI_NameplateFontSize", RCUI_Nameplates, "OptionsSliderTemplate")
-  nameplateFontSlider:SetMinMaxValues(6, 20)
-  nameplateFontSlider:SetValue(RCUIDB.nameplateNameFontSize)
-  nameplateFontSlider:SetValueStep(1)
-  nameplateFontSlider:SetWidth(110)
-  nameplateFontSlider:SetScript("OnValueChanged", function(_, v)
-    v = floor(v)
-    RCUI_NameplateFontSizeText:SetFormattedText(FONT_SIZE.." "..FONT_SIZE_TEMPLATE, v)
-    RCUIDB.nameplateNameFontSize = v
-  end)
-  RCUI_NameplateFontSizeHigh:SetText(20)
-  RCUI_NameplateFontSizeLow:SetText(6)
-  RCUI_NameplateFontSizeText:SetFormattedText(FONT_SIZE.." "..FONT_SIZE_TEMPLATE, RCUIDB.nameplateNameFontSize)
-  nameplateFontSlider:SetPoint("TOPLEFT", nameplateText, "BOTTOMLEFT", 4, -24)
+  local nameplateFontSlider = newSlider(
+    "RCUI_NameplateFontSlider",
+    FONT_SIZE.." "..FONT_SIZE_TEMPLATE,
+    "nameplateNameFontSize",
+    6,
+    20,
+    nameplateText,
+    RCUI_Nameplates
+  )
 
   local nameplateNameLength = newCheckbox(
     "Abbreviate Unit Names",
@@ -282,6 +298,28 @@ local function rcui_options()
     RCUI_Nameplates
   )
 
+  local nameplateShowLevel = newCheckbox(
+    "Show Level",
+    "Show player/mob level on nameplate",
+    RCUIDB.nameplateShowLevel,
+    function(self, value)
+      RCUIDB.nameplateShowLevel = value
+    end,
+    nameplateFriendlyNamesClassColor,
+    RCUI_Nameplates
+  )
+
+  local nameplateShowHealth = newCheckbox(
+    "Show Health Percentage",
+    "Show percentages of health on nameplates",
+    RCUIDB.nameplateHealthPercent,
+    function(self, value)
+      RCUIDB.nameplateHealthPercent = value
+    end,
+    nameplateShowLevel,
+    RCUI_Nameplates
+  )
+
   local nameplateHideCastText = newCheckbox(
     "Hide Cast Text",
     "Hide cast text from nameplate castbars.",
@@ -289,54 +327,48 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateHideCastText = value
     end,
-    nameplateFriendlyNamesClassColor,
+    nameplateShowHealth,
     RCUI_Nameplates
   )
 
   ------------
   -- Layout --
   ------------
-  local nameplateText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  nameplateText:SetText("Layout Options")
-  nameplateText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
+  local layoutText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  layoutText:SetText("Layout Options")
+  layoutText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -16)
 
   -- Action Bar Offset
-  local actionBarOffset = CreateFrame("EditBox", "actionBarOffset", disableAutoAddSpells, "InputBoxTemplate")
-  actionBarOffset:SetAutoFocus(false)
-  actionBarOffset:SetPoint("TOPLEFT", nameplateText, "BOTTOMLEFT", 12, -8)
-  actionBarOffset:SetSize(40, 20)
-  actionBarOffset:SetNumber(RCUIDB.actionBarOffset)
-  actionBarOffset:SetCursorPosition(0)
-  function setActionBarOffset()
-    actionBarOffset:ClearFocus()
-    RCUIDB.actionBarOffset = actionBarOffset:GetNumber()
-  end
-  actionBarOffset:SetScript("OnEditFocusLost", setActionBarOffset)
-  actionBarOffset:SetScript("OnEnterPressed", setActionBarOffset)
-
   local actionBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   actionBarOffsetText:SetText("Action Bar Offset (Vertical)")
   actionBarOffsetText:SetTextColor( 1, 1, 1 )
-  actionBarOffsetText:SetPoint("LEFT", actionBarOffset, "RIGHT", 6, 0)
+  actionBarOffsetText:SetPoint("TOPLEFT", layoutText, "BOTTOMLEFT", 6, -12)
+
+  local actionBarOffset = newSlider(
+    "RCUI_ActionbaroffsetSlider",
+    "Offset: %d px",
+    'actionBarOffset',
+    0,
+    600,
+    actionBarOffsetText,
+    rcui.childpanel
+  )
 
   -- Castbar Offset
-  local castBarOffset = CreateFrame("EditBox", "castBarOffset", actionBarOffset, "InputBoxTemplate")
-  castBarOffset:SetAutoFocus(false)
-  castBarOffset:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -8)
-  castBarOffset:SetSize(40, 20)
-  castBarOffset:SetNumber(RCUIDB.castbarOffset)
-  castBarOffset:SetCursorPosition(0)
-  function setcastBarOffset()
-    castBarOffset:ClearFocus()
-    RCUIDB.castbarOffset = castBarOffset:GetNumber()
-  end
-  castBarOffset:SetScript("OnEditFocusLost", setcastBarOffset)
-  castBarOffset:SetScript("OnEnterPressed", setcastBarOffset)
-
   local castBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  castBarOffsetText:SetText("CastBar Offset (Vertical)")
+  castBarOffsetText:SetText("CastBar Offset (Vertical, relative to action bars)")
   castBarOffsetText:SetTextColor( 1, 1, 1 )
-  castBarOffsetText:SetPoint("LEFT", castBarOffset, "RIGHT", 6, 0)
+  castBarOffsetText:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -16)
+
+  local castBarOffset = newSlider(
+    "RCUI_CastbaroffsetSlider",
+    "Offset: %d px",
+    'castbarOffset',
+    0,
+    600,
+    castBarOffsetText,
+    rcui.childpanel
+  )
 
   ------------------
   --Reload Button --
