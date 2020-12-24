@@ -46,14 +46,14 @@ CF:SetScript("OnEvent", function(self, event)
 	GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
 		local _, unit = tooltip:GetUnit()
 		if  not unit then return end
-		local level = UnitLevel(unit)
+		local level = UnitEffectiveLevel(unit)
 
 		if UnitIsPlayer(unit) then
 			local className, class = UnitClass(unit)
 			local r, g, b = GetClassColor(class)
 			local race = UnitRace(unit)
 
-			if (level == -1 or level == "-1") then
+			if (level < 0) then
 				level = "??"
 			end
 

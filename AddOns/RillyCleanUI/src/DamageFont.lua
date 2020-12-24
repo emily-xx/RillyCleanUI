@@ -1,7 +1,7 @@
 RillyNiceDamage = CreateFrame("Frame", "RillyNiceDamage")
 
 function RillyNiceDamage:ApplySystemFonts()
-  DAMAGE_TEXT_FONT = "Interface\\AddOns\\RillyCleanUI\\fonts\\DamageFont.ttf"
+  DAMAGE_TEXT_FONT = "Interface\\AddOns\\RillyCleanUI\\fonts\\Bangers-Regular.ttf"
 end
 
 RillyNiceDamage:RegisterEvent("ADDON_LOADED")

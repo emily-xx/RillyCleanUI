@@ -115,6 +115,10 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
         setDefaultFont(frame.castBar.Text, RCUIDB.nameplateNameFontSize - 1)
       end
+
+      -- if (frame.ClassificationFrame) then
+      --   frame.ClassificationFrame:SetPoint('CENTER', frame.healthBar, 'LEFT', 0, 0)
+      -- end
     end
 
     hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)
@@ -150,8 +154,33 @@ RillyCleanNameplates:SetScript("OnEvent", function()
     if (RCUIDB.nameplateShowLevel) then
       frame.unitLevel = UnitEffectiveLevel(frame.unit)
       local c = GetCreatureDifficultyColor(frame.unitLevel)
+      local unitClassification = UnitClassification(frame.unit)
+      if (unitClassification == 'rare' or unitClassification == 'rareelite') then
+        c = {
+          r = 0.8,
+          g = 0.8,
+          b = 0.8
+        }
+      end
+      local levelText = frame.unitLevel
+      local levelSuffix = ''
+      if (levelText < 0) then
+        levelText = '??'
+      else
+        if (unitClassification == 'elite') then
+          levelSuffix = '+'
+        elseif (unitClassification == 'rareelite') then
+          levelSuffix = '*+'
+        elseif (unitClassification == 'worldboss') then
+          levelSuffix = '++'
+        elseif (unitClassification == 'rare') then
+          levelSuffix = '*'
+        elseif (unitClassification == 'minus') then
+          levelSuffix = '-'
+        end
+      end
       frame.levelText:SetTextColor( c.r, c.g, c.b )
-      frame.levelText:SetText(frame.unitLevel)
+      frame.levelText:SetText(levelText .. levelSuffix)
       frame.levelText:Show()
     elseif (not RCUIDB.nameplateShowLevel) then
       frame.levelText:SetText('')
