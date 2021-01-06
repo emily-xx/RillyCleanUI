@@ -40,8 +40,17 @@ local function init()
     end
 
     -- Hide stance bar
-    StanceBarFrame:SetAlpha(0)
-    RegisterStateDriver(StanceBarFrame, "visibility", "hide")
+    if (RCUIDB.hideStanceBar and not dominos and not bartender4) then
+      StanceBarFrame:SetAlpha(0)
+      RegisterStateDriver(StanceBarFrame, "visibility", "hide")
+    elseif (not dominos and not bartender4) then
+      StanceButton1:ClearAllPoints()
+      local relativeButton = MultiBarBottomLeftButton1
+      if (not relativeButton) then
+        relativeButton = ActionButton1
+      end
+      StanceButton1:SetPoint("BOTTOMLEFT", relativeButton, "TOPLEFT", 0, 16)
+    end
 
     AlertFrame:ClearAllPoints()
     AlertFrame:SetPoint("TOP", Screen, "TOP", 0, 0)
@@ -373,11 +382,19 @@ local function init()
     local nt = _G[name .. "NormalTexture2"]
     nt:SetAllPoints(bu)
 
+    --cut the default border of the icons and make them shiny
+    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
+    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+
     --shadows+background
     if not bu.bg then
       applyBackground(bu)
     end
     bu.rabs_styled = true
+  end
+  for i = 1, NUM_STANCE_SLOTS do
+    styleStanceButton(_G["StanceButton" .. i])
   end
 
   --style possess buttons

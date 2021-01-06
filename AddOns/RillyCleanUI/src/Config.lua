@@ -7,6 +7,7 @@ RCUIDBDefaults = {
   hideHotkeys = true,
 
   hideAltPower = true,
+  hideStanceBar = true,
   lootSpecDisplay = true, -- Display loot spec under the player frame
 
   damageFont = true, -- Change damage font to something cooler
@@ -225,6 +226,16 @@ local function rcui_options()
     actionbarText
   )
 
+  local hideStanceBar = newCheckbox(
+    "Hide Stance Bar (Requires reload)",
+    "Hides stance bar in favour of binding stances to action bars.",
+    RCUIDB.hideStanceBar,
+    function(self, value)
+      RCUIDB.hideStanceBar = value
+    end,
+    hideHotkeys
+  )
+
   local disableAutoAddSpells = newCheckbox(
     "Disable Auto Adding of Spells",
     "Disables automatic adding of spells to action bars when learning new spells.",
@@ -232,7 +243,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.disableAutoAddSpells = value
     end,
-    hideHotkeys
+    hideStanceBar
   )
 
   local miscText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
