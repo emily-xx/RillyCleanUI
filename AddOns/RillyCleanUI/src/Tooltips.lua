@@ -42,6 +42,18 @@ CF:SetScript("OnEvent", function(self, event)
 	bar.capNumericDisplay = true
 	bar.lockShow = 1
 
+	--gametooltip statusbar
+	GameTooltipStatusBar:ClearAllPoints()
+	GameTooltipStatusBar:SetPoint("LEFT", 5, 0)
+	GameTooltipStatusBar:SetPoint("RIGHT", -5, 0)
+	GameTooltipStatusBar:SetPoint("BOTTOM", 0, 5)
+	GameTooltipStatusBar:SetHeight(10)
+	--gametooltip statusbar bg
+	GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil,"BACKGROUND",nil,-8)
+	GameTooltipStatusBar.bg:SetAllPoints()
+	GameTooltipStatusBar.bg:SetColorTexture(1,1,1)
+	GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.5)
+
 	-- Class colours
 	GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
 		local _, unit = tooltip:GetUnit()
@@ -72,6 +84,8 @@ CF:SetScript("OnEvent", function(self, event)
 		if (family) then -- UnitIsBattlePetCompanion(unit);
 			GameTooltipTextLeft2:SetText(level .. " " .. family)
 		end
+
+		GameTooltip:AddLine(' ')
 	end)
 
 	GameTooltip:HookScript("OnUpdate", function(tooltip)
