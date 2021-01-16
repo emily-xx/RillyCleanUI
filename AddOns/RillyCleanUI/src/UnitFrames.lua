@@ -7,8 +7,13 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			local frameName = 'BigDebuffs' .. unit .. "UnitFrame"
 			local bdbFrame = _G[frameName]
 
-			if (bdbFrame.icon) then
-				bdbFrame.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+			local icon = bdbFrame.icon
+
+			if (icon) then
+				local cooldown = bdbFrame.cooldown or bdbFrame.Cooldown
+				icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+				cooldown:SetAllPoints(icon)
+				cooldown:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
 			end
 		end)
 	end
