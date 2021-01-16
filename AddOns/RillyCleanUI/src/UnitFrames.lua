@@ -2,6 +2,16 @@ RillyCleanUnitFrames = CreateFrame("Frame", "RillyCleanUnitFrames")
 RillyCleanUnitFrames:RegisterEvent("PLAYER_LOGIN")
 
 RillyCleanUnitFrames:SetScript("OnEvent", function()
+	if (IsAddOnLoaded('BigDebuffs')) then
+		hooksecurefunc(BigDebuffs, 'AttachUnitFrame', function(self, unit)
+			local frameName = 'BigDebuffs' .. unit .. "UnitFrame"
+			local bdbFrame = _G[frameName]
+
+			if (bdbFrame.icon) then
+				bdbFrame.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+			end
+		end)
+	end
 	-------------------------
 	-- Hide Alt Power bars --
 	-------------------------
