@@ -1,16 +1,4 @@
-local backdrop = {
-  bgFile = nil,
-  edgeFile = "Interface\\BUTTONS\\WHITE8X8",
-  tile = false,
-  tileSize = 32,
-  edgeSize = 1,
-  insets = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0,
-  },
-}
+local backdrop = RILLY_CLEAN_BACKDROP
 
 local function applySkin(b)
   if not b or (b and b.styled) then return end

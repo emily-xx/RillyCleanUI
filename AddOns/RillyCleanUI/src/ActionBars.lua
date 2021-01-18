@@ -50,6 +50,7 @@ local function init()
         relativeButton = ActionButton1
       end
       StanceButton1:SetPoint("BOTTOMLEFT", relativeButton, "TOPLEFT", 0, 16)
+      StanceBarRight:Hide()
     end
 
     AlertFrame:ClearAllPoints()
@@ -443,7 +444,7 @@ local function init()
             updateHotkey(_G["PetActionButton"..i])
         end
         updateHotkey(ExtraActionButton1)
-    end)     
+    end)
   end
 
   --style the actionbar buttons
