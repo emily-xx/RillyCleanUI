@@ -89,7 +89,27 @@ CF:SetScript("OnEvent", function(self, event)
 	end)
 
 	GameTooltip:HookScript("OnUpdate", function(tooltip)
-		GameTooltip:SetBackdropColor(0.13,0.13,0.13) -- Simpler and themed BG color
+		skinNineSlice(GameTooltip.NineSlice)
+		GameTooltip.NineSlice:SetCenterColor(0.13,0.13,0.13) -- Simpler and themed BG color
+		GameTooltip.NineSlice:SetBorderColor(0,0,0,0)
+
+		local RillyCleanToolTipBorder = _G["RillyCleanToolTipBorder"] or CreateFrame("Frame", "RillyCleanToolTipBorder", GameTooltip, "BackdropTemplate")
+		RillyCleanToolTipBorder:SetFrameLevel(0)
+		RillyCleanToolTipBorder:SetFrameStrata("MEDIUM")
+		RillyCleanToolTipBorder:SetHeight(GameTooltip:GetHeight() - 4)
+		RillyCleanToolTipBorder:SetWidth(GameTooltip:GetWidth() - 4)
+		RillyCleanToolTipBorder:SetPoint("CENTER",0,0)
+		RillyCleanToolTipBorder:SetScale(1)
+
+		RillyCleanToolTipBorder.backdropInfo = {
+			bgFile = SQUARE_TEXTURE,
+			tile = false, tileSize = 0, edgeSize = 0,
+			insets = { left = 1, right = 1, top = 1, bottom = 1 }
+		}
+		RillyCleanToolTipBorder:ApplyBackdrop()
+		RillyCleanToolTipBorder:SetBackdropColor(0,0,0,1)
+		RillyCleanToolTipBorder:SetBackdropBorderColor(0,0,0,1)
+		RillyCleanToolTipBorder:Show()
 	end)
 
 	GameTooltipStatusBar:HookScript("OnValueChanged", function(self, hp)
