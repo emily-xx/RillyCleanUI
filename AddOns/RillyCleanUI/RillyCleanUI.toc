@@ -1,8 +1,8 @@
-## Interface: 90002
+## Interface: 91500
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Emily
-## Version: 9.0.2-11
+## Version: 9.1.5-1
 ## SavedVariables: RCUIDB
 ## Email: emlywind@gmail.com
 
