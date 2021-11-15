@@ -109,11 +109,31 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       if ( not frame.isNameplate ) then return end
 
       if (frame.castBar) then
+        local castFrame = frame.castBar
         if RCUIDB.nameplateHideCastText then
-          frame.castBar.Text:Hide()
+          castFrame.Text:Hide()
         end
 
-        setDefaultFont(frame.castBar.Text, RCUIDB.nameplateNameFontSize - 1)
+        if ( not castFrame.styled ) then
+          setDefaultFont(castFrame.Text, RCUIDB.nameplateNameFontSize - 1)
+          -- frame
+          frame = CreateFrame("Frame", nil, castFrame)
+          local nameplateCastIcon = castFrame.Icon
+          --icon
+          nameplateCastIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
+          -- border
+          local back = CreateFrame("Frame", nil, castFrame, "BackdropTemplate")
+          back:SetPoint("TOPLEFT", nameplateCastIcon, "TOPLEFT", -2, 2)
+          back:SetPoint("BOTTOMRIGHT", nameplateCastIcon, "BOTTOMRIGHT", 2, -2)
+          back:SetFrameLevel(frame:GetFrameLevel())
+          back.backdropInfo = CAST_BACKDROP
+          back:ApplyBackdrop()
+          back:SetBackdropBorderColor(0,0,0,1)
+          castFrame.bg = back
+          --set nameplate styled variable
+          castFrame.styled = true
+        end
       end
 
       if (frame.ClassificationFrame) then
