@@ -90,7 +90,7 @@ CF:SetScript("OnEvent", function(self, event)
 
 	GameTooltip:HookScript("OnUpdate", function(tooltip)
 		skinNineSlice(GameTooltip.NineSlice)
-		GameTooltip.NineSlice:SetCenterColor(0.13,0.13,0.13) -- Simpler and themed BG color
+		GameTooltip.NineSlice:SetCenterColor(0.08,0.08,0.08) -- Simpler and themed BG color
 		GameTooltip.NineSlice:SetBorderColor(0,0,0,0)
 
 		local RillyCleanToolTipBorder = _G["RillyCleanToolTipBorder"]
@@ -98,7 +98,7 @@ CF:SetScript("OnEvent", function(self, event)
 		if (RillyCleanToolTipBorder == nil) then
 			RillyCleanToolTipBorder = CreateFrame("Frame", "RillyCleanToolTipBorder", GameTooltip, "BackdropTemplate")
 			RillyCleanToolTipBorder:SetFrameLevel(0)
-			RillyCleanToolTipBorder:SetFrameStrata("MEDIUM")
+			RillyCleanToolTipBorder:SetFrameStrata("TOOLTIP")
 			RillyCleanToolTipBorder:SetPoint("CENTER",0,0)
 			RillyCleanToolTipBorder:SetScale(1)
 
