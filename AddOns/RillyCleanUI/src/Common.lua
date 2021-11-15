@@ -14,6 +14,24 @@ RILLY_CLEAN_BACKDROP = {
   },
 }
 
+function skinNineSlice(ns)
+  local nsPoints = {
+    "TopLeftCorner",
+    "TopRightCorner",
+    "BottomLeftCorner",
+    "BottomRightCorner",
+    "TopEdge",
+    "BottomEdge",
+    "LeftEdge",
+    "RightEdge",
+    "Center"
+  }
+
+  for _, nsPoint in pairs(nsPoints) do
+    ns[nsPoint]:SetTexture(SQUARE_TEXTURE)
+  end
+end
+
 function applyRillyCleanButtonSkin(b)
   if not b or (b and b.styled) then return end
 
