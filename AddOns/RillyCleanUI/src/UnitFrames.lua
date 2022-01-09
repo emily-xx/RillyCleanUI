@@ -205,14 +205,14 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 
 		self.healthbar:SetSize(120, 26)
 		self.healthbar:ClearAllPoints()
-		self.healthbar:SetPoint("TOPLEFT", 5, -24)
+		self.healthbar:SetPoint("TOPLEFT", 6, -24)
 		self.healthbar.LeftText:ClearAllPoints()
 		self.healthbar.LeftText:SetPoint("LEFT", self.healthbar, "LEFT", 8, 0)
 		self.healthbar.RightText:ClearAllPoints()
 		self.healthbar.RightText:SetPoint("RIGHT", self.healthbar, "RIGHT", -5, 0)
 		self.healthbar.TextString:SetPoint("CENTER", self.healthbar, "CENTER", 0, 0)
 		self.manabar:ClearAllPoints()
-		self.manabar:SetPoint("TOPLEFT", 5, -52)
+		self.manabar:SetPoint("TOPLEFT", 6, -52)
 		self.manabar:SetSize(120, 13)
 		self.manabar.LeftText:ClearAllPoints()
 		self.manabar.LeftText:SetPoint("LEFT", self.manabar, "LEFT", 8, 0)
@@ -399,11 +399,8 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		local defaultIcon
 
 		local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
-		local yVal = 32
-		if (not RCUIDB.hideAltPower) then
-			yVal = 10
-		end
-		PlayerLootSpecFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOMRIGHT", -120, yVal)
+
+		PlayerLootSpecFrame:SetPoint("BOTTOMRIGHT", PlayerFrame.portrait, "BOTTOMRIGHT", -120, yVal)
 		PlayerLootSpecFrame:SetHeight(16)
 		PlayerLootSpecFrame:SetWidth(16)
 		PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
@@ -431,7 +428,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 				if not lootIcon then return end
 
 				local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
-				PlayerLootSpecFrame.specname:SetFormattedText("%s %s: %s", lootIconText, "Loot", lootSpecName)
+				PlayerLootSpecFrame.specname:SetFormattedText("%s", lootIconText)
 			end
 		end)
 	end

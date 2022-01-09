@@ -70,7 +70,7 @@ SetSortBagsRightToLeft(true)
 SetInsertItemsLeftToRight(false)
 
 local onShow = function(frame)
-  
+
 end
 
 local makePanel = function(frameName, mainpanel, panelName)
@@ -193,8 +193,8 @@ local function rcui_options()
   tooltipAnchor:SetPoint("LEFT", portraitSelect, "RIGHT", 200, 0)
 
   local lootSpecDisplay = newCheckbox(
-    "Display Loot Spec",
-    "Display loot spec and icon under your player frame.",
+    "Display Loot Spec Indicator",
+    "Display loot spec icon in your player portrait.",
     RCUIDB.lootSpecDisplay,
     function(self, value)
       RCUIDB.lootSpecDisplay = value
