@@ -1,4 +1,4 @@
-Copy these files directly into World of Warcraft's _retail_ folder, NOT the AddOns folder.
+Copy these files directly into World of Warcraft's _retail_ folder, NOT the AddOns or Interface folder.
 
 This will allow the loading of Fonts and Textures without the need for any code, which reduces system resource useage and code complexity. Aka, easier to maintain by following the path of least resistance, and Fonts will remain consistent from the login screen to the game.
 
