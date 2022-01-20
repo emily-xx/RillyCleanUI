@@ -14,7 +14,7 @@ lib\embeds.xml
 
 src\Common.lua
 src\Config.lua
-src\DamageFont.lua
+src\Fonts.lua
 src\ActionBars.lua
 src\Range.lua
 src\DisableAutoAddSpells.lua
@@ -26,7 +26,6 @@ src\Portrait.lua
 src\RaidFrames.lua
 src\Minimap.lua
 src\Nameplates.lua
-# src\QuestWidget.lua
 src\Tooltips.lua
 src\FriendsList.lua
 src\EasyDelete.lua
