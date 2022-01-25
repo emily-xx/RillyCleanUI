@@ -2,7 +2,7 @@
 local LSM = LibStub("LibSharedMedia-3.0")
 
 LSM:Register("sound", "airforcebase", [[Interface\Addons\RillyCleanUI\media\sound\airforcebase.ogg]])
-LSM:Register("sound", "garou-specialko", [[Interface\Addons\RillyCleanUI\media\sound\garouspecialko.ogg]]
+LSM:Register("sound", "garou-specialko", [[Interface\Addons\RillyCleanUI\media\sound\garouspecialko.ogg]])
 LSM:Register("sound", "garou-fullko", [[Interface\Addons\RillyCleanUI\media\sound\garou-fullko.ogg]])
 LSM:Register("sound", "garou-kitaa", [[Interface\Addons\RillyCleanUI\media\sound\garou-kitaa.ogg]])
 LSM:Register("sound", "garou-ko", [[Interface\Addons\RillyCleanUI\media\sound\garou-ko.ogg]])
