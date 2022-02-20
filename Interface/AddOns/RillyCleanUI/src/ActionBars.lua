@@ -134,26 +134,6 @@ local function init()
     StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
   end
 
-  --backdrop settings
-  local bgfile, edgefile = "", ""
-
-  --backdrop
-  local backdropcolor = {0,0,0,1}
-
-  local backdrop = {
-    bgFile = "Interface\\BUTTONS\\WHITE8X8",
-    edgeFile = "Interface\\BUTTONS\\WHITE8X8",
-    tile = false,
-    tileSize = 32,
-    edgeSize = 1,
-    insets = {
-      left = 0,
-      right = 0,
-      top = 0,
-      bottom = 0
-    }
-  }
-
   ---------------------------------------
   -- FUNCTIONS
   ---------------------------------------
@@ -162,51 +142,28 @@ local function init()
     return
   end
 
-  local function applyBackground(bu, isLeaveButton)
-    if not bu or (bu and bu.bg) then
+  local function styleIcon(ic, bu)
+    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    ic:SetAllPoints(bu)
+    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
+    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+  end
+
+  local function skinButton(bu)
+    if not bu or (bu and bu.rillyClean) then
       return
     end
 
-    --shadows+background
-    if bu:GetFrameLevel() < 1 then
-      bu:SetFrameLevel(1)
-    end
-
-    bu.bg = CreateFrame("Frame", nil, bu, "BackdropTemplate")
-    -- bu.bg:SetAllPoints(bu)
-    bu.bg:SetPoint("TOPLEFT", bu, "TOPLEFT", 0, 0)
-    bu.bg:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 0, 0)
-    bu.bg:SetFrameLevel(bu:GetFrameLevel() - 1)
-
-    bu.bg.backdropInfo = backdrop
-    bu.bg:ApplyBackdrop()
-    bu.bg:SetBackdropColor(backdropcolor)
-
-    bu.bg:SetBackdropBorderColor(0, 0, 0, 0)
-
-    -- Remove the normaltexture
+    -- Set the normal texture
+    bu:SetNormalTexture(RILLY_CLEAN_TEXTURES.button)
     local nt = bu:GetNormalTexture()
-    if not isLeaveButton then
-      nt:SetAlpha(0)
-
-      hooksecurefunc(
-        bu,
-        "SetNormalTexture",
-        function(self, texture)
-          --make sure the normaltexture stays the way we want it
-          nt:SetAlpha(0)
-        end
-      )
-    else
-      nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
-      nt:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-      nt:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
-    end
+    nt:SetAllPoints(bu)
+    bu.rillyClean = true
   end
 
   --style extraactionbutton
   local function styleExtraActionButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
     local name = bu:GetName() or bu:GetParent():GetName()
@@ -228,10 +185,7 @@ local function init()
     )
 
     --icon
-    icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    icon:SetAllPoints(bu)
-    icon:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    icon:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+    styleIcon(icon, bu)
 
     --cooldown
     cooldown:SetAllPoints(icon)
@@ -242,12 +196,12 @@ local function init()
     end
 
     --apply background
-    if not bu.bg then applyBackground(bu) end
+    skinButton(bu)
   end
 
   --initial style func
   local function styleActionButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
     local action = bu.action
@@ -293,32 +247,15 @@ local function init()
       --fix the non existent texture problem (no clue what is causing this)
       nt = bu:GetNormalTexture()
     end
+
     --cut the default border of the icons
-    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+    styleIcon(ic, bu)
+
     --adjust the cooldown frame
     cd:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
     cd:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
 
-    --make the normaltexture match the buttonsize
-    nt:SetAllPoints(bu)
-    nt:SetAlpha(0)
-
-    --hook to prevent Blizzard from reseting our colors
-    hooksecurefunc(
-        nt,
-        "SetVertexColor",
-        function(nt, r, g, b, a)
-          if nt then nt:SetAlpha(0) end
-        end
-      )
-
-    --shadows+background
-    if not bu.bg then
-      applyBackground(bu)
-    end
-    bu.rabs_styled = true
+    skinButton(bu)
 
     if bartender4 then --fix the normaltexture
       nt:SetTexCoord(0, 1, 0, 1)
@@ -333,21 +270,16 @@ local function init()
 
   -- style leave button
   local function styleLeaveButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
 
-    --shadows+background
-    if not bu.bg then
-      applyBackground(bu, true)
-    end
-
-    bu.rabs_styled = true
+    skinButton(bu, true)
   end
 
   --style pet buttons
   local function stylePetButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
     local name = bu:GetName()
@@ -355,52 +287,37 @@ local function init()
     local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture2"]
     local cd = _G[name .. "Cooldown"]
-    nt:SetAllPoints(bu)
 
-    --cut the default border of the icons and make them shiny
-    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+    styleIcon(ic, bu)
+
     --adjust the cooldown frame
     cd:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
     cd:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
 
-    --shadows+background
-    if not bu.bg then
-      applyBackground(bu)
-    end
-    bu.rabs_styled = true
+    skinButton(bu)
   end
 
-  --style stance buttons
+  -- Style stance buttons
   local function styleStanceButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
     local name = bu:GetName()
     local ic = _G[name .. "Icon"]
     local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture2"]
-    nt:SetAllPoints(bu)
 
-    --cut the default border of the icons and make them shiny
-    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
-
-    --shadows+background
-    if not bu.bg then
-      applyBackground(bu)
-    end
-    bu.rabs_styled = true
+    styleIcon(ic, bu)
+    skinButton(bu)
   end
+
   for i = 1, NUM_STANCE_SLOTS do
     styleStanceButton(_G["StanceButton" .. i])
   end
 
-  --style possess buttons
+  -- Style possess buttons
   local function stylePossessButton(bu)
-    if not bu or (bu and bu.rabs_styled) then
+    if not bu or (bu and bu.rillyClean) then
       return
     end
     local name = bu:GetName()
@@ -408,15 +325,9 @@ local function init()
     local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture"]
     nt:SetAllPoints(bu)
-    --cut the default border of the icons and make them shiny
-    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
-    --shadows+background
-    if not bu.bg then
-      applyBackground(bu)
-    end
-    bu.rabs_styled = true
+
+    styleIcon(ic, bu)
+    skinButton(bu)
   end
 
   --update hotkey func
@@ -473,7 +384,7 @@ local function init()
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
-  styleExtraActionButton(ZoneAbilityFrame.SpellButton)-- TODO: Fix
+  styleExtraActionButton(ZoneAbilityFrame.SpellButton) -- TODO: Fix
   --spell flyout
   SpellFlyoutBackgroundEnd:SetTexture(nil)
   SpellFlyoutHorizontalBackground:SetTexture(nil)
