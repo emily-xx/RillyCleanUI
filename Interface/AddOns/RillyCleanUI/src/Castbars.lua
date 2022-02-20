@@ -4,20 +4,6 @@ local CreateFrame = CreateFrame
 local hooksecurefunc = hooksecurefunc
 local CastBars = CreateFrame("Frame", nil, UIParent)
 
-local backdrop = {
-  bgFile = nil,
-  edgeFile = SQUARE_TEXTURE,
-  tile = false,
-  tileSize = 32,
-  edgeSize = 2,
-  insets = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0
-  },
-}
-
 -- CastBar timer function
 local function CastingBarFrame_OnUpdate_Hook(self, elapsed)
 	if not self.timer then
@@ -91,7 +77,7 @@ CastBars:SetScript(
       -- Target Castbar
       TargetFrameSpellBar.Icon:SetPoint("RIGHT", TargetFrameSpellBar, "LEFT", -5, 0)
 
-      -- Target 
+      -- Target
       addCastbarTimer(TargetFrameSpellBar, 11, 4, 0)
 
       self:UnregisterEvent("ADDON_LOADED")
@@ -101,7 +87,7 @@ CastBars:SetScript(
     -- Castbar spell icon styling
     -----------------------------
     local function applycastSkin(b)
-      if not b or (b and b.styled) then return end
+      if not b or (b and b.rillyClean) then return end
       -- parent
       if b == CastingBarFrame.Icon then
         b.parent = CastingBarFrame
@@ -113,20 +99,10 @@ CastBars:SetScript(
 
       -- frame
       frame = CreateFrame("Frame", nil, b.parent)
-      --icon
-      b:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
-      -- border
-      local back = CreateFrame("Frame", nil, b.parent, "BackdropTemplate")
-      back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
-      back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
-      back:SetFrameLevel(frame:GetFrameLevel() - 1)
-      back.backdropInfo = backdrop
-      back:ApplyBackdrop()
-      back:SetBackdropBorderColor(0,0,0,1)
-      b.bg = back
-      --set button styled variable
-      b.styled = true
+      applyRillyCleanBackdrop(b)
+
+      b.rillyClean = true
     end
 
     -- setting timer for castbar icons

@@ -13,12 +13,7 @@ local function makePortraitBG(frame, r, g, b)
   frame.portraitBG:SetFrameStrata("background")
   frame.portraitBG:SetAllPoints(frame.portrait)
 
-  frame.portraitBG.backdropInfo = {
-    bgFile = SQUARE_TEXTURE,
-    edgeFile = SQUARE_TEXTURE,
-    tile = false, tileSize = 0, edgeSize = 1,
-    insets = { left = -1, right = -1, top = -1, bottom = -1 }
-  }
+  frame.portraitBG.backdropInfo = RILLY_CLEAN_BACKDROP
   frame.portraitBG:ApplyBackdrop()
   frame.portraitBG:SetBackdropColor(r,g,b,1)
   frame.portraitBG:SetBackdropBorderColor(r,g,b,1)

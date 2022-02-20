@@ -4,18 +4,11 @@ RILLY_CLEAN_TEXTURES = {
   button = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\button-normal",
 }
 
-CAST_BACKDROP = {
-  bgFile = nil,
+RILLY_CLEAN_BACKDROP = {
+  bgFile = SQUARE_TEXTURE,
   edgeFile = SQUARE_TEXTURE,
-  tile = false,
-  tileSize = 32,
-  edgeSize = 2,
-  insets = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0
-  },
+  tile = false, tileSize = 0, edgeSize = 1,
+  insets = { left = -1, right = -1, top = -1, bottom = -1 }
 }
 
 function skinNineSlice(ns)
@@ -68,6 +61,41 @@ function applyRillyCleanButtonSkin(b)
   --set button styled variable
   b.rillyClean = true
   return border, icon
+end
+
+function applyRillyCleanBackdrop(b)
+  if (b.rillyClean) then return end
+
+  local backdrop = {
+    bgFile = nil,
+    edgeFile = SQUARE_TEXTURE,
+    tile = false,
+    tileSize = 32,
+    edgeSize = 2,
+    insets = {
+      left = 0,
+      right = 0,
+      top = 0,
+      bottom = 0
+    },
+  }
+
+  local frame = CreateFrame("Frame", nil, b.parent)
+
+  --icon
+  b:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
+  -- border
+  local back = CreateFrame("Frame", nil, b.parent, "BackdropTemplate")
+  back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
+  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
+  back:SetFrameLevel(frame:GetFrameLevel() - 1)
+  back.backdropInfo = backdrop
+  back:ApplyBackdrop()
+  back:SetBackdropBorderColor(0,0,0,1)
+  b.bg = back
+
+  b.rillyClean = true
 end
 
 ARA_FACTION_COLORS = {
