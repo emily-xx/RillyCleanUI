@@ -39,25 +39,26 @@ hooksecurefunc("UnitFramePortrait_Update",function(frame)
     elseif( RCUIDB.portraitStyle == "2D" ) then -- Standard 2D character image, but made square
       frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
     elseif (RCUIDB.portraitStyle == "3D") then
-      if( not frame.portraitModel ) then -- Initialize 3D Model Container
-        frame.portraitModel = CreateFrame("PlayerModel", nil, frame)
-        frame.portraitModel:SetScript("OnShow", resetCamera)
-        frame.portraitModel:SetScript("OnHide", resetGUID)
-        frame.portraitModel.parent = frame
-        frame.portraitModel:SetFrameLevel(0)
+      if ( not frame.portraitModel ) then -- Initialize 3D Model Container
+        local portraitModel = CreateFrame("PlayerModel", nil, frame)
+        portraitModel:SetScript("OnShow", resetCamera)
+        portraitModel:SetScript("OnHide", resetGUID)
+        portraitModel.parent = frame
+        portraitModel:SetFrameLevel(frame:GetFrameLevel())
 
         makePortraitBG(frame,0.05,0.05,0.05)
 
-        frame.portraitModel:SetAllPoints(frame.portrait)
-        frame.portraitModel:Show()
+        portraitModel:SetAllPoints(frame.portrait)
+        portraitModel:Show()
         frame.portrait:Hide()
+        frame.portraitModel = portraitModel
       end
 
       -- Portrait models can't be updated unless the GUID changed or else you have the animation jumping around
       frame.portraitModel.guid = UnitGUID(frame.unit)
 
       -- The players not in range so swap to question mark
-      if( not UnitIsVisible(frame.unit) or not UnitIsConnected(frame.unit) ) then
+      if ( not UnitIsVisible(frame.unit) or not UnitIsConnected(frame.unit) ) then
         frame.portraitModel:ClearModel()
         frame.portraitModel:SetModelScale(5.5)
         resetCamera(frame.portraitModel)
@@ -68,6 +69,7 @@ hooksecurefunc("UnitFramePortrait_Update",function(frame)
         frame.portraitModel:SetUnit(frame.unit)
         resetCamera(frame.portraitModel)
         frame.portraitModel:SetPosition(0, 0, 0)
+        frame.portraitModel:SetAnimation(804)
         frame.portraitModel:Show()
       end
     end
