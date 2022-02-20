@@ -40,4 +40,5 @@ src\TabBinder.lua
 src\Media.lua
 src\AfkCam.lua
 src\eAlignUpdated.lua
+src\BigDebuffsSkin.lua
 src\sArenaLayout.lua
