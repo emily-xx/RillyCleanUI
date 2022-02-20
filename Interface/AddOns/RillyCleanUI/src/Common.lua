@@ -39,8 +39,8 @@ end
 function styleIcon(ic, bu)
   ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
   ic:ClearAllPoints()
-  ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-  ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+  ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
+  ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
   ic:SetDrawLayer("BACKGROUND",-8)
 end
 
