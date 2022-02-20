@@ -15,3 +15,4 @@ RillyCleanBigDebuffs:SetScript("OnEvent", function()
       end
     end)
   end
+end)
