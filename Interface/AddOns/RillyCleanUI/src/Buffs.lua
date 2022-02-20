@@ -1,7 +1,5 @@
-local backdrop = RILLY_CLEAN_BACKDROP
-
 local function applySkin(b)
-  if not b or (b and b.styled) then return end
+  if not b or (b and b.rillyClean) then return end
 
   local name = b:GetName()
 
@@ -16,11 +14,14 @@ local function applySkin(b)
     buff = true
   end
 
-  --button
-  b:SetSize(32, 32)
+  local border, icon = applyRillyCleanButtonSkin(b)
 
-  --icon
-  local icon = _G[name.."Icon"]
+  if tempenchant then
+    border:SetVertexColor(0.7,0,1)
+  elseif not debuff then
+    border:SetVertexColor(0,0,0)
+  end
+
   if consolidated then
     if select(1,UnitFactionGroup("player")) == "Alliance" then
       icon:SetTexture(select(3,GetSpellInfo(61573)))
@@ -29,47 +30,16 @@ local function applySkin(b)
     end
   end
 
-  icon:SetTexCoord(0.1,0.9,0.1,0.9)
-  icon:ClearAllPoints()
-  icon:SetPoint("TOPLEFT", b, "TOPLEFT", 2, -2)
-  icon:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -2, 2)
-  -- icon:SetDrawLayer("BACKGROUND",-8)
-  b.icon = icon
+  -- duration
+  b.duration:ClearAllPoints()
+  b.duration:SetPoint("TOP", b, "BOTTOM", 0, 0)
 
-  --border
-  local border = _G[name.."Border"] or b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
-  border:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-  border:SetTexCoord(0,1,0,1)
-  border:SetDrawLayer("BACKGROUND",-7)
-  if tempenchant then
-    border:SetVertexColor(0.7,0,1)
-  elseif not debuff then
-    border:SetVertexColor(0,0,0)
-  end
-  border:ClearAllPoints()
-  border:SetAllPoints(b)
-  b.border = border
+  -- count
+  b.count:ClearAllPoints()
+  b.count:SetPoint("CENTER",0,0)
 
-  --duration
-  -- b.duration:ClearAllPoints()
-  -- b.duration:SetPoint("TOP",0,0)
-
-  --count
-  -- b.count:ClearAllPoints()
-  -- b.count:SetPoint("CENTER",0,0)
-
-  --shadow
-  local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
-  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 0, 0)
-  back:SetFrameLevel(b:GetFrameLevel() - 1)
-  back.backdropInfo = backdrop
-  back:ApplyBackdrop()
-  back:SetBackdropBorderColor(0,0,0,1)
-  b.bg = back
-
-  --set button styled variable
-  b.styled = true
+  -- Set button styled variable
+  b.rillyClean = true
 end
 
 local function updateAllBuffAnchors()
@@ -95,7 +65,7 @@ local function updateAllBuffAnchors()
       if not button then return end
       if not button.consolidated then
         --apply skin
-        if not button.styled then applySkin(button) end
+        applySkin(button)
       end
     end
 end
@@ -105,7 +75,7 @@ local function updateDebuffAnchors(buttonName,index)
     if not button then return end
 
     --apply skin
-    if not button.styled then applySkin(button) end
+    applySkin(button)
 end
 
 

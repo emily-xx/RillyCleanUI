@@ -142,13 +142,6 @@ local function init()
     return
   end
 
-  local function styleIcon(ic, bu)
-    ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    ic:SetAllPoints(bu)
-    ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-    ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
-  end
-
   local function skinButton(bu)
     if not bu or (bu and bu.rillyClean) then
       return

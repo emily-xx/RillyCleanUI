@@ -1,17 +1,7 @@
 SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
-RILLY_CLEAN_BACKDROP = {
-  bgFile = nil,
-  edgeFile = "Interface\\BUTTONS\\WHITE8X8",
-  tile = false,
-  tileSize = 32,
-  edgeSize = 1,
-  insets = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0,
-  },
+RILLY_CLEAN_TEXTURES = {
+  button = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\button-normal",
 }
 
 CAST_BACKDROP = {
@@ -46,43 +36,38 @@ function skinNineSlice(ns)
   end
 end
 
+function styleIcon(ic, bu)
+  ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+  ic:ClearAllPoints()
+  ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
+  ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
+  ic:SetDrawLayer("BACKGROUND",-8)
+end
+
 function applyRillyCleanButtonSkin(b)
-  if not b or (b and b.styled) then return end
+  if not b then return end
+  if (b and b.rillyClean) then return b.border end
 
   local name = b:GetName()
 
   --icon
   local icon = b.icon or b.Icon or _G[name.."Icon"]
 
-  icon:SetTexCoord(0.1,0.9,0.1,0.9)
-  icon:ClearAllPoints()
-  icon:SetPoint("TOPLEFT", b, "TOPLEFT", 2, -2)
-  icon:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -2, 2)
-  -- icon:SetDrawLayer("BACKGROUND",-8)
+  styleIcon(icon, b)
   b.icon = icon
 
   --border
   local border = _G[name.."Border"] or b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
-  border:SetTexture("Interface\\BUTTONS\\WHITE8X8")
-  border:SetTexCoord(0,1,0,1)
+  border:SetTexture(RILLY_CLEAN_TEXTURES.button)
   border:SetDrawLayer("BACKGROUND",-7)
   border:SetVertexColor(0,0,0)
   border:ClearAllPoints()
   border:SetAllPoints(b)
   b.border = border
 
-  --shadow
-  local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
-  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 0, 0)
-  back:SetFrameLevel(b:GetFrameLevel() - 1)
-  back.backdropInfo = RILLY_CLEAN_BACKDROP
-  back:ApplyBackdrop()
-  back:SetBackdropBorderColor(0,0,0,1)
-  b.bg = back
-
   --set button styled variable
-  b.styled = true
+  b.rillyClean = true
+  return border, icon
 end
 
 ARA_FACTION_COLORS = {
