@@ -2,21 +2,6 @@ RillyCleanUnitFrames = CreateFrame("Frame", "RillyCleanUnitFrames")
 RillyCleanUnitFrames:RegisterEvent("PLAYER_LOGIN")
 
 RillyCleanUnitFrames:SetScript("OnEvent", function()
-	if (IsAddOnLoaded('BigDebuffs')) then
-		hooksecurefunc(BigDebuffs, 'AttachUnitFrame', function(self, unit)
-			local frameName = 'BigDebuffs' .. unit .. "UnitFrame"
-			local bdbFrame = _G[frameName]
-
-			local icon = bdbFrame.icon
-
-			if (icon) then
-				local cooldown = bdbFrame.cooldown or bdbFrame.Cooldown
-				icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-				cooldown:SetAllPoints(icon)
-				cooldown:SetSwipeTexture("Interface\\BUTTONS\\WHITE8X8")
-			end
-		end)
-	end
 	-------------------------
 	-- Hide Alt Power bars --
 	-------------------------
@@ -128,6 +113,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	function StylePlayerFrame(isVehicle)
 		PlayerName:SetPoint("BOTTOM", PlayerFrameHealthBar, "TOP", 0, 3)
 		setFontOutline(PlayerName)
+		PlayerFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetFrame)
 
 		PlayerFrameGroupIndicatorText:ClearAllPoints()
 		PlayerFrameGroupIndicatorText:SetPoint("BOTTOMLEFT", PlayerFrame, "TOPLEFT", 42, -10)
@@ -189,6 +175,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 
 	--TARGET
 	function StyleTargetFrame(self, forceNormalTexture)
+		TargetFrameTextureFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetFrame)
 		local classification = UnitClassification(self.unit)
 		self.deadText:ClearAllPoints()
 		self.deadText:SetPoint("CENTER", self.healthbar, "CENTER", 0, 0)
@@ -220,13 +207,17 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		self.manabar.RightText:SetPoint("RIGHT", self.manabar, "RIGHT", -5, 1)
 		self.manabar.TextString:SetPoint("CENTER", self.manabar, "CENTER", 0, 0)
 
-		--TargetOfTarget
+		-- TargetOfTarget
+		TargetFrameToTTextureFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetOfTarget)
 		TargetFrameToTHealthBar:ClearAllPoints()
 		TargetFrameToTHealthBar:SetPoint("TOPLEFT", 44, -15)
 		TargetFrameToTHealthBar:SetHeight(8)
 		TargetFrameToTManaBar:ClearAllPoints()
 		TargetFrameToTManaBar:SetPoint("TOPLEFT", 44, -24)
 		TargetFrameToTManaBar:SetHeight(5)
+
+		-- Focus
+		FocusFrameTextureFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetFrame)
 		FocusFrameToTHealthBar:ClearAllPoints()
 		FocusFrameToTHealthBar:SetPoint("TOPLEFT", 45, -15)
 		FocusFrameToTHealthBar:SetHeight(8)
@@ -352,16 +343,6 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			GameTooltip:Hide()
 		end)
 
-		-- artifactBar.Text = artifactBar:CreateFontString(nil, "OVERLAY")
-		-- artifactBar.Text:SetFontObject(GameFontHighlight)
-		-- artifactBar.Text:SetPoint("CENTER", artifactBar, "CENTER")
-
-		local artifactInfo = {
-			xpToNextLevel = 0,
-			xp = 0,
-			totalLevelXP = 2000,
-			tPercent = 0
-		}
 		local function getBarData()
 			if (UnitLevel("player") == maxPlayerLevel) then
 				xpBar:Hide()
