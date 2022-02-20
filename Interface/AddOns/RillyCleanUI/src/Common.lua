@@ -63,7 +63,7 @@ function applyRillyCleanButtonSkin(b)
   return border, icon
 end
 
-function applyRillyCleanBackdrop(b)
+function applyRillyCleanBackdrop(b, frame)
   if (b.rillyClean) then return end
 
   local backdrop = {
@@ -80,16 +80,16 @@ function applyRillyCleanBackdrop(b)
     },
   }
 
-  local frame = CreateFrame("Frame", nil, b.parent)
+  local frame = CreateFrame("Frame", nil, (frame or b.parent))
 
   --icon
   b:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
   -- border
-  local back = CreateFrame("Frame", nil, b.parent, "BackdropTemplate")
+  local back = CreateFrame("Frame", nil, frame, "BackdropTemplate")
   back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
   back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
-  back:SetFrameLevel(frame:GetFrameLevel() - 1)
+  back:SetFrameLevel(frame:GetFrameLevel())
   back.backdropInfo = backdrop
   back:ApplyBackdrop()
   back:SetBackdropBorderColor(0,0,0,1)

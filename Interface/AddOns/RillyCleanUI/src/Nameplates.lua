@@ -117,11 +117,10 @@ RillyCleanNameplates:SetScript("OnEvent", function()
         if (castFrame.rillyClean) then return end
 
         setDefaultFont(castFrame.Text, RCUIDB.nameplateNameFontSize - 1)
-        -- frame
-        frame = CreateFrame("Frame", nil, castFrame)
-        local nameplateCastIcon = castFrame.Icon
 
-        applyRillyCleanBackdrop(nameplateCastIcon)
+        applyRillyCleanBackdrop(castFrame.Icon, castFrame)
+
+        castFrame.rillyClean = true
       end
 
       if (frame.ClassificationFrame) then
