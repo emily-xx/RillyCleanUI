@@ -151,6 +151,15 @@ local function init()
     bu:SetNormalTexture(RILLY_CLEAN_TEXTURES.button)
     local nt = bu:GetNormalTexture()
     nt:SetAllPoints(bu)
+
+    hooksecurefunc(
+      bu,
+      "SetNormalTexture",
+      function(self, texture)
+        -- Make sure the normaltexture stays the way we want it
+        nt:SetTexture(RILLY_CLEAN_TEXTURES.button)
+      end
+    )
     bu.rillyClean = true
   end
 
