@@ -209,6 +209,7 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 
 		-- TargetOfTarget
 		TargetFrameToTTextureFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetOfTarget)
+		TargetFrameToTTextureFrame:SetFrameLevel(0)
 		TargetFrameToTHealthBar:ClearAllPoints()
 		TargetFrameToTHealthBar:SetPoint("TOPLEFT", 42, -15)
 		TargetFrameToTHealthBar:SetHeight(8)
