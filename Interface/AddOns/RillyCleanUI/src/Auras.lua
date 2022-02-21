@@ -14,7 +14,7 @@ CF:SetScript("OnEvent", function(self, event)
     end
 
     --border
-    local border, icon = applyRillyCleanBackdrop(b)
+    local border, icon = applyRillyCleanButtonSkin(b)
 
     --icon
     if consolidated then

@@ -14,7 +14,7 @@ local function applySkin(b)
     buff = true
   end
 
-  local border, icon = applyRillyCleanBackdrop(b)
+  local border, icon = applyRillyCleanButtonSkin(b)
 
   if tempenchant then
     border:SetBackdropBorderColor(0.7,0,1)
@@ -32,7 +32,7 @@ local function applySkin(b)
 
   -- duration
   b.duration:ClearAllPoints()
-  b.duration:SetPoint("TOP", b, "BOTTOM", 0, -2)
+  b.duration:SetPoint("TOP", b, "BOTTOM", 0, -3)
 
   -- count
   b.count:ClearAllPoints()

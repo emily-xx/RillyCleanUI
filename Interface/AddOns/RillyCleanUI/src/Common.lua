@@ -63,9 +63,8 @@ function applyRillyCleanButtonSkin(b, icon)
   if not b then return end
   if (b and b.rillyClean) then return b.border end
 
-  local name = b:GetName()
-
   -- Icon
+  local name = b:GetName()
   icon = icon or b.icon or b.Icon or _G[name.."Icon"]
 
   if (icon) then
@@ -77,7 +76,6 @@ function applyRillyCleanButtonSkin(b, icon)
   local border = CreateFrame("Frame", "BACKGROUND", b, "BackdropTemplate")
   border:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
   border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
-  border:SetFrameLevel(math.max(0, (b:GetFrameLevel() - 7)))
   border.backdropInfo = RILLY_CLEAN_BORDER
   border:ApplyBackdrop()
   border:SetBackdropBorderColor(0,0,0,1)
@@ -95,7 +93,7 @@ function applyRillyCleanBackdrop(b, frame)
   -- Icon
   local name = b:GetName()
   local icon = b.icon or b.Icon or (name and _G[name.."Icon"]) or b
-  icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+  styleIcon(icon, b)
 
   -- border
   local back = CreateFrame("Frame", nil, frame, "BackdropTemplate")
