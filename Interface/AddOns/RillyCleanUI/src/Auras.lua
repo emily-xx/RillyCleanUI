@@ -14,7 +14,7 @@ CF:SetScript("OnEvent", function(self, event)
     end
 
     --border
-    local border, icon = applyRillyCleanButtonSkin(b)
+    local border, icon = applyRillyCleanBackdrop(b)
 
     --icon
     if consolidated then
@@ -26,9 +26,9 @@ CF:SetScript("OnEvent", function(self, event)
     end
 
     if tempenchant then
-      border:SetVertexColor(0.7,0,1)
+      border:SetBackdropBorderColor(0.7,0,1)
     elseif not debuff then
-      border:SetVertexColor(0,0,0)
+      border:SetBackdropBorderColor(0,0,0)
     end
   end
 

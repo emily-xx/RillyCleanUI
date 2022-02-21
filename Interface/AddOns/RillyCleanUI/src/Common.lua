@@ -42,28 +42,44 @@ function styleIcon(ic, bu)
   ic:SetDrawLayer("BACKGROUND",-8)
 end
 
-function applyRillyCleanButtonSkin(b)
+function applyRillyCleanButtonSkin(b, icon)
   if not b then return end
   if (b and b.rillyClean) then return b.border end
 
   local name = b:GetName()
+  local backdrop = {
+    bgFile = nil,
+    edgeFile = SQUARE_TEXTURE,
+    tile = false,
+    tileSize = 32,
+    edgeSize = 4,
+    insets = {
+      left = 0,
+      right = 0,
+      top = 0,
+      bottom = 0
+    },
+  }
 
-  --icon
-  local icon = b.icon or b.Icon or _G[name.."Icon"]
+  -- Icon
+  icon = icon or b.icon or b.Icon or _G[name.."Icon"]
 
-  styleIcon(icon, b)
-  b.icon = icon
+  if (icon) then
+    styleIcon(icon, b)
+    b.icon = icon
+  end
 
-  --border
-  local border = _G[name.."Border"] or b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
-  border:SetTexture(RILLY_CLEAN_TEXTURES.button)
-  border:SetDrawLayer("BACKGROUND",-7)
-  border:SetVertexColor(0,0,0)
-  border:ClearAllPoints()
-  border:SetAllPoints(b)
+  -- Border
+  local border = CreateFrame("Frame", nil, b, "BackdropTemplate")
+  border:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
+  border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
+  border:SetFrameLevel(b:GetFrameLevel() - 1)
+  border.backdropInfo = backdrop
+  border:ApplyBackdrop()
+  border:SetBackdropBorderColor(0,0,0,1)
   b.border = border
 
-  --set button styled variable
+  -- Set button styled variable
   b.rillyClean = true
   return border, icon
 end
@@ -76,7 +92,7 @@ function applyRillyCleanBackdrop(b, frame)
     edgeFile = SQUARE_TEXTURE,
     tile = false,
     tileSize = 32,
-    edgeSize = 2,
+    edgeSize = 3,
     insets = {
       left = 0,
       right = 0,
@@ -85,15 +101,17 @@ function applyRillyCleanBackdrop(b, frame)
     },
   }
 
-  local frame = CreateFrame("Frame", nil, (frame or b.parent))
+  local frame = CreateFrame("Frame", nil, (frame or b))
 
-  --icon
-  b:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+  -- Icon
+  local name = b:GetName()
+  local icon = b.icon or b.Icon or (name and _G[name.."Icon"]) or b
+  icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
   -- border
   local back = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
-  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
+  back:SetPoint("TOPLEFT", b, "TOPLEFT", -1, 1)
+  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 1, -1)
   back:SetFrameLevel(frame:GetFrameLevel())
   back.backdropInfo = backdrop
   back:ApplyBackdrop()
@@ -101,6 +119,7 @@ function applyRillyCleanBackdrop(b, frame)
   b.bg = back
 
   b.rillyClean = true
+  return back, icon
 end
 
 ARA_FACTION_COLORS = {

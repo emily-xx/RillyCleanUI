@@ -142,22 +142,22 @@ local function init()
     return
   end
 
-  local function skinButton(bu)
+  local function skinButton(bu, icon)
     if not bu or (bu and bu.rillyClean) then
       return
     end
 
-    -- Set the normal texture
-    bu:SetNormalTexture(RILLY_CLEAN_TEXTURES.button)
+    -- Hide the normal texture
     local nt = bu:GetNormalTexture()
-    nt:SetAllPoints(bu)
+    nt:SetAlpha(0)
+    applyRillyCleanButtonSkin(bu, icon)
 
     hooksecurefunc(
       bu,
       "SetNormalTexture",
       function(self, texture)
         -- Make sure the normaltexture stays the way we want it
-        nt:SetTexture(RILLY_CLEAN_TEXTURES.button)
+        nt:SetAlpha(0)
       end
     )
     bu.rillyClean = true
@@ -198,7 +198,7 @@ local function init()
     end
 
     --apply background
-    skinButton(bu)
+    skinButton(bu, icon)
   end
 
   --initial style func
@@ -250,14 +250,11 @@ local function init()
       nt = bu:GetNormalTexture()
     end
 
-    --cut the default border of the icons
-    styleIcon(ic, bu)
-
     --adjust the cooldown frame
     cd:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
     cd:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
 
-    skinButton(bu)
+    skinButton(bu, ic)
 
     if bartender4 then --fix the normaltexture
       nt:SetTexCoord(0, 1, 0, 1)
@@ -276,7 +273,7 @@ local function init()
       return
     end
 
-    skinButton(bu, true)
+    skinButton(bu)
   end
 
   --style pet buttons
@@ -290,13 +287,11 @@ local function init()
     local nt = _G[name .. "NormalTexture2"]
     local cd = _G[name .. "Cooldown"]
 
-    styleIcon(ic, bu)
-
     --adjust the cooldown frame
     cd:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
     cd:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
 
-    skinButton(bu)
+    skinButton(bu, ic)
   end
 
   -- Style stance buttons
@@ -309,8 +304,7 @@ local function init()
     local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture2"]
 
-    styleIcon(ic, bu)
-    skinButton(bu)
+    skinButton(bu, ic)
   end
 
   for i = 1, NUM_STANCE_SLOTS do
@@ -328,8 +322,7 @@ local function init()
     local nt = _G[name .. "NormalTexture"]
     nt:SetAllPoints(bu)
 
-    styleIcon(ic, bu)
-    skinButton(bu)
+    skinButton(bu, ic)
   end
 
   --update hotkey func

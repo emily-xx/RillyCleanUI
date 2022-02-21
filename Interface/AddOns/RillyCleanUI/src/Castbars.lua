@@ -100,7 +100,7 @@ CastBars:SetScript(
       -- frame
       frame = CreateFrame("Frame", nil, b.parent)
 
-      applyRillyCleanBackdrop(b)
+      applyRillyCleanBackdrop(b, frame)
 
       b.rillyClean = true
     end
