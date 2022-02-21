@@ -160,6 +160,7 @@ local function init()
         nt:SetAlpha(0)
       end
     )
+
     bu.rillyClean = true
   end
 
@@ -249,10 +250,6 @@ local function init()
       --fix the non existent texture problem (no clue what is causing this)
       nt = bu:GetNormalTexture()
     end
-
-    --adjust the cooldown frame
-    cd:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
-    cd:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
 
     skinButton(bu, ic)
 

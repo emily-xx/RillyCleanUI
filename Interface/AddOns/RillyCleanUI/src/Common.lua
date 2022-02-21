@@ -12,8 +12,29 @@ RILLY_CLEAN_TEXTURES = {
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
   edgeFile = SQUARE_TEXTURE,
-  tile = false, tileSize = 0, edgeSize = 1,
-  insets = { left = -1, right = -1, top = -1, bottom = -1 }
+  tile = false,
+  tileSize = 0,
+  edgeSize = 1,
+  insets = {
+    left = -1,
+    right = -1,
+    top = -1,
+    bottom = -1
+  }
+}
+
+RILLY_CLEAN_BORDER = {
+  bgFile = nil,
+  edgeFile = SQUARE_TEXTURE,
+  tile = false,
+  tileSize = 32,
+  edgeSize = 2,
+  insets = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0
+  },
 }
 
 function skinNineSlice(ns)
@@ -36,10 +57,6 @@ end
 
 function styleIcon(ic, bu)
   ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-  ic:ClearAllPoints()
-  ic:SetPoint("TOPLEFT", bu, "TOPLEFT", 1, -1)
-  ic:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -1, 1)
-  ic:SetDrawLayer("BACKGROUND",-8)
 end
 
 function applyRillyCleanButtonSkin(b, icon)
@@ -47,19 +64,6 @@ function applyRillyCleanButtonSkin(b, icon)
   if (b and b.rillyClean) then return b.border end
 
   local name = b:GetName()
-  local backdrop = {
-    bgFile = nil,
-    edgeFile = SQUARE_TEXTURE,
-    tile = false,
-    tileSize = 32,
-    edgeSize = 4,
-    insets = {
-      left = 0,
-      right = 0,
-      top = 0,
-      bottom = 0
-    },
-  }
 
   -- Icon
   icon = icon or b.icon or b.Icon or _G[name.."Icon"]
@@ -70,14 +74,13 @@ function applyRillyCleanButtonSkin(b, icon)
   end
 
   -- Border
-  local border = CreateFrame("Frame", nil, b, "BackdropTemplate")
+  local border = CreateFrame("Frame", "BACKGROUND", b, "BackdropTemplate")
   border:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
   border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
-  border:SetFrameLevel(b:GetFrameLevel() - 1)
-  border.backdropInfo = backdrop
+  border:SetFrameLevel(math.max(0, (b:GetFrameLevel() - 7)))
+  border.backdropInfo = RILLY_CLEAN_BORDER
   border:ApplyBackdrop()
   border:SetBackdropBorderColor(0,0,0,1)
-  b.border = border
 
   -- Set button styled variable
   b.rillyClean = true
@@ -86,20 +89,6 @@ end
 
 function applyRillyCleanBackdrop(b, frame)
   if (b.rillyClean) then return end
-
-  local backdrop = {
-    bgFile = nil,
-    edgeFile = SQUARE_TEXTURE,
-    tile = false,
-    tileSize = 32,
-    edgeSize = 3,
-    insets = {
-      left = 0,
-      right = 0,
-      top = 0,
-      bottom = 0
-    },
-  }
 
   local frame = CreateFrame("Frame", nil, (frame or b))
 
@@ -110,10 +99,10 @@ function applyRillyCleanBackdrop(b, frame)
 
   -- border
   local back = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", b, "TOPLEFT", -1, 1)
-  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 1, -1)
+  back:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
+  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
   back:SetFrameLevel(frame:GetFrameLevel())
-  back.backdropInfo = backdrop
+  back.backdropInfo = RILLY_CLEAN_BORDER
   back:ApplyBackdrop()
   back:SetBackdropBorderColor(0,0,0,1)
   b.bg = back

@@ -28,7 +28,7 @@ RillyCleanBigDebuffs:SetScript("OnEvent", function()
     local bdbNameplate = bdbFrame.BigDebuffs
 
     if (bdbNameplate) then
-      applyRillyCleanButtonSkin(bdbNameplate)
+      applyRillyCleanBackdrop(bdbNameplate)
     end
   end)
 end)
