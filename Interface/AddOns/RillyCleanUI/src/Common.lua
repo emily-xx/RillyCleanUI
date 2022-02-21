@@ -1,7 +1,6 @@
 SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
 RILLY_CLEAN_TEXTURES = {
-  button = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\button-normal",
   statusBar = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\status-bar",
   targetFrame = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame",
   targetFrameSmall = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame-small",
