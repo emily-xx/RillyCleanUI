@@ -80,6 +80,11 @@ local makePanel = function(frameName, mainpanel, panelName)
   InterfaceOptions_AddCategory(panel)
 end
 
+local function openRcuiConfig()
+  InterfaceOptionsFrame_OpenToCategory(rcuiPanel)
+  InterfaceOptionsFrame_OpenToCategory(rcuiPanel)
+end
+
 local function rcui_options()
   -- Creation of the options menu
   rcui.panel = CreateFrame( "Frame", "rcuiPanel", UIParent )
@@ -413,11 +418,23 @@ local function rcui_options()
   SLASH_rcui1 = "/rcui"
 
   SlashCmdList["rcui"] = function()
-    InterfaceOptionsFrame_OpenToCategory(rcuiPanel)
-    InterfaceOptionsFrame_OpenToCategory(rcuiPanel)
+    openRcuiConfig()
   end
-
 end
+
+GameMenuFrame.Header:Hide()
+local frame = CreateFrame("Button","UIPanelButtonTemplateTest",
+  GameMenuFrame, "UIPanelButtonTemplate")
+frame:SetHeight(20)
+frame:SetWidth(145)
+frame:SetText("|cffb07aebRC|r|cff009cffUI|r")
+frame:ClearAllPoints()
+frame:SetPoint("TOP", 0, -11)
+frame:RegisterForClicks("AnyUp")
+frame:SetScript("OnClick", function()
+	openRcuiConfig()
+	ToggleGameMenu();
+end)
 
 local rc_catch = CreateFrame("Frame")
 rc_catch:RegisterEvent("PLAYER_LOGIN")
