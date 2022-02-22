@@ -85,9 +85,9 @@ function init(self, event)
 	-- Mouse shortcuts
 	Minimap:SetScript("OnMouseUp", function(self, btn)
 		if btn == "RightButton" then
-			_G.GameTimeFrame:Click()
-		elseif btn == "MiddleButton" then
 			_G.ToggleDropDownMenu(1, nil, _G.MiniMapTrackingDropDown, self)
+		elseif btn == "MiddleButton" then
+			_G.GameTimeFrame:Click()
 		else
 			_G.Minimap_OnClick(self)
 		end
