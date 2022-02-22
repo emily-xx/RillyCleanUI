@@ -27,3 +27,4 @@ LSM:Register("sound", "mario-invincibility-2secfade", [[Interface\Addons\RillyCl
 LSM:Register ("statusbar", "RillyClean", [[Interface\AddOns\RillyCleanUI\media\textures\status-bar]])
 
 LSM:Register ("font", "Andika", [[Interface\AddOns\RillyCleanUI\media\fonts\Andika.ttf]])
+LSM:Register ("font", "Marmelad", [[Interface\AddOns\RillyCleanUI\media\fonts\Marmelad.ttf]])
