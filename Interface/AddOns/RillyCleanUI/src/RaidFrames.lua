@@ -6,17 +6,48 @@ f:SetScript("OnEvent", function(self, event, ...)
 	h:SetMinMaxValues(1, 200)
 	w:SetMinMaxValues(1, 200)
 
-	--BLACK SKIN
+	-- Clean Skins
+	local function RaidGroupsUpdate()
+		local g = 1
+		repeat
+			local i, bar = 1
+			local group = _G["CompactRaidGroup" .. g]
+			repeat
+				local prefix = ("CompactRaidGroup" .. g .. "Member" .. i)
+				bar = _G[prefix .. "HealthBar"]
+				rbar = _G[prefix .. "PowerBar"]
+				Divider = _G[prefix .. "HorizDivider"]
+				vleftseparator = _G[prefix .. "VertLeftBorder"]
+				vrightseparator = _G[prefix .. "VertRightBorder"]
+				htopseparator = _G[prefix .. "HorizTopBorder"]
+				hbotseparator = _G[prefix .. "HorizBottomBorder"]
+				if bar then
+					--STATUSBAR
+					bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+					rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+
+					vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+					vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+					htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+					hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+				end
+				i = i + 1
+			until not bar
+			g = g + 1
+		until not group
+	end
+
 	local function RaidFrameUpdate()
 		local i, bar = 1
 		repeat
-			bar = _G["CompactRaidFrame" .. i .. "HealthBar"]
-			rbar = _G["CompactRaidFrame" .. i .. "PowerBar"]
-			Divider = _G["CompactRaidFrame" .. i .. "HorizDivider"]
-			vleftseparator = _G["CompactRaidFrame" .. i .. "VertLeftBorder"]
-			vrightseparator = _G["CompactRaidFrame" .. i .. "VertRightBorder"]
-			htopseparator = _G["CompactRaidFrame" .. i .. "HorizTopBorder"]
-			hbotseparator = _G["CompactRaidFrame" .. i .. "HorizBottomBorder"]
+			local prefix = ("CompactRaidFrame" .. i)
+			bar = _G[prefix .. "HealthBar"]
+			rbar = _G[prefix .. "PowerBar"]
+			Divider = _G[prefix .. "HorizDivider"]
+			vleftseparator = _G[prefix .. "VertLeftBorder"]
+			vrightseparator = _G[prefix .. "VertRightBorder"]
+			htopseparator = _G[prefix .. "HorizTopBorder"]
+			hbotseparator = _G[prefix .. "HorizBottomBorder"]
 			if bar then
 				--STATUSBAR
 				bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
@@ -34,7 +65,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 	if CompactRaidFrameContainer_AddUnitFrame then
 		self:UnregisterAllEvents()
 		hooksecurefunc("CompactRaidFrameContainer_AddUnitFrame", RaidFrameUpdate)
-		--hooksecurefunc("CompactUnitFrame_UpdateAll", RaidFrameUpdate)
+		hooksecurefunc("CompactUnitFrame_UpdateAll", RaidGroupsUpdate)
 		CompactRaidFrameContainerBorderFrameBorderTopLeft:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
 		CompactRaidFrameContainerBorderFrameBorderTop:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
 		CompactRaidFrameContainerBorderFrameBorderTopRight:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
