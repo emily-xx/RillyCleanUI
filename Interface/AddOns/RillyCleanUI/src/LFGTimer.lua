@@ -10,7 +10,7 @@ function init()
   local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
   timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
   local tex = timerBar:CreateTexture()
-  tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+  tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
   timerBar:SetStatusBarTexture(tex, "BORDER")
   timerBar:SetStatusBarColor(1, 0.1, 0)
   timerBar:SetSize(194, 14)
@@ -20,13 +20,13 @@ function init()
   bg:SetColorTexture(0, 0, 0, 0.7)
 
   timerBar.Spark = timerBar:CreateTexture(nil, "OVERLAY")
-  timerBar.Spark:SetTexture(130877) -- "Interface\\CastingBar\\UI-CastingBar-Spark"
+  timerBar.Spark:SetTexture(RILLY_CLEAN_TEXTURES.castSpark)
   timerBar.Spark:SetSize(32, 32)
   timerBar.Spark:SetBlendMode("ADD")
   timerBar.Spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 3)
 
   timerBar.Border = timerBar:CreateTexture(nil, "ARTWORK")
-  timerBar.Border:SetTexture(130874) -- "Interface\\CastingBar\\UI-CastingBar-Border"
+  timerBar.Border:SetTexture(RILLY_CLEAN_TEXTURES.castBorder)
   timerBar.Border:SetSize(256, 64)
   timerBar.Border:SetPoint("TOP", timerBar, 0, 27)
 
