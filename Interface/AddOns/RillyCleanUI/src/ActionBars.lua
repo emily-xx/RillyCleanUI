@@ -151,6 +151,8 @@ local function init()
     local nt = bu:GetNormalTexture()
     nt:SetAlpha(0)
     applyRillyCleanButtonSkin(bu, icon)
+    bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+    bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
     hooksecurefunc(
       bu,
