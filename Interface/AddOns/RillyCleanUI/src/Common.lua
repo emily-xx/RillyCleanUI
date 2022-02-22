@@ -1,8 +1,8 @@
 SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
-local AddonDir = "Interface\\AddOns\\RillyCleanUI"
-local MediaDir = AddonDir.."\\media"
-local TextureDir = MediaDir.."\\textures"
+AddonDir = "Interface\\AddOns\\RillyCleanUI"
+MediaDir = AddonDir.."\\media"
+TextureDir = MediaDir.."\\textures"
 
 RILLY_CLEAN_TEXTURES = {
   buttons = {
@@ -24,7 +24,10 @@ RILLY_CLEAN_TEXTURES = {
   clock = TextureDir.."\\clock-bg"
 }
 
-RILLY_CLEAN_FONT = "Interface\\AddOns\\RillyCleanUI\\media\\fonts\\Andika.ttf"
+RILLY_CLEAN_FONTS = {
+  standard = MediaDir.."\\fonts\\Marmelad.ttf",
+  ui = MediaDir.."\\fonts\\Andika.ttf"
+}
 
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
@@ -161,7 +164,7 @@ function setDefaultFont(textObject, size, outlinestyle)
   if not size then size = 12 end
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
-  textObject:SetFont(RILLY_CLEAN_FONT, size, outlinestyle)
+  textObject:SetFont(RILLY_CLEAN_FONTS.ui, size, outlinestyle)
 end
 
 function createStatusBar(name, parentFrame, width, height, color)

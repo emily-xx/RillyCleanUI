@@ -1,31 +1,32 @@
-local SUI=CreateFrame("Frame")
-SUI:RegisterEvent("ADDON_LOADED")
-SUI:SetScript("OnEvent", function(self, event)
-  local FONT = RILLY_CLEAN_FONT
+local function updateFontObject(FontObject, font, forcedFontSize)
+  local _, oldSize, oldStyle = FontObject:GetFont()
+  FontObject:SetFont(font, forcedFontSize or oldSize, oldStyle)
+end
 
+local RCUI=CreateFrame("Frame")
+RCUI:RegisterEvent("ADDON_LOADED")
+RCUI:SetScript("OnEvent", function(self, event)
   if not RCUIDB.fonts then return end
 
-  STANDARD_TEXT_FONT          = FONT
-  UNIT_NAME_FONT              = FONT
-  DAMAGE_TEXT_FONT            = FONT
-  NAMEPLATE_FONT              = FONT
-  NAMEPLATE_SPELLCAST_FONT    = FONT
+  STANDARD_TEXT_FONT          = RILLY_CLEAN_FONTS.standard
+  UNIT_NAME_FONT              = RILLY_CLEAN_FONTS.ui
+  NAMEPLATE_FONT              = RILLY_CLEAN_FONTS.ui
+  NAMEPLATE_SPELLCAST_FONT    = RILLY_CLEAN_FONTS.ui
 
-  local ForcedFontSize = {10, 14, 20, 64, 64}
+  local ForcedFontSize = { 10, 14, 20, 64, 64 }
 
   local BlizFontObjects = {
     SystemFont_NamePlateCastBar, SystemFont_NamePlateFixed, SystemFont_LargeNamePlateFixed, SystemFont_World, SystemFont_World_ThickOutline,
 
     SystemFont_Outline_Small, SystemFont_Outline, SystemFont_InverseShadow_Small, SystemFont_Med2, SystemFont_Med3, SystemFont_Shadow_Med3,
     SystemFont_Huge1, SystemFont_Huge1_Outline, SystemFont_OutlineThick_Huge2, SystemFont_OutlineThick_Huge4, SystemFont_OutlineThick_WTF,
-    NumberFont_GameNormal, NumberFont_Shadow_Small, NumberFont_OutlineThick_Mono_Small, NumberFont_Shadow_Med, NumberFont_Normal_Med,
-    NumberFont_Outline_Med, NumberFont_Outline_Large, NumberFont_Outline_Huge, Fancy22Font, QuestFont_Huge, QuestFont_Outline_Huge,
+    Fancy22Font, QuestFont_Huge, QuestFont_Outline_Huge,
     QuestFont_Super_Huge, QuestFont_Super_Huge_Outline, SplashHeaderFont, Game11Font, Game12Font, Game13Font, Game13FontShadow,
     Game15Font, Game18Font, Game20Font, Game24Font, Game27Font, Game30Font, Game32Font, Game36Font, Game48Font, Game48FontShadow,
     Game60Font, Game72Font, Game11Font_o1, Game12Font_o1, Game13Font_o1, Game15Font_o1, QuestFont_Enormous, DestinyFontLarge,
     CoreAbilityFont, DestinyFontHuge, QuestFont_Shadow_Small, MailFont_Large, SpellFont_Small, InvoiceFont_Med, InvoiceFont_Small,
     Tooltip_Med, Tooltip_Small, AchievementFont_Small, ReputationDetailFont, FriendsFont_Normal, FriendsFont_Small, FriendsFont_Large,
-    FriendsFont_UserText, GameFont_Gigantic, ChatBubbleFont, Fancy16Font, Fancy18Font, Fancy20Font, Fancy24Font, Fancy27Font, Fancy30Font,
+    FriendsFont_UserText, GameFont_Gigantic, Fancy16Font, Fancy18Font, Fancy20Font, Fancy24Font, Fancy27Font, Fancy30Font,
     Fancy32Font, Fancy48Font, SystemFont_NamePlate, SystemFont_LargeNamePlate,
 
     SystemFont_Tiny2, SystemFont_Tiny, SystemFont_Shadow_Small, SystemFont_Small, SystemFont_Small2, SystemFont_Shadow_Small2, SystemFont_Shadow_Med1_Outline,
@@ -36,8 +37,18 @@ SUI:SetScript("OnEvent", function(self, event)
   }
 
   for i, FontObject in pairs(BlizFontObjects) do
-      local _, oldSize, oldStyle  = FontObject:GetFont()
-      FontObject:SetFont(FONT, ForcedFontSize[i] or oldSize, oldStyle)
+    updateFontObject(FontObject, RILLY_CLEAN_FONTS.ui, ForcedFontSize[i])
   end
+
+  local StandardFontObjects = {
+    ChatBubbleFont, ChatFontNormal, NumberFont_GameNormal, NumberFont_Shadow_Small,
+    NumberFont_OutlineThick_Mono_Small, NumberFont_Shadow_Med, NumberFont_Normal_Med,
+    NumberFont_Outline_Med, NumberFont_Outline_Large, NumberFont_Outline_Huge,
+  }
+
+  for i, FontObject in pairs(StandardFontObjects) do
+    updateFontObject(FontObject, RILLY_CLEAN_FONTS.standard)
+  end
+
   BlizFontObjects = nil
 end)
