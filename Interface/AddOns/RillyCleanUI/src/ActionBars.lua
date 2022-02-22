@@ -157,6 +157,15 @@ local function init()
       "SetNormalTexture",
       function(self, texture)
         -- Make sure the normaltexture stays the way we want it
+        local nt = self:GetNormalTexture()
+        nt:SetAlpha(0)
+      end
+    )
+
+    hooksecurefunc(
+      nt,
+      "SetVertexColor",
+      function(nt)
         nt:SetAlpha(0)
       end
     )
