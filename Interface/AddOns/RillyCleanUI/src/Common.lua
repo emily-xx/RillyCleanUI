@@ -7,7 +7,8 @@ local TextureDir = MediaDir.."\\textures"
 RILLY_CLEAN_TEXTURES = {
   buttons = {
     pushed = TextureDir.."\\buttons\\UI-Quickslot-Depress",
-    hover = TextureDir.."\\buttons\\ButtonHilight-Square"
+    hover = TextureDir.."\\buttons\\ButtonHilight-Square",
+    checked = TextureDir.."\\buttons\\button-checked"
   },
   button = TextureDir.."\\button-normal",
   statusBar = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\status-bar",

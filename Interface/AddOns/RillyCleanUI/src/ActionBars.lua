@@ -154,6 +154,10 @@ local function init()
     bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
     bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
+    if bu.SetCheckedTexture ~= nil then
+      bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+    end
+
     hooksecurefunc(
       bu,
       "SetNormalTexture",
