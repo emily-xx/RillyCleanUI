@@ -29,7 +29,7 @@ RCSA:SetScript("OnEvent", function(self, event, addon)
     end
     local layoutName = "RillyClean"
     local layout = {}
-    local statusTexture = "Interface\\AddOns\\RillyCleanUI\\media\\statusbar"
+    local statusTexture = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\status-bar"
 
     layout.defaultSettings = {
         posX = 281,
