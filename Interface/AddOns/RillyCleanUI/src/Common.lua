@@ -179,7 +179,7 @@ function createStatusBar(name, parentFrame, width, height, color)
 	statusBar:SetOrientation("Vertical")
 	statusBar:SetPoint("CENTER", 0, 0)
 	local tex = statusBar:CreateTexture()
-	tex:SetTexture(137012) -- "Interface\\TargetingFrame\\UI-StatusBar"
+	tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
 	statusBar:SetStatusBarTexture(tex)
 	statusBar:SetSize(barBorder:GetWidth() - 4, barBorder:GetHeight() - 2)
 	statusBar:SetStatusBarColor(color.r, color.g, color.b, 1)
