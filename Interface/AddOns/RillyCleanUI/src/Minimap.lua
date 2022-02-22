@@ -64,6 +64,8 @@ function init(self, event)
 	-- Hide/unhide Minimap zone text
 	handleMinimapZoneText()
 
+	MiniMapInstanceDifficultyTexture:SetTexture(RILLY_CLEAN_TEXTURES.minimap.dungeonDifficulty)
+
 	MiniMapTracking:Hide()
 	MiniMapTracking.Show = kill
 	MiniMapTracking:UnregisterAllEvents()

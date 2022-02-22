@@ -20,6 +20,10 @@ RILLY_CLEAN_TEXTURES = {
   targetSmallNoMana = TextureDir.."\\target-small-nomana",
   targetOfTarget = TextureDir.."\\target-of-target",
 
+  minimap = {
+    dungeonDifficulty = TextureDir.."\\minimap\\UI-DungeonDifficulty-Button"
+  },
+
   characterframe = {
     stateIcon = TextureDir.."\\characterframe\\UI-StateIcon",
     totemBorder = TextureDir.."\\characterframe\\TotemBorder",
@@ -32,6 +36,7 @@ RILLY_CLEAN_TEXTURES = {
 
   castBorder = TextureDir.."\\UI-CastingBar-Border",
   castFlash = TextureDir.."\\UI-CastingBar-Flash",
+  castSpark = TextureDir.."\\UI-CastingBar-Spark",
 
   clock = TextureDir.."\\clock-bg"
 }
