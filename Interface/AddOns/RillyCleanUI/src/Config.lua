@@ -150,7 +150,7 @@ local function rcui_options()
     return dropdownText, dropdown
   end
 
-  local function newSlider(frameName, label, configVar, min, max, relativeEl, frame)
+  local function newSlider(frameName, label, configVar, min, max, relativeEl, frame, onChanged)
     local slider = CreateFrame("Slider", frameName, frame, "OptionsSliderTemplate")
     slider:SetMinMaxValues(min, max)
     slider:SetValue(RCUIDB[configVar])
@@ -161,6 +161,9 @@ local function rcui_options()
       v = floor(v)
       _G[textFrame]:SetFormattedText(label, v)
       RCUIDB[configVar] = v
+      if onChanged ~= nil and type(onChanged) == "function" then
+        onChanged(v)
+      end
     end)
     _G[(frameName .. 'Low')]:SetText(min)
     _G[(frameName .. 'High')]:SetText(max)
@@ -386,7 +389,8 @@ local function rcui_options()
     0,
     600,
     actionBarOffsetText,
-    rcui.childpanel
+    rcui.childpanel,
+    setActionBarOffset
   )
 
   -- Castbar Offset
