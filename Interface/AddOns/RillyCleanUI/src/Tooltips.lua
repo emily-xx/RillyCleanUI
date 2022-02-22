@@ -13,6 +13,20 @@ local function GetDifficultyLevelColor(level)
 	end
 end
 
+local function getUnitHealthColor(unit)
+	local r, g, b
+
+	if (UnitIsPlayer(unit)) then
+		r, g, b = GetClassColor(select(2,UnitClass(unit)))
+	else
+		r, g, b = GameTooltip_UnitColor(unit)
+		if (g == 0.6) then g = 0.9 end
+		if (r==1 and g==1 and b==1) then r, g, b = 0, 0.9, 0.1 end
+	end
+
+	return r, g, b
+end
+
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
@@ -42,27 +56,23 @@ CF:SetScript("OnEvent", function(self, event)
 	bar.capNumericDisplay = true
 	bar.lockShow = 1
 
-	--gametooltip statusbar
+	-- Gametooltip statusbar
+	GameTooltipStatusBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 	GameTooltipStatusBar:ClearAllPoints()
 	GameTooltipStatusBar:SetPoint("LEFT", 5, 0)
 	GameTooltipStatusBar:SetPoint("RIGHT", -5, 0)
 	GameTooltipStatusBar:SetPoint("BOTTOM", 0, 5)
 	GameTooltipStatusBar:SetHeight(10)
-	--gametooltip statusbar bg
-	GameTooltipStatusBar.bg = GameTooltipStatusBar:CreateTexture(nil,"BACKGROUND",nil,-8)
-	GameTooltipStatusBar.bg:SetAllPoints()
-	GameTooltipStatusBar.bg:SetColorTexture(1,1,1)
-	GameTooltipStatusBar.bg:SetVertexColor(0,0,0,0.5)
 
 	-- Class colours
 	GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
 		local _, unit = tooltip:GetUnit()
 		if  not unit then return end
 		local level = UnitEffectiveLevel(unit)
+		local r, g, b = getUnitHealthColor(unit)
 
 		if UnitIsPlayer(unit) then
 			local className, class = UnitClass(unit)
-			local r, g, b = GetClassColor(class)
 			local race = UnitRace(unit)
 
 			if (level < 0) then
@@ -124,15 +134,9 @@ CF:SetScript("OnEvent", function(self, event)
 	  if (focus and focus.unit) then
 	      unit = focus.unit
 	  end
-	  local r, g, b
 
-	  if (UnitIsPlayer(unit)) then
-	    r, g, b = GetClassColor(select(2,UnitClass(unit)))
-	  else
-	    r, g, b = GameTooltip_UnitColor(unit)
-	    if (g == 0.6) then g = 0.9 end
-	    if (r==1 and g==1 and b==1) then r, g, b = 0, 0.9, 0.1 end
-	  end
+	  local r, g, b = getUnitHealthColor(unit)
+
 	  self:SetStatusBarColor(r, g, b)
 	end)
 end)

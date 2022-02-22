@@ -56,6 +56,7 @@ CastBars:SetScript(
       CastingBarFrame:SetPoint("CENTER", MainMenuBar, "CENTER", 0, (actionBarOffset + castbarOffset))
       CastingBarFrame:SetUserPlaced(true)
       CastingBarFrame:SetMovable(false)
+      CastingBarFrame:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
       CastingBarFrame.Icon:Show()
       CastingBarFrame.Icon:ClearAllPoints()
@@ -67,7 +68,9 @@ CastBars:SetScript(
       -- CastingBarFrame.Flash:SetWidth(CastingBarFrame.Flash:GetWidth() + 4)
       -- CastingBarFrame.BorderShield:SetWidth(CastingBarFrame.BorderShield:GetWidth() + 4)
       CastingBarFrame.Border:SetPoint("TOP", 0, 26)
+      CastingBarFrame.Border:SetTexture(RILLY_CLEAN_TEXTURES.castBorder)
       CastingBarFrame.Flash:SetPoint("TOP", 0, 26)
+      CastingBarFrame.Flash:SetTexture(RILLY_CLEAN_TEXTURES.castFlash)
       CastingBarFrame.BorderShield:SetPoint("TOP", 0, 26)
       CastingBarFrame.Spark:SetPoint("LEFT", CastingBarFrame:GetStatusBarTexture(), "RIGHT", -15, 1)
 

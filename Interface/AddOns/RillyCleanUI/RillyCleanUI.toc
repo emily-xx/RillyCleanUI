@@ -15,6 +15,7 @@ lib\embeds.xml
 src\Common.lua
 src\Config.lua
 src\DamageFont.lua
+src\Fonts.lua
 src\ActionBars.lua
 src\Range.lua
 src\DisableAutoAddSpells.lua

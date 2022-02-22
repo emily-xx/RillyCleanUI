@@ -108,19 +108,24 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       if ( frame:IsForbidden() ) then return end
       if ( not frame.isNameplate ) then return end
 
-      if (frame.castBar) then
-        local castFrame = frame.castBar
+      local healthBar = frame.healthBar
+      healthBar.barTexture:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
+
+      local castBar = frame.castBar
+      if (castBar) then
         if RCUIDB.nameplateHideCastText then
-          castFrame.Text:Hide()
+          castBar.Text:Hide()
         end
 
-        if (castFrame.rillyClean) then return end
+        castBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
-        setDefaultFont(castFrame.Text, RCUIDB.nameplateNameFontSize - 1)
+        if (castBar.rillyClean) then return end
 
-        applyRillyCleanBackdrop(castFrame.Icon, castFrame)
+        setDefaultFont(castBar.Text, RCUIDB.nameplateNameFontSize - 1)
 
-        castFrame.rillyClean = true
+        applyRillyCleanBackdrop(castBar.Icon, castBar)
+
+        castBar.rillyClean = true
       end
 
       if (frame.ClassificationFrame) then

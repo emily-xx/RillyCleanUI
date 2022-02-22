@@ -1,25 +1,11 @@
-local backdrop = {
-    bgFile = nil,
-    edgeFile = "Interface\\BUTTONS\\WHITE8X8",
-    tile = false,
-    tileSize = 32,
-    edgeSize = 1,
-    insets = {
-      left = 0,
-      right = 0,
-      top = 0,
-      bottom = 0,
-    },
-}
-
 local function skinIcon(b, name)
-    if not b or (b and b.styled) then return end
+    if not b or (b and b.rillyClean) then return end
 
     local texture = b.Texture or b.Icon or b
 
     texture:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
-    --border
+    -- Border
     -- local border = b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
     -- border:SetTexture("Interface\\BUTTONS\\WHITE8X8")
     -- border:SetTexCoord(0,1,0,1)
@@ -30,18 +16,8 @@ local function skinIcon(b, name)
     -- border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 1, 1)
     -- b.border = border
 
-    --shadow
-    -- local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
-    -- back:SetPoint("TOPLEFT", b, "TOPLEFT", -1, 1)
-    -- back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 1, -1)
-    -- back:SetFrameLevel(b:GetFrameLevel() - 1)
-    -- back.backdropInfo = backdrop
-    -- back:ApplyBackdrop()
-    -- back:SetBackdropBorderColor(0,0,0,1)
-    -- b.bg = back
-
     --set button styled variable
-    b.styled = true
+    b.rillyClean = true
 end
 
 RCSA = CreateFrame("Frame", "RCSA")

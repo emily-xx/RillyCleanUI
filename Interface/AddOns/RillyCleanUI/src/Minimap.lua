@@ -51,6 +51,7 @@ function init(self, event)
 	-- Clock Positioning
 	self.ClearAllPoints(TimeManagerClockButton)
 	self.SetPoint(TimeManagerClockButton, "TOP", RillyCleanMapBorder, "BOTTOM", 0, 3)
+	select(1, TimeManagerClockButton:GetRegions()):SetTexture(RILLY_CLEAN_TEXTURES.clock)
 
 	-- Hide Border
 	MinimapBorder:Hide()

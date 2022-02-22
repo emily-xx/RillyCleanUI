@@ -11,6 +11,7 @@ RCUIDBDefaults = {
   lootSpecDisplay = true, -- Display loot spec under the player frame
 
   damageFont = true, -- Change damage font to something cooler
+  fonts = true, -- Update all fonts to something cooler
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 

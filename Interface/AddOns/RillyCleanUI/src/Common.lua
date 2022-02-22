@@ -1,12 +1,25 @@
 SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
+local AddonDir = "Interface\\AddOns\\RillyCleanUI"
+local MediaDir = AddonDir.."\\media"
+local TextureDir = MediaDir.."\\textures"
+
 RILLY_CLEAN_TEXTURES = {
+  button = TextureDir.."\\button-normal",
   statusBar = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\status-bar",
   targetFrame = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame",
+  targetFrameFlash = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-TARGETINGFRAME-FLASH",
   targetFrameSmall = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame-small",
   targetSmallNoMana = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-small-nomana",
   targetOfTarget = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-of-target",
+
+  castBorder = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-CastingBar-Border",
+  castFlash = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-CastingBar-Flash",
+
+  clock = TextureDir.."\\clock-bg"
 }
+
+RILLY_CLEAN_FONT = "Interface\\AddOns\\RillyCleanUI\\media\\fonts\\Andika.ttf"
 
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
@@ -72,12 +85,14 @@ function applyRillyCleanButtonSkin(b, icon)
   end
 
   -- Border
-  local border = CreateFrame("Frame", "BACKGROUND", b, "BackdropTemplate")
+  local border = CreateFrame("Frame", nil, b, "BackdropTemplate")
   border:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
   border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
+  -- border:SetFrameLevel()
   border.backdropInfo = RILLY_CLEAN_BORDER
   border:ApplyBackdrop()
   border:SetBackdropBorderColor(0,0,0,1)
+  b.border = border
 
   -- Set button styled variable
   b.rillyClean = true
@@ -141,7 +156,7 @@ function setDefaultFont(textObject, size, outlinestyle)
   if not size then size = 12 end
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
-  textObject:SetFont("Fonts\\FRIZQT__.TTF", size, outlinestyle)
+  textObject:SetFont(RILLY_CLEAN_FONT, size, outlinestyle)
 end
 
 function createStatusBar(name, parentFrame, width, height, color)
