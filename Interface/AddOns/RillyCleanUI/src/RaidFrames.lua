@@ -7,6 +7,30 @@ f:SetScript("OnEvent", function(self, event, ...)
 	w:SetMinMaxValues(1, 200)
 
 	-- Clean Skins
+	local function SkinRaidFrame(prefix)
+		bar = _G[prefix .. "HealthBar"]
+		rbar = _G[prefix .. "PowerBar"]
+		Divider = _G[prefix .. "HorizDivider"]
+		vleftseparator = _G[prefix .. "VertLeftBorder"]
+		vrightseparator = _G[prefix .. "VertRightBorder"]
+		htopseparator = _G[prefix .. "HorizTopBorder"]
+		hbotseparator = _G[prefix .. "HorizBottomBorder"]
+		local roleIcon = _G[prefix .. "RoleIcon"]
+		if bar then
+			--STATUSBAR
+			bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+			rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+
+			vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+			vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+			htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+			hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+			roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
+		end
+
+		return bar
+	end
+
 	local function RaidGroupsUpdate()
 		local g = 1
 		repeat
@@ -14,23 +38,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 			local group = _G["CompactRaidGroup" .. g]
 			repeat
 				local prefix = ("CompactRaidGroup" .. g .. "Member" .. i)
-				bar = _G[prefix .. "HealthBar"]
-				rbar = _G[prefix .. "PowerBar"]
-				Divider = _G[prefix .. "HorizDivider"]
-				vleftseparator = _G[prefix .. "VertLeftBorder"]
-				vrightseparator = _G[prefix .. "VertRightBorder"]
-				htopseparator = _G[prefix .. "HorizTopBorder"]
-				hbotseparator = _G[prefix .. "HorizBottomBorder"]
-				if bar then
-					--STATUSBAR
-					bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-					rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-
-					vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-					vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-					htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-					hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-				end
+				bar = SkinRaidFrame(prefix)
 				i = i + 1
 			until not bar
 			g = g + 1
@@ -41,23 +49,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 		local i, bar = 1
 		repeat
 			local prefix = ("CompactRaidFrame" .. i)
-			bar = _G[prefix .. "HealthBar"]
-			rbar = _G[prefix .. "PowerBar"]
-			Divider = _G[prefix .. "HorizDivider"]
-			vleftseparator = _G[prefix .. "VertLeftBorder"]
-			vrightseparator = _G[prefix .. "VertRightBorder"]
-			htopseparator = _G[prefix .. "HorizTopBorder"]
-			hbotseparator = _G[prefix .. "HorizBottomBorder"]
-			if bar then
-				--STATUSBAR
-				bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-				rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-				--DARK
-				vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-				vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-				htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-				hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-			end
+			bar = SkinRaidFrame(prefix)
 			i = i + 1
 		until not bar
 	end

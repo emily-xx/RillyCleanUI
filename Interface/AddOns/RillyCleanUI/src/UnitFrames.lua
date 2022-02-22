@@ -34,6 +34,8 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		PlayerPrestigeBadge:SetAlpha(0)
 		PlayerPrestigePortrait:SetAlpha(0)
 
+		PlayerFrameRoleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
+
 		TargetFrameTextureFramePrestigeBadge:SetAlpha(0)
 		TargetFrameTextureFramePrestigePortrait:SetAlpha(0)
 		FocusFrameTextureFramePrestigeBadge:SetAlpha(0)
