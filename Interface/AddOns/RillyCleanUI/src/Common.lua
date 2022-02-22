@@ -2,31 +2,43 @@ SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
 
 AddonDir = "Interface\\AddOns\\RillyCleanUI"
 MediaDir = AddonDir.."\\media"
+FontsDir = MediaDir.."\\fonts"
 TextureDir = MediaDir.."\\textures"
 
 RILLY_CLEAN_TEXTURES = {
   buttons = {
+    normal = TextureDir.."\\button-normal",
     pushed = TextureDir.."\\buttons\\UI-Quickslot-Depress",
     hover = TextureDir.."\\buttons\\ButtonHilight-Square",
     checked = TextureDir.."\\buttons\\button-checked"
   },
-  button = TextureDir.."\\button-normal",
-  statusBar = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\status-bar",
-  targetFrame = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame",
-  targetFrameFlash = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-TARGETINGFRAME-FLASH",
-  targetFrameSmall = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-frame-small",
-  targetSmallNoMana = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-small-nomana",
-  targetOfTarget = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\target-of-target",
 
-  castBorder = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-CastingBar-Border",
-  castFlash = "Interface\\AddOns\\RillyCleanUI\\media\\textures\\UI-CastingBar-Flash",
+  statusBar = TextureDir.."\\status-bar",
+  targetFrame = TextureDir.."\\target-frame",
+  targetFrameFlash = TextureDir.."\\UI-TARGETINGFRAME-FLASH",
+  targetFrameSmall = TextureDir.."\\target-frame-small",
+  targetSmallNoMana = TextureDir.."\\target-small-nomana",
+  targetOfTarget = TextureDir.."\\target-of-target",
+
+  characterframe = {
+    stateIcon = TextureDir.."\\characterframe\\UI-StateIcon",
+    totemBorder = TextureDir.."\\characterframe\\TotemBorder",
+  },
+
+  lfg = {
+    portraitRoles = TextureDir.."\\lfgframe\\UI-LFG-ICON-PORTRAITROLES",
+    roles = TextureDir.."\\lfgframe\\UI-LFG-ICON-ROLES"
+  },
+
+  castBorder = TextureDir.."\\UI-CastingBar-Border",
+  castFlash = TextureDir.."\\UI-CastingBar-Flash",
 
   clock = TextureDir.."\\clock-bg"
 }
 
 RILLY_CLEAN_FONTS = {
-  standard = MediaDir.."\\fonts\\Marmelad.ttf",
-  ui = MediaDir.."\\fonts\\Andika.ttf"
+  standard = FontsDir.."\\Marmelad.ttf",
+  ui = FontsDir.."\\Andika.ttf"
 }
 
 RILLY_CLEAN_BACKDROP = {
