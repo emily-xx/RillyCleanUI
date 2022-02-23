@@ -20,10 +20,7 @@ local function makePortraitBG(frame, r, g, b)
   frame.portraitBG:Show()
 end
 
-local CF=CreateFrame("Frame")
-CF:RegisterEvent("PLAYER_LOGIN")
-CF:SetScript("OnEvent", function(self, event)
-hooksecurefunc("UnitFramePortrait_Update",function(frame)
+local function makeRillyCleanPortrait(frame)
   if not frame.portrait then return end
 
   if ( RCUIDB.portraitStyle == "class" ) then -- Flat class icons
@@ -81,5 +78,10 @@ hooksecurefunc("UnitFramePortrait_Update",function(frame)
   else -- Standard 2D character image, but made square
     frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
   end
-  end)
+end
+
+local CF=CreateFrame("Frame")
+CF:RegisterEvent("PLAYER_LOGIN")
+CF:SetScript("OnEvent", function(self, event)
+  hooksecurefunc("UnitFramePortrait_Update", makeRillyCleanPortrait)
 end)
