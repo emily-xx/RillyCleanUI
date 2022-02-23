@@ -63,18 +63,18 @@ local function makeRillyCleanPortrait(frame)
     if ( not UnitIsVisible(unit) or not UnitIsConnected(unit) ) then
       frame.portraitModel:ClearModel()
       frame.portraitModel:SetModelScale(5.5)
+      resetCamera(frame.portraitModel)
       frame.portraitModel:SetModel("Interface\\Buttons\\talktomequestionmark.m2")
     -- Use animated 3D portrait
     else
       frame.portraitModel:ClearModel()
       frame.portraitModel:SetModelScale(1)
       frame.portraitModel:SetUnit(frame.unit)
+      resetCamera(frame.portraitModel)
       frame.portraitModel:SetPosition(0, 0, 0)
       frame.portraitModel:SetAnimation(804)
+      frame.portraitModel:Show()
     end
-
-    resetCamera(frame.portraitModel)
-    frame.portraitModel:Show()
   else -- Standard 2D character image, but made square
     frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
   end
