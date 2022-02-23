@@ -305,14 +305,19 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	-- PetFrame placement --
 	------------------------
 	PetFrame:ClearAllPoints()
-	PetFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOM", -20, 0)
+	PetFrame:SetPoint("TOPLEFT", PlayerFrame, "BOTTOM", -15, 30)
 
-	PetFrameManaBar:ClearAllPoints()
-	PetFrameManaBar:SetPoint("TOPLEFT", PetPortrait, "TOPRIGHT", 2, -24)
+	hooksecurefunc("PetFrame_Update", function(self)
+		PetFrameTexture:SetTexture(RILLY_CLEAN_TEXTURES.targetFrameSmall)
+		PetFrameManaBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+		PetFrameManaBar:ClearAllPoints()
+		PetFrameManaBar:SetPoint("TOPLEFT", PetPortrait, "TOPRIGHT", 2, -24)
 
-	PetFrameHealthBar:ClearAllPoints()
-	PetFrameHealthBar:SetPoint("BOTTOM", PetFrameManaBar, "TOP", 0, 0)
-	PetFrameHealthBar:SetHeight(18)
+		PetFrameHealthBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+		PetFrameHealthBar:ClearAllPoints()
+		PetFrameHealthBar:SetPoint("BOTTOM", PetFrameManaBar, "TOP", 0, 0)
+		PetFrameHealthBar:SetHeight(18)
+	end)
 
 	PetName:SetTextColor(1,1,1)
 	setFontOutline(PetName)
