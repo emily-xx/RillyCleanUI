@@ -24,6 +24,11 @@ RILLY_CLEAN_TEXTURES = {
     dungeonDifficulty = TextureDir.."\\minimap\\UI-DungeonDifficulty-Button"
   },
 
+  nameplates = {
+    border = TextureDir.."\\nameplates\\border",
+    glow = TextureDir.."\\nameplates\\glow",
+  },
+
   characterframe = {
     stateIcon = TextureDir.."\\characterframe\\UI-StateIcon",
     totemBorder = TextureDir.."\\characterframe\\TotemBorder",
