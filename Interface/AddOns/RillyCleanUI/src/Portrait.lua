@@ -53,7 +53,7 @@ local function makeRillyCleanPortrait(frame)
     -- Portrait models can't be updated unless the GUID changed or else you have the animation jumping around
     local unit = frame.unit
     local unitGuid = UnitGUID(unit)
-    if (frame.portraitModel.guid == unitGuid or unitGuid == nil) then
+    if (frame.portraitModel.guid == unitGuid) then
       return
     end
 
