@@ -1,7 +1,3 @@
-Copy these files directly into World of Warcraft's _retail_ folder, NOT the AddOns or Interface folder.
-
-This will allow the loading of Fonts and Textures without the need for any code, which reduces system resource useage and code complexity. Aka, easier to maintain by following the path of least resistance, and Fonts will remain consistent from the login screen to the game.
-
 A thanks to many addons for inspiring this and making coding this a lot easier by providing a good base for some of the improvements, textures and etc. I will mention those addons by name below.
 
 - MiirGUI (https://www.wowinterface.com/downloads/info20541-MiirGuiIconPackBlue.html)
