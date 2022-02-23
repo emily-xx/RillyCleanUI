@@ -1,7 +1,7 @@
 -- This table defines the addon's default settings:
 local name, RCUI = ...
 RCUIDBDefaults = {
-  actionBarOffset = 20,
+  actionBarOffset = 40,
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 170,
   hideHotkeys = true,
@@ -11,7 +11,7 @@ RCUIDBDefaults = {
   lootSpecDisplay = true, -- Display loot spec under the player frame
 
   damageFont = true, -- Change damage font to something cooler
-  fonts = true, -- Update all fonts to something cooler
+  fonts = false, -- Update all fonts to something cooler
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 
