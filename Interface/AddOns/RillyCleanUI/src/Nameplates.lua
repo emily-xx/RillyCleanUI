@@ -118,6 +118,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
         end
 
         castBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+        castBar.Flash:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
         if (castBar.rillyClean) then return end
 
