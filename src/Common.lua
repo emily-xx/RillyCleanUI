@@ -79,6 +79,20 @@ RILLY_CLEAN_BORDER = {
   },
 }
 
+RILLY_CLEAN_BUFF_BORDER = {
+  bgFile = nil,
+  edgeFile = SQUARE_TEXTURE,
+  tile = false,
+  tileSize = 32,
+  edgeSize = 1,
+  insets = {
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
+  },
+}
+
 function skinNineSlice(ns)
   local nsPoints = {
     "TopLeftCorner",

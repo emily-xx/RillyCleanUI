@@ -14,14 +14,11 @@ local function applySkin(b)
     buff = true
   end
 
-  local border, icon = applyRillyCleanButtonSkin(b)
+  --button
+  b:SetSize(32, 32)
 
-  if tempenchant then
-    border:SetBackdropBorderColor(0.7,0,1)
-  elseif not debuff then
-    border:SetBackdropBorderColor(0,0,0)
-  end
-
+  --icon
+  local icon = _G[name.."Icon"]
   if consolidated then
     if select(1,UnitFactionGroup("player")) == "Alliance" then
       icon:SetTexture(select(3,GetSpellInfo(61573)))
@@ -30,15 +27,46 @@ local function applySkin(b)
     end
   end
 
-  -- duration
-  b.duration:ClearAllPoints()
-  b.duration:SetPoint("TOP", b, "BOTTOM", 0, -3)
+  icon:SetTexCoord(0.1,0.9,0.1,0.9)
+  icon:ClearAllPoints()
+  icon:SetPoint("TOPLEFT", b, "TOPLEFT", 2, -2)
+  icon:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -2, 2)
+  -- icon:SetDrawLayer("BACKGROUND",-8)
+  b.icon = icon
 
-  -- count
-  b.count:ClearAllPoints()
-  b.count:SetPoint("CENTER",0,0)
+  --border
+  local border = _G[name.."Border"] or b:CreateTexture(name.."Border", "BACKGROUND", nil, -7)
+  border:SetTexture("Interface\\BUTTONS\\WHITE8X8")
+  border:SetTexCoord(0,1,0,1)
+  border:SetDrawLayer("BACKGROUND",-7)
+  if tempenchant then
+    border:SetVertexColor(0.7,0,1)
+  elseif not debuff then
+    border:SetVertexColor(0,0,0)
+  end
+  border:ClearAllPoints()
+  border:SetAllPoints(b)
+  b.border = border
 
-  -- Set button styled variable
+  --duration
+  -- b.duration:ClearAllPoints()
+  -- b.duration:SetPoint("TOP",0,0)
+
+  --count
+  -- b.count:ClearAllPoints()
+  -- b.count:SetPoint("CENTER",0,0)
+
+  --shadow
+  local back = CreateFrame("Frame", nil, b, "BackdropTemplate")
+  back:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
+  back:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 0, 0)
+  back:SetFrameLevel(b:GetFrameLevel() - 1)
+  back.backdropInfo = RILLY_CLEAN_BUFF_BORDER
+  back:ApplyBackdrop()
+  back:SetBackdropBorderColor(0,0,0,1)
+  b.bg = back
+
+  --set button styled variable
   b.rillyClean = true
 end
 
