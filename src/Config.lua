@@ -5,9 +5,10 @@ RCUIDBDefaults = {
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 170,
   hideHotkeys = true,
+  hideMicroButtonsAndBags = true,
+  hideStanceBar = false,
 
-  hideAltPower = true,
-  hideStanceBar = true,
+  hideAltPower = false,
   lootSpecDisplay = true, -- Display loot spec under the player frame
 
   damageFont = true, -- Change damage font to something cooler
@@ -235,6 +236,16 @@ local function rcui_options()
     actionbarText
   )
 
+  local hideMicroButtonsAndBags = newCheckbox(
+    "Hide Micro Buttons and Bags (Requires reload)",
+    "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
+    RCUIDB.hideMicroButtonsAndBags,
+    function(self, value)
+      RCUIDB.hideMicroButtonsAndBags = value
+    end,
+    hideHotkeys
+  )
+
   local hideStanceBar = newCheckbox(
     "Hide Stance Bar (Requires reload)",
     "Hides stance bar in favour of binding stances to action bars.",
@@ -242,7 +253,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.hideStanceBar = value
     end,
-    hideHotkeys
+    hideMicroButtonsAndBags
   )
 
   local disableAutoAddSpells = newCheckbox(

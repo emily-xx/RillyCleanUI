@@ -32,6 +32,12 @@ function setActionBarOffset(actionBarOffset)
   PlayerPowerBarAlt:SetMovable(false)
 end
 
+function hideElements(hiddenElements)
+  for _, hiddenElement in pairs(hiddenElements) do
+    hiddenElement:Hide()
+  end
+end
+
 local function init()
   local dominos = IsAddOnLoaded("Dominos")
   local bartender4 = IsAddOnLoaded("Bartender4")
@@ -44,22 +50,28 @@ local function init()
       end)
     end
 
-    -- Hide stuff
-    local hiddenElements = {
+    if (RCUIDB.hideMicroButtonsAndBags) then
       -- Micro buttons
-      MicroButtonAndBagsBar,
-      MicroButton,
-      CharacterMicroButton,
-      SpellbookMicroButton,
-      TalentMicroButton,
-      AchievementMicroButton,
-      QuestLogMicroButton,
-      GuildMicroButton,
-      LFDMicroButton,
-      CollectionsMicroButton,
-      EJMicroButton,
-      MainMenuMicroButton,
-      -- Action Bars
+      local microButonsAndBags = {
+        MicroButtonAndBagsBar,
+        MicroButton,
+        CharacterMicroButton,
+        SpellbookMicroButton,
+        TalentMicroButton,
+        AchievementMicroButton,
+        QuestLogMicroButton,
+        GuildMicroButton,
+        LFDMicroButton,
+        CollectionsMicroButton,
+        EJMicroButton,
+        MainMenuMicroButton,
+      }
+
+      hideElements(microButonsAndBags)
+    end
+
+    -- Hide stuff
+    local actionBarElements = {
       MainMenuBarArtFrameBackground,
       ActionBarUpButton,
       ActionBarDownButton,
@@ -69,9 +81,7 @@ local function init()
       StatusTrackingBarManager
     }
 
-    for _, hiddenElement in pairs(hiddenElements) do
-      hiddenElement:Hide()
-    end
+    hideElements(actionBarElements)
 
     -- Hide stance bar
     if (RCUIDB.hideStanceBar and not dominos and not bartender4) then
