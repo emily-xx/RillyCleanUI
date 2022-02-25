@@ -146,39 +146,46 @@ local function init()
     return
   end
 
-  local function skinButton(bu, icon)
+  local function skinButton(bu, icon, isLeaveButton)
     if not bu or (bu and bu.rillyClean) then
       return
     end
 
-    -- Hide the normal texture
-    local nt = bu:GetNormalTexture()
-    nt:SetAlpha(0)
     applyRillyCleanButtonSkin(bu, icon)
-    bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
     bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
-    if bu.SetCheckedTexture ~= nil then
-      bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+    local nt = bu:GetNormalTexture()
+
+    if (isLeaveButton) then
+      nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
+      nt:SetAllPoints(bu)
+    else
+      -- Hide the normal texture
+      nt:SetAlpha(0)
+
+      bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+      if bu.SetCheckedTexture ~= nil then
+        bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+      end
+
+      hooksecurefunc(
+        bu,
+        "SetNormalTexture",
+        function(self, texture)
+          -- Make sure the normaltexture stays the way we want it
+          local nt = self:GetNormalTexture()
+          nt:SetAlpha(0)
+        end
+      )
+
+      hooksecurefunc(
+        nt,
+        "SetVertexColor",
+        function(nt)
+          nt:SetAlpha(0)
+        end
+      )
     end
-
-    hooksecurefunc(
-      bu,
-      "SetNormalTexture",
-      function(self, texture)
-        -- Make sure the normaltexture stays the way we want it
-        local nt = self:GetNormalTexture()
-        nt:SetAlpha(0)
-      end
-    )
-
-    hooksecurefunc(
-      nt,
-      "SetVertexColor",
-      function(nt)
-        nt:SetAlpha(0)
-      end
-    )
 
     bu.rillyClean = true
   end
@@ -289,7 +296,7 @@ local function init()
       return
     end
 
-    skinButton(bu)
+    skinButton(bu, nil, true)
   end
 
   --style pet buttons
