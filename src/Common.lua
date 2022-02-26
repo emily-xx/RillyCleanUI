@@ -115,31 +115,65 @@ function styleIcon(ic, bu)
   ic:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 end
 
-function applyRillyCleanButtonSkin(b, icon)
-  if not b then return end
-  if (b and b.rillyClean) then return b.border end
+function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
+  if not bu then return end
+  if (bu and bu.rillyClean) then return bu.border end
 
   -- Icon
-  local name = b:GetName()
-  icon = icon or b.icon or b.Icon or _G[name.."Icon"]
+  local name = bu:GetName()
+  icon = icon or bu.icon or bu.Icon or _G[name.."Icon"]
 
   if (icon) then
-    styleIcon(icon, b)
-    b.icon = icon
+    styleIcon(icon, bu)
+    bu.icon = icon
   end
 
   -- Border
-  local border = CreateFrame("Frame", nil, b, "BackdropTemplate")
-  border:SetPoint("TOPLEFT", b, "TOPLEFT", -2, 2)
-  border:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 2, -2)
+  local border = CreateFrame("Frame", nil, bu, "BackdropTemplate")
+  border:SetPoint("TOPLEFT", bu, "TOPLEFT", -2, 2)
+  border:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 2, -2)
   -- border:SetFrameLevel()
   border.backdropInfo = RILLY_CLEAN_BORDER
   border:ApplyBackdrop()
   border:SetBackdropBorderColor(0,0,0,1)
-  b.border = border
+  bu.border = border
 
-  -- Set button styled variable
-  b.rillyClean = true
+  bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
+
+  local nt = bu:GetNormalTexture()
+
+  if (isLeaveButton) then
+    nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
+    nt:SetAllPoints(bu)
+  else
+    -- Hide the normal texture
+    nt:SetAlpha(0)
+
+    bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+    if bu.SetCheckedTexture ~= nil then
+      bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+    end
+
+    hooksecurefunc(
+      bu,
+      "SetNormalTexture",
+      function(self, texture)
+        -- Make sure the normaltexture stays the way we want it
+        local nt = self:GetNormalTexture()
+        nt:SetAlpha(0)
+      end
+    )
+
+    hooksecurefunc(
+      nt,
+      "SetVertexColor",
+      function(nt)
+        nt:SetAlpha(0)
+      end
+    )
+  end
+
+  bu.rillyClean = true
   return border, icon
 end
 
@@ -197,7 +231,8 @@ end
 
 function setDefaultFont(textObject, size, outlinestyle)
   if not textObject then return end
-  if not size then size = 12 end
+  local _, currSize = textObject:GetFont()
+  if not size then size = currSize end
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
   textObject:SetFont(RILLY_CLEAN_FONTS.ui, size, outlinestyle)

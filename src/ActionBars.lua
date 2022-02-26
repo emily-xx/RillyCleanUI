@@ -157,47 +157,7 @@ local function init()
   end
 
   local function skinButton(bu, icon, isLeaveButton)
-    if not bu or (bu and bu.rillyClean) then
-      return
-    end
-
-    applyRillyCleanButtonSkin(bu, icon)
-    bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
-
-    local nt = bu:GetNormalTexture()
-
-    if (isLeaveButton) then
-      nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
-      nt:SetAllPoints(bu)
-    else
-      -- Hide the normal texture
-      nt:SetAlpha(0)
-
-      bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
-      if bu.SetCheckedTexture ~= nil then
-        bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
-      end
-
-      hooksecurefunc(
-        bu,
-        "SetNormalTexture",
-        function(self, texture)
-          -- Make sure the normaltexture stays the way we want it
-          local nt = self:GetNormalTexture()
-          nt:SetAlpha(0)
-        end
-      )
-
-      hooksecurefunc(
-        nt,
-        "SetVertexColor",
-        function(nt)
-          nt:SetAlpha(0)
-        end
-      )
-    end
-
-    bu.rillyClean = true
+    applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
   end
 
   --style extraactionbutton
