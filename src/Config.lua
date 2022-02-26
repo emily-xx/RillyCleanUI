@@ -222,53 +222,9 @@ local function rcui_options()
     lootSpecDisplay
   )
 
-  local actionbarText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  actionbarText:SetText("Action Bar Options")
-  actionbarText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
-
-  local hideHotkeys = newCheckbox(
-    "Hide Hotkeys on Action Bars",
-    "Hides keybinding text on your action bar buttons.",
-    RCUIDB.hideHotkeys,
-    function(self, value)
-      RCUIDB.hideHotkeys = value
-    end,
-    actionbarText
-  )
-
-  local hideMicroButtonsAndBags = newCheckbox(
-    "Hide Micro Buttons and Bags (Requires reload)",
-    "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
-    RCUIDB.hideMicroButtonsAndBags,
-    function(self, value)
-      RCUIDB.hideMicroButtonsAndBags = value
-    end,
-    hideHotkeys
-  )
-
-  local hideStanceBar = newCheckbox(
-    "Hide Stance Bar (Requires reload)",
-    "Hides stance bar in favour of binding stances to action bars.",
-    RCUIDB.hideStanceBar,
-    function(self, value)
-      RCUIDB.hideStanceBar = value
-    end,
-    hideMicroButtonsAndBags
-  )
-
-  local disableAutoAddSpells = newCheckbox(
-    "Disable Auto Adding of Spells",
-    "Disables automatic adding of spells to action bars when learning new spells.",
-    RCUIDB.disableAutoAddSpells,
-    function(self, value)
-      RCUIDB.disableAutoAddSpells = value
-    end,
-    hideStanceBar
-  )
-
   local miscText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   miscText:SetText("Misc. Options")
-  miscText:SetPoint("TOPLEFT", disableAutoAddSpells, "BOTTOMLEFT", 0, -12)
+  miscText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
 
   local damageFont = newCheckbox(
     "Use Custom Damage Font (Requires Game Restart)",
@@ -289,6 +245,59 @@ local function rcui_options()
       handleMinimapZoneText()
     end,
     damageFont
+  )
+
+  ----------------
+  -- Action Bars --
+  ----------------
+  makePanel("RCUI_ActionBars", rcui.panel, "Action Bars")
+
+  local actionbarText = RCUI_ActionBars:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  actionbarText:SetText("Action Bars")
+  actionbarText:SetPoint("TOPLEFT", 16, -16)
+
+  local hideHotkeys = newCheckbox(
+    "Hide Hotkeys on Action Bars",
+    "Hides keybinding text on your action bar buttons.",
+    RCUIDB.hideHotkeys,
+    function(self, value)
+      RCUIDB.hideHotkeys = value
+    end,
+    actionbarText,
+    RCUI_ActionBars
+  )
+
+  local hideMicroButtonsAndBags = newCheckbox(
+    "Hide Micro Buttons and Bags (Requires reload)",
+    "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
+    RCUIDB.hideMicroButtonsAndBags,
+    function(self, value)
+      RCUIDB.hideMicroButtonsAndBags = value
+    end,
+    hideHotkeys,
+    RCUI_ActionBars
+  )
+
+  local hideStanceBar = newCheckbox(
+    "Hide Stance Bar (Requires reload)",
+    "Hides stance bar in favour of binding stances to action bars.",
+    RCUIDB.hideStanceBar,
+    function(self, value)
+      RCUIDB.hideStanceBar = value
+    end,
+    hideMicroButtonsAndBags,
+    RCUI_ActionBars
+  )
+
+  local disableAutoAddSpells = newCheckbox(
+    "Disable Auto Adding of Spells",
+    "Disables automatic adding of spells to action bars when learning new spells.",
+    RCUIDB.disableAutoAddSpells,
+    function(self, value)
+      RCUIDB.disableAutoAddSpells = value
+    end,
+    hideStanceBar,
+    RCUI_ActionBars
   )
 
   ----------------
