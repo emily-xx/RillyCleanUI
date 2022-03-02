@@ -372,7 +372,21 @@ local function init()
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
-  styleExtraActionButton(ZoneAbilityFrame.SpellButton) -- TODO: Fix
+
+  -- -- Zone Ability buttons
+  -- local function styleZoneAbilityButton(self)
+  --   local activeSpellButtons = self.SpellButtonContainer
+  --   for k,v in pairs(activeSpellButtons) do
+  --     -- print(k)
+  --   end
+  --   local abilities = C_ZoneAbility.GetActiveAbilities()
+  --   for i, ability in pairs(abilities) do
+  --     -- styleExtraActionButton(button)
+  --   end
+  -- end
+  -- hooksecurefunc(ZoneAbilityFrame, "UpdateDisplayedZoneAbilities", styleZoneAbilityButton)
+  -- -- hooksecurefunc(ZoneAbilityFrame.SpellButtonContainer, "Refresh", styleZoneAbilityButton)
+
   --spell flyout
   SpellFlyoutBackgroundEnd:SetTexture(nil)
   SpellFlyoutHorizontalBackground:SetTexture(nil)
