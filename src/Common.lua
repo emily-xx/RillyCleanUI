@@ -125,7 +125,6 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
 
   if (icon) then
     styleIcon(icon, bu)
-    bu.icon = icon
   end
 
   -- Border
