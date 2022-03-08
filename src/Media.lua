@@ -23,6 +23,7 @@ LSM:Register("sound", "kenthemebuildup-.5s+5db", [[Interface\Addons\RillyCleanUI
 LSM:Register("sound", "kenthemebuildup", [[Interface\Addons\RillyCleanUI\media\sound\kenthemebuildup.ogg]])
 LSM:Register("sound", "mario-invincibility-2secfade+10db", [[Interface\Addons\RillyCleanUI\media\sound\mario-invincibility-2secfade+10db.ogg]])
 LSM:Register("sound", "mario-invincibility-2secfade", [[Interface\Addons\RillyCleanUI\media\sound\mario-invincibility-2secfade.ogg]])
+LSM:Register("sound", "MinorCircuit", [[Interface\Addons\RillyCleanUI\media\sound\minorcircuit.ogg]])
 
 LSM:Register ("statusbar", "RillyClean", [[Interface\AddOns\RillyCleanUI\media\textures\status-bar]])
 
