@@ -154,11 +154,10 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
     local hasArenaNumber = false
 
-    if RCUIDB.arenaNumbers and IsActiveBattlefieldArena() and UnitIsPlayer(frame.unit) and UnitIsEnemy(frame.unit) then -- Check to see if unit is a player to avoid needless checks on pets
+    if RCUIDB.arenaNumbers and IsActiveBattlefieldArena() and UnitIsPlayer(frame.unit) and UnitIsEnemy("player", frame.unit) then -- Check to see if unit is a player to avoid needless checks on pets
       for i = 1, 5 do
         if UnitIsUnit(frame.unit, "arena" .. i) then
           frame.name:SetText(i)
-          frame.name:SetTextColor(1, 1, 0)
           hasArenaNumber = true
           break
         end
