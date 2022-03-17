@@ -152,6 +152,19 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
     setDefaultFont(frame.name, RCUIDB.nameplateNameFontSize)
 
+    local hasArenaNumber = false
+
+    if RCUIDB.arenaNumbers and IsActiveBattlefieldArena() and UnitIsPlayer(frame.unit) then -- Check to see if unit is a player to avoid needless checks on pets
+      for i = 1, 5 do
+        if UnitIsUnit(self.unit, "arena" .. i) then
+          self.name:SetText(i)
+          self.name:SetTextColor(1, 1, 0)
+          hasArenaNumber = true
+          break
+        end
+      end
+    end
+
     if RCUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
       local classR, classG, classB = GetClassColor(className)
@@ -200,7 +213,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       frame.levelText:Hide()
     end
 
-    if RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0 then
+    if not hasArenaNumber and (RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0) then
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
       if not RCUIDB.nameplateHideServerNames and realm then

@@ -7,6 +7,7 @@ RCUIDBDefaults = {
   hideHotkeys = true,
   hideMicroButtonsAndBags = true,
   hideStanceBar = false,
+  arenaNumbers = false,
 
   hideAltPower = false,
   lootSpecDisplay = true, -- Display loot spec under the player frame
@@ -226,6 +227,16 @@ local function rcui_options()
   miscText:SetText("Misc. Options")
   miscText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
 
+  local arenaNumbers = newCheckbox(
+    "Show Arena Numbers instead of player names in arenas",
+    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
+    RCUIDB.arenaNumbers,
+    function(self, value)
+      RCUIDB.arenaNumbers = value
+    end,
+    miscText
+  )
+
   local damageFont = newCheckbox(
     "Use Custom Damage Font (Requires Game Restart)",
     "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
@@ -233,7 +244,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.damageFont = value
     end,
-    miscText
+    arenaNumbers
   )
 
   local hideMinimapZoneText = newCheckbox(
