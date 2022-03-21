@@ -227,16 +227,6 @@ local function rcui_options()
   miscText:SetText("Misc. Options")
   miscText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
 
-  local arenaNumbers = newCheckbox(
-    "Show Arena Numbers instead of player names in arenas",
-    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
-    RCUIDB.arenaNumbers,
-    function(self, value)
-      RCUIDB.arenaNumbers = value
-    end,
-    miscText
-  )
-
   local damageFont = newCheckbox(
     "Use Custom Damage Font (Requires Game Restart)",
     "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
@@ -244,7 +234,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.damageFont = value
     end,
-    arenaNumbers
+    miscText
   )
 
   local hideMinimapZoneText = newCheckbox(
@@ -356,6 +346,17 @@ local function rcui_options()
     RCUI_Nameplates
   )
 
+  local arenaNumbers = newCheckbox(
+    "Show Arena Numbers instead of player names in arenas",
+    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
+    RCUIDB.arenaNumbers,
+    function(self, value)
+      RCUIDB.arenaNumbers = value
+    end,
+    nameplateHideServerNames,
+    RCUI_Nameplates
+  )
+
   local nameplateFriendlyNamesClassColor = newCheckbox(
     "Class Colour Friendly Names",
     "Colours friendly players' names on their nameplates.",
@@ -363,7 +364,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateFriendlyNamesClassColor = value
     end,
-    nameplateHideServerNames,
+    arenaNumbers,
     RCUI_Nameplates
   )
 
