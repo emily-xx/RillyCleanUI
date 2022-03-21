@@ -7,6 +7,7 @@ RCUIDBDefaults = {
   hideHotkeys = true,
   hideMicroButtonsAndBags = true,
   hideStanceBar = false,
+  hideTalkingHeads = true,
   arenaNumbers = false,
 
   hideAltPower = false,
@@ -203,6 +204,16 @@ local function rcui_options()
   )
   tooltipAnchor:SetPoint("LEFT", portraitSelect, "RIGHT", 200, 0)
 
+  local hideTalkingHeads = newCheckbox(
+    "Hide Talking Head Frame",
+    "Hide box with npc dialog that comes up during world quests and etc.",
+    RCUIDB.hideTalkingHeads,
+    function(self, value)
+      RCUIDB.hideTalkingHeads = value
+    end,
+    portraitDropdown
+  )
+
   local lootSpecDisplay = newCheckbox(
     "Display Loot Spec Indicator",
     "Display loot spec icon in your player portrait.",
@@ -210,7 +221,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.lootSpecDisplay = value
     end,
-    portraitDropdown
+    hideTalkingHeads
   )
 
   local hideAltPower = newCheckbox(

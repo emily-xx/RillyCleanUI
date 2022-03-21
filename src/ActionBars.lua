@@ -107,17 +107,19 @@ local function init()
     end
 
     -- Hide Talking Head Frame
-    if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
-      NoTalkingHeads()
-    else
-      local waitFrame = CreateFrame("FRAME")
-      waitFrame:RegisterEvent("ADDON_LOADED")
-      waitFrame:SetScript("OnEvent", function(self, event, arg1)
-        if arg1 == "Blizzard_TalkingHeadUI" then
-          NoTalkingHeads()
-          waitFrame:UnregisterAllEvents()
-        end
-      end)
+    if RCUIDB.hideTalkingHeads then
+      if IsAddOnLoaded("Blizzard_TalkingHeadUI") then
+        NoTalkingHeads()
+      else
+        local waitFrame = CreateFrame("FRAME")
+        waitFrame:RegisterEvent("ADDON_LOADED")
+        waitFrame:SetScript("OnEvent", function(self, event, arg1)
+          if arg1 == "Blizzard_TalkingHeadUI" then
+            NoTalkingHeads()
+            waitFrame:UnregisterAllEvents()
+          end
+        end)
+      end
     end
 
     -- Clean up XP Bar/Azerite Bar appearance
