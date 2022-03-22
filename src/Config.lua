@@ -195,7 +195,7 @@ local function rcui_options()
 
   local tooltipAnchor = newDropdown(
     "Tooltip Cursor Anchor",
-    {["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left"},
+    {["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left", ['DEFAULT'] = 'Disabled'},
     RCUIDB.tooltipAnchor,
     100,
     function(value)

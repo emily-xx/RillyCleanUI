@@ -36,7 +36,7 @@ CF:SetScript("OnEvent", function(self, event)
 
 	-- Tooltips anchored on mouse
 	hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
-		if (InCombatLockdown()) then
+		if (InCombatLockdown() or RCUIDB.tooltipAnchor == 'DEFAULT') then
 	    self:SetOwner(parent, "ANCHOR_NONE")
 	    self:ClearAllPoints()
 	    self:SetPoint(unpack({"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -200, 220}))
