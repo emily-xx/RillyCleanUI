@@ -241,8 +241,10 @@ local function init()
       ho:Hide()
     end
 
-    --macro name
-    na:Hide()
+    -- Macro name
+    if (RCUIDB.hideMacroText) then
+      na:Hide()
+    end
 
     if not nt then
       --fix the non existent texture problem (no clue what is causing this)

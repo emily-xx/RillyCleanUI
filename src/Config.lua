@@ -5,6 +5,7 @@ RCUIDBDefaults = {
   disableAutoAddSpells = true, -- Whether or not to disable the automatic addition of spells to bars when changing talents and etc
   castbarOffset = 170,
   hideHotkeys = true,
+  hideMacroText = true,
   hideMicroButtonsAndBags = true,
   hideStanceBar = false,
   hideTalkingHeads = true,
@@ -279,6 +280,17 @@ local function rcui_options()
     RCUI_ActionBars
   )
 
+  local hideMacroText = newCheckbox(
+    "Hide Macro Text on Action Bars",
+    "Hides macro text on your action bar buttons.",
+    RCUIDB.hideMacroText,
+    function(self, value)
+      RCUIDB.hideMacroText = value
+    end,
+    hideHotkeys,
+    RCUI_ActionBars
+  )
+
   local hideMicroButtonsAndBags = newCheckbox(
     "Hide Micro Buttons and Bags (Requires reload)",
     "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
@@ -286,7 +298,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.hideMicroButtonsAndBags = value
     end,
-    hideHotkeys,
+    hideMacroText,
     RCUI_ActionBars
   )
 
