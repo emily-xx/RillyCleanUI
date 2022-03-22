@@ -4,10 +4,6 @@ local db
 
 function ns.Print(...) print("|cFF33FF99".. myfullname.. "|r:", ...) end
 
-local LoadFrame = CreateFrame("Frame")
-LoadFrame:RegisterEvent("PLAYER_LOGIN")
-LoadFrame:SetScript("OnEvent", init)
-
 local function init()
   if not RCUIDB.showItemLevels then return end
 
@@ -279,3 +275,7 @@ local function init()
       end
   end
 end
+
+local LoadFrame = CreateFrame("Frame")
+LoadFrame:RegisterEvent("PLAYER_LOGIN")
+LoadFrame:SetScript("OnEvent", init)
