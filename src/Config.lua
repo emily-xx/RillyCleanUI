@@ -13,6 +13,7 @@ RCUIDBDefaults = {
 
   hideAltPower = false,
   lootSpecDisplay = true, -- Display loot spec under the player frame
+  showItemLevels = true,
 
   damageFont = true, -- Change damage font to something cooler
   fonts = false, -- Update all fonts to something cooler
@@ -260,6 +261,56 @@ local function rcui_options()
     damageFont
   )
 
+  local showItemLevels = newCheckbox(
+    "Show Item Levels",
+    "Show Item Levels for gear in bags/Character window",
+    RCUIDB.showItemLevels,
+    function(self, value)
+      RCUIDB.showItemLevels = value
+    end,
+    hideMinimapZoneText
+  )
+
+  ------------
+  -- Layout --
+  ------------
+  local layoutText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  layoutText:SetText("Layout Options")
+  layoutText:SetPoint("TOPLEFT", showItemLevels, "BOTTOMLEFT", 0, -12)
+
+  -- Action Bar Offset
+  local actionBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  actionBarOffsetText:SetText("Action Bar Offset (Vertical)")
+  actionBarOffsetText:SetTextColor( 1, 1, 1 )
+  actionBarOffsetText:SetPoint("TOPLEFT", layoutText, "BOTTOMLEFT", 6, -12)
+
+  local actionBarOffset = newSlider(
+    "RCUI_ActionbaroffsetSlider",
+    "Offset: %d px",
+    'actionBarOffset',
+    0,
+    600,
+    actionBarOffsetText,
+    rcui.childpanel,
+    setActionBarOffset
+  )
+
+  -- Castbar Offset
+  local castBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  castBarOffsetText:SetText("CastBar Offset (Vertical, relative to action bars)")
+  castBarOffsetText:SetTextColor( 1, 1, 1 )
+  castBarOffsetText:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -16)
+
+  local castBarOffset = newSlider(
+    "RCUI_CastbaroffsetSlider",
+    "Offset: %d px",
+    'castbarOffset',
+    0,
+    600,
+    castBarOffsetText,
+    rcui.childpanel
+  )
+
   ----------------
   -- Action Bars --
   ----------------
@@ -422,46 +473,6 @@ local function rcui_options()
     end,
     nameplateShowHealth,
     RCUI_Nameplates
-  )
-
-  ------------
-  -- Layout --
-  ------------
-  local layoutText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  layoutText:SetText("Layout Options")
-  layoutText:SetPoint("TOPLEFT", hideMinimapZoneText, "BOTTOMLEFT", 0, -12)
-
-  -- Action Bar Offset
-  local actionBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  actionBarOffsetText:SetText("Action Bar Offset (Vertical)")
-  actionBarOffsetText:SetTextColor( 1, 1, 1 )
-  actionBarOffsetText:SetPoint("TOPLEFT", layoutText, "BOTTOMLEFT", 6, -12)
-
-  local actionBarOffset = newSlider(
-    "RCUI_ActionbaroffsetSlider",
-    "Offset: %d px",
-    'actionBarOffset',
-    0,
-    600,
-    actionBarOffsetText,
-    rcui.childpanel,
-    setActionBarOffset
-  )
-
-  -- Castbar Offset
-  local castBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  castBarOffsetText:SetText("CastBar Offset (Vertical, relative to action bars)")
-  castBarOffsetText:SetTextColor( 1, 1, 1 )
-  castBarOffsetText:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -16)
-
-  local castBarOffset = newSlider(
-    "RCUI_CastbaroffsetSlider",
-    "Offset: %d px",
-    'castbarOffset',
-    0,
-    600,
-    castBarOffsetText,
-    rcui.childpanel
   )
 
   ------------------

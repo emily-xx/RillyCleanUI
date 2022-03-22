@@ -1,3 +1,5 @@
+if not RCUIDB.showItemLevels then return end
+
 local myname, ns = ...
 local myfullname = GetAddOnMetadata(myname, "Title")
 local db
