@@ -529,7 +529,7 @@ local function rcui_options()
   )
 
   local arenaNumbers = newCheckbox(
-    "Show Arena Numbers instead of player names in arenas",
+    "Show Arena Numbers on nameplates in arenas",
     "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
     RCUIDB.arenaNumbers,
     function(self, value)
