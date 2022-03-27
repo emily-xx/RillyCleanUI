@@ -15,8 +15,7 @@ frame.text:SetFontObject(GameFontNormalSmall)
 frame.text:SetAllPoints()
 
 function frame:UNIT_AURA(unit)
-
-local name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, nameplateShowAll, noIdea, timeMod , percentage = FindAuraByName(dampeningtext, unit, "HARMFUL")
+	local name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, nameplateShowAll, noIdea, timeMod , percentage = FindAuraByName(dampeningtext, unit, "HARMFUL")
 
 	if percentage then
 		if not self:IsShown() then
@@ -33,6 +32,7 @@ local name, icon, count, debuffType, duration, expirationTime, source, isStealab
 end
 
 function frame:PLAYER_ENTERING_WORLD()
+	if not RCUIDB.dampeningDisplay then return end
 	local _, instanceType = IsInInstance()
 	if instanceType == "arena" then
 		self:RegisterUnitEvent("UNIT_AURA", "player")

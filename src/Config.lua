@@ -34,6 +34,11 @@ RCUIDBDefaults = {
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
+
+  -- PvP Settings
+  safeQueue = true,
+  tabBinder = true,
+  dampeningDisplay = true,
 }
 
 local function rcui_defaults()
@@ -483,6 +488,48 @@ local function rcui_options()
     end,
     nameplateShowHealth,
     RCUI_Nameplates
+  )
+
+  ----------------
+  --     PvP    --
+  ----------------
+  makePanel("RCUI_PvP", rcui.panel, "PvP")
+
+  local pvpText = RCUI_Nameplates:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  pvpText:SetText("PvP")
+  pvpText:SetPoint("TOPLEFT", 16, -16)
+
+  local safeQueue = newCheckbox(
+    "Safe Queue",
+    "Hide Leave Queue button and show timer for Arena/RBG queues.",
+    RCUIDB.safeQueue,
+    function(self, value)
+      RCUIDB.safeQueue = value
+    end,
+    pvpText,
+    RCUI_PvP
+  )
+
+  local dampeningDisplay = newCheckbox(
+    "Dampening Display",
+    "Display Dampening % under remaining time at the top of the screen in arenas.",
+    RCUIDB.dampeningDisplay,
+    function(self, value)
+      RCUIDB.dampeningDisplay = value
+    end,
+    safeQueue,
+    RCUI_PvP
+  )
+
+  local tabBinder = newCheckbox(
+    "Safe Queue",
+    "Tab-target only between players in Arenas and BGs.",
+    RCUIDB.tabBinder,
+    function(self, value)
+      RCUIDB.tabBinder = value
+    end,
+    dampeningDisplay,
+    RCUI_PvP
   )
 
   ------------------
