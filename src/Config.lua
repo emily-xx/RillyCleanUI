@@ -16,7 +16,7 @@ RCUIDBDefaults = {
   showItemLevels = true,
 
   damageFont = true, -- Change damage font to something cooler
-  fonts = false, -- Update all fonts to something cooler
+  customFonts = true, -- Update all fonts to something cooler
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 
@@ -240,6 +240,16 @@ local function rcui_options()
   miscText:SetText("Misc. Options")
   miscText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
 
+  local customFonts = newCheckbox(
+    "Use Custom Fonts (Requires Reload)",
+    "Use custom fonts with support for Cyrillic and other character sets",
+    RCUIDB.customFonts,
+    function(self, value)
+      RCUIDB.customFonts = value
+    end,
+    miscText
+  )
+
   local damageFont = newCheckbox(
     "Use Custom Damage Font (Requires Game Restart)",
     "Use custom damage font, ZCOOL KuaiLe. Replace font file in Addons/RillyCleanUI/fonts to customise.",
@@ -247,7 +257,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.damageFont = value
     end,
-    miscText
+    customFonts
   )
 
   local hideMinimapZoneText = newCheckbox(

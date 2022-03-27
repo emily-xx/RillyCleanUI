@@ -6,12 +6,16 @@ end
 local RCUI=CreateFrame("Frame")
 RCUI:RegisterEvent("ADDON_LOADED")
 RCUI:SetScript("OnEvent", function(self, event)
-  if not RCUIDB.fonts then return end
+  if RCUIDB.damageFont then
+    DAMAGE_TEXT_FONT            = RILLY_CLEAN_FONTS.damage
+  end
+
+  if not RCUIDB.customFonts then return end
 
   STANDARD_TEXT_FONT          = RILLY_CLEAN_FONTS.standard
-  UNIT_NAME_FONT              = RILLY_CLEAN_FONTS.ui
-  NAMEPLATE_FONT              = RILLY_CLEAN_FONTS.ui
-  NAMEPLATE_SPELLCAST_FONT    = RILLY_CLEAN_FONTS.ui
+  UNIT_NAME_FONT              = RILLY_CLEAN_FONTS.standard
+  NAMEPLATE_FONT              = RILLY_CLEAN_FONTS.standard
+  NAMEPLATE_SPELLCAST_FONT    = RILLY_CLEAN_FONTS.standard
 
   local ForcedFontSize = { 10, 14, 20, 64, 64 }
 
@@ -26,7 +30,7 @@ RCUI:SetScript("OnEvent", function(self, event)
     Game60Font, Game72Font, Game11Font_o1, Game12Font_o1, Game13Font_o1, Game15Font_o1, QuestFont_Enormous, DestinyFontLarge,
     CoreAbilityFont, DestinyFontHuge, QuestFont_Shadow_Small, MailFont_Large, SpellFont_Small, InvoiceFont_Med, InvoiceFont_Small,
     Tooltip_Med, Tooltip_Small, AchievementFont_Small, ReputationDetailFont, FriendsFont_Normal, FriendsFont_Small, FriendsFont_Large,
-    FriendsFont_UserText, GameFont_Gigantic, Fancy16Font, Fancy18Font, Fancy20Font, Fancy24Font, Fancy27Font, Fancy30Font,
+    GameFont_Gigantic, Fancy16Font, Fancy18Font, Fancy20Font, Fancy24Font, Fancy27Font, Fancy30Font,
     Fancy32Font, Fancy48Font, SystemFont_NamePlate, SystemFont_LargeNamePlate,
 
     SystemFont_Tiny2, SystemFont_Tiny, SystemFont_Shadow_Small, SystemFont_Small, SystemFont_Small2, SystemFont_Shadow_Small2, SystemFont_Shadow_Med1_Outline,
@@ -37,17 +41,19 @@ RCUI:SetScript("OnEvent", function(self, event)
   }
 
   for i, FontObject in pairs(BlizFontObjects) do
-    updateFontObject(FontObject, RILLY_CLEAN_FONTS.ui, ForcedFontSize[i])
+    updateFontObject(FontObject, RILLY_CLEAN_FONTS.standard, ForcedFontSize[i])
   end
 
-  local StandardFontObjects = {
-    ChatBubbleFont, ChatFontNormal, NumberFont_GameNormal, NumberFont_Shadow_Small,
+  local NumberFontObjects = {
+    ChatBubbleFont, ChatFontNormal, NumberFont_GameNormal, NumberFont_Shadow_Small, NumberFont_Shadow_Tiny,
     NumberFont_OutlineThick_Mono_Small, NumberFont_Shadow_Med, NumberFont_Normal_Med,
-    NumberFont_Outline_Med, NumberFont_Outline_Large, NumberFont_Outline_Huge,
+    NumberFont_Outline_Med, NumberFont_Outline_Large, NumberFont_Outline_Huge, Number12Font_o1, NumberFont_Small,
+    Number11Font, Number12Font, Number13Font, PriceFont, Number15Font, Number16Font, Number18Font,
+    FriendsFont_UserText, EditBoxFont_Large, WhiteNormalNumberFont, GameFontHighlightLarge
   }
 
-  for i, FontObject in pairs(StandardFontObjects) do
-    updateFontObject(FontObject, RILLY_CLEAN_FONTS.standard)
+  for i, FontObject in pairs(NumberFontObjects) do
+    updateFontObject(FontObject, RILLY_CLEAN_FONTS.number)
   end
 
   BlizFontObjects = nil

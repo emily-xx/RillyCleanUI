@@ -47,8 +47,9 @@ RILLY_CLEAN_TEXTURES = {
 }
 
 RILLY_CLEAN_FONTS = {
-  standard = FontsDir.."\\Marmelad.ttf",
-  ui = FontsDir.."\\Andika.ttf"
+  number = FontsDir.."\\Marmelad.ttf",
+  standard = FontsDir.."\\Andika.ttf",
+  damage = FontsDir.."\\Bangers-Regular.ttf",
 }
 
 RILLY_CLEAN_BACKDROP = {
@@ -234,7 +235,7 @@ function setDefaultFont(textObject, size, outlinestyle)
   if not size then size = currSize end
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
-  textObject:SetFont(RILLY_CLEAN_FONTS.ui, size, outlinestyle)
+  textObject:SetFont(RILLY_CLEAN_FONTS.standard, size, outlinestyle)
 end
 
 function createStatusBar(name, parentFrame, width, height, color)
