@@ -43,6 +43,8 @@ end
 
 SafeQueue:RegisterEvent("UPDATE_BATTLEFIELD_STATUS")
 SafeQueue:SetScript("OnEvent", function()
+	if not RCUIDB.safeQueue then return end
+
 	local queued
 	for i=1, GetMaxBattlefieldID() do
 		local status = GetBattlefieldStatus(i)
@@ -63,6 +65,8 @@ SafeQueue:SetScript("OnEvent", function()
 end)
 
 SafeQueue:SetScript("OnUpdate", function(self)
+	if not RCUIDB.safeQueue then return end
+
 	if PVPReadyDialog_Showing(queue) then
 		local secs = GetBattlefieldPortExpiration(queue)
 		if secs and secs > 0 and remaining ~= secs then

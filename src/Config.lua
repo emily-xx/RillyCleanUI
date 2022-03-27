@@ -14,6 +14,7 @@ RCUIDBDefaults = {
   hideAltPower = false,
   lootSpecDisplay = true, -- Display loot spec under the player frame
   showItemLevels = true,
+  afkScreen = true,
 
   damageFont = true, -- Change damage font to something cooler
   customFonts = true, -- Update all fonts to something cooler
@@ -241,10 +242,6 @@ local function rcui_options()
     lootSpecDisplay
   )
 
-  local miscText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  miscText:SetText("Misc. Options")
-  miscText:SetPoint("TOPLEFT", hideAltPower, "BOTTOMLEFT", 0, -12)
-
   local customFonts = newCheckbox(
     "Use Custom Fonts (Requires Reload)",
     "Use custom fonts with support for Cyrillic and other character sets",
@@ -252,7 +249,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.customFonts = value
     end,
-    miscText
+    hideAltPower
   )
 
   local damageFont = newCheckbox(
@@ -284,6 +281,16 @@ local function rcui_options()
       RCUIDB.showItemLevels = value
     end,
     hideMinimapZoneText
+  )
+
+  local afkScreen = newCheckbox(
+    "Show AFK Screen",
+    "Show special screen for when you are AFK",
+    RCUIDB.afkScreen,
+    function(self, value)
+      RCUIDB.afkScreen = value
+    end,
+    showItemLevels
   )
 
   ------------
@@ -435,17 +442,6 @@ local function rcui_options()
     RCUI_Nameplates
   )
 
-  local arenaNumbers = newCheckbox(
-    "Show Arena Numbers instead of player names in arenas",
-    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
-    RCUIDB.arenaNumbers,
-    function(self, value)
-      RCUIDB.arenaNumbers = value
-    end,
-    nameplateHideServerNames,
-    RCUI_Nameplates
-  )
-
   local nameplateFriendlyNamesClassColor = newCheckbox(
     "Class Colour Friendly Names",
     "Colours friendly players' names on their nameplates.",
@@ -453,7 +449,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateFriendlyNamesClassColor = value
     end,
-    arenaNumbers,
+    nameplateHideServerNames,
     RCUI_Nameplates
   )
 
@@ -495,7 +491,7 @@ local function rcui_options()
   ----------------
   makePanel("RCUI_PvP", rcui.panel, "PvP")
 
-  local pvpText = RCUI_Nameplates:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  local pvpText = RCUI_PvP:CreateFontString(nil, "ARTWORK", "GameFontNormal")
   pvpText:SetText("PvP")
   pvpText:SetPoint("TOPLEFT", 16, -16)
 
@@ -522,13 +518,24 @@ local function rcui_options()
   )
 
   local tabBinder = newCheckbox(
-    "Safe Queue",
+    "Tab Binder",
     "Tab-target only between players in Arenas and BGs.",
     RCUIDB.tabBinder,
     function(self, value)
       RCUIDB.tabBinder = value
     end,
     dampeningDisplay,
+    RCUI_PvP
+  )
+
+  local arenaNumbers = newCheckbox(
+    "Show Arena Numbers instead of player names in arenas",
+    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
+    RCUIDB.arenaNumbers,
+    function(self, value)
+      RCUIDB.arenaNumbers = value
+    end,
+    tabBinder,
     RCUI_PvP
   )
 
