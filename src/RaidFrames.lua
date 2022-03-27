@@ -57,7 +57,6 @@ f:SetScript("OnEvent", function(self, event, ...)
 	end
 
 	local function SkinBorders(prefix)
-		print(prefix)
 		_G[prefix.."BorderFrameBorderTopLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
 		_G[prefix.."BorderFrameBorderTop"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
 		_G[prefix.."BorderFrameBorderTopRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
