@@ -396,6 +396,25 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		eventFrame:SetScript("OnEvent", getBarData)
 	end
 
+	function StylePartyFrames(self, isParty)
+		local useCompact = GetCVarBool("useCompactPartyFrames")
+		if not isParty or useCompact then return end
+
+		for i = 1, 4 do
+			local prefix = ("PartyMemberFrame"..i)
+
+			_G[prefix .. "Texture"]:SetTexture(TextureDir .. "\\UI-PartyFrame")
+			_G[prefix.."Flash"]:SetTexture(TextureDir .. "\\UI-PARTYFRAME-FLASH")
+			_G[prefix.."HealthBar"]:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+			_G[prefix.."HealthBar"]:SetHeight(6)
+			_G[prefix.."ManaBar"]:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+			_G[prefix.."ManaBar"]:SetHeight(6)
+		end
+	end
+
+	hooksecurefunc("UnitFrame_Update", StylePartyFrames)
+  hooksecurefunc("PartyMemberFrame_ToPlayerArt", StylePartyFrames)
+
 	-----------------------
 	-- Loot Spec Display --
 	-----------------------
