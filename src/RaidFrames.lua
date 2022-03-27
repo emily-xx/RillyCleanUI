@@ -4,7 +4,7 @@
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
 
-frame:SetScript("OnEvent", function(self, event, addon)
+frame:SetScript("OnEvent", function(self, event, addon) -- Darken Raid Panel
 		for _, region in pairs({CompactRaidFrameManager:GetRegions()}) do
 			if region:IsObjectType("Texture") then
 				region:SetVertexColor(0, 0, 0)
@@ -21,8 +21,7 @@ frame:SetScript("OnEvent", function(self, event, addon)
   	frame:SetScript("OnEvent", nil)
 end)
 
--- TODO - Work out bugs here
-local f = CreateFrame("Frame")
+local f = CreateFrame("Frame") -- Skin raid frames
 f:SetScript("OnEvent", function(self, event, ...)
 	-- HIDE RAIDFRAMERESIZE
 	local n, w, h = "CompactUnitFrameProfilesGeneralOptionsFrame"
@@ -57,11 +56,24 @@ f:SetScript("OnEvent", function(self, event, ...)
 		return bar
 	end
 
-	local function RaidGroupsUpdate()
-		local g = 1
-		local isRaid = _G["CompactRaidGroup1"] ~= nil
+	local function SkinBorders(prefix)
+		print(prefix)
+		_G[prefix.."BorderFrameBorderTopLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
+		_G[prefix.."BorderFrameBorderTop"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
+		_G[prefix.."BorderFrameBorderTopRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
+		_G[prefix.."BorderFrameBorderLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Left")
+		_G[prefix.."BorderFrameBorderRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Right")
+		_G[prefix.."BorderFrameBorderBottomLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomLeft")
+		_G[prefix.."BorderFrameBorderBottom"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomMiddle")
+		_G[prefix.."BorderFrameBorderBottomRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomRight")
+	end
 
-		if isRaid then
+	local function RaidFrameUpdate()
+		local g = 1
+		local isRaidGroup = _G["CompactRaidGroup1"] ~= nil
+		local isParty = _G["CompactPartyFrameMember1"] ~= nil
+
+		if isRaidGroup then
 			repeat
 				local i, bar = 1
 				local group = _G["CompactRaidGroup" .. g]
@@ -72,37 +84,39 @@ f:SetScript("OnEvent", function(self, event, ...)
 				until not bar
 				g = g + 1
 			until not group
-		else
+		elseif isParty then
 			local i, bar = 1
 			repeat
 				local prefix = ("CompactPartyFrameMember" .. i)
 				bar = SkinRaidFrame(prefix)
 				i = i + 1
 			until not bar
+		else
+			local i, bar = 1
+			repeat
+				local prefix = ("CompactRaidFrame" .. i)
+				bar = SkinRaidFrame(prefix)
+				i = i + 1
+			until not bar
 		end
-	end
-
-	local function RaidFrameUpdate()
-		local i, bar = 1
-		repeat
-			local prefix = ("CompactRaidFrame" .. i)
-			bar = SkinRaidFrame(prefix)
-			i = i + 1
-		until not bar
 	end
 
 	if CompactRaidFrameContainer_AddUnitFrame then
 		self:UnregisterAllEvents()
 		hooksecurefunc("CompactRaidFrameContainer_AddUnitFrame", RaidFrameUpdate)
-		hooksecurefunc("CompactUnitFrame_UpdateAll", RaidGroupsUpdate)
-		CompactRaidFrameContainerBorderFrameBorderTopLeft:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
-		CompactRaidFrameContainerBorderFrameBorderTop:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
-		CompactRaidFrameContainerBorderFrameBorderTopRight:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
-		CompactRaidFrameContainerBorderFrameBorderLeft:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Left")
-		CompactRaidFrameContainerBorderFrameBorderRight:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Right")
-		CompactRaidFrameContainerBorderFrameBorderBottomLeft:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomLeft")
-		CompactRaidFrameContainerBorderFrameBorderBottom:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomMiddle")
-		CompactRaidFrameContainerBorderFrameBorderBottomRight:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomRight")
+		hooksecurefunc("CompactUnitFrame_UpdateAll", RaidFrameUpdate)
+		SkinBorders("CompactRaidFrameContainer")
+
+		hooksecurefunc("CompactRaidGroup_UpdateUnits", function()
+			local g = 1
+			repeat
+				local group = _G["CompactRaidGroup" .. g]
+				if (group) then
+					SkinBorders("CompactRaidGroup" .. g)
+				end
+				g = g + 1
+			until not group
+		end)
 	end
 
 	--RAID BUFFS
