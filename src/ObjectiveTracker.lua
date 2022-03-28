@@ -3,7 +3,7 @@ local cleanBarBackdrop = {
   edgeFile = SQUARE_TEXTURE,
   tile = false,
   tileSize = 0,
-  edgeSize = 2,
+  edgeSize = 3,
   insets = {
     left = -2,
     right = -2,
@@ -11,6 +11,44 @@ local cleanBarBackdrop = {
     bottom = -2
   }
 }
+
+local function skinProgressBar(progressBar)
+  local bar = progressBar.Bar
+
+  bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+  bar.BarBG:Hide()
+  bar.BarFrame:Hide()
+
+  -- Rilly Clean Border
+  local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+  back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+  back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+  back:SetFrameLevel(bar:GetFrameLevel() - 1)
+  back.backdropInfo = cleanBarBackdrop
+  back:ApplyBackdrop()
+  back:SetBackdropBorderColor(0,0,0,1)
+  back:SetBackdropColor(0,0,0,1)
+
+  local Icon = bar.Icon
+  if (Icon) then
+    Icon:SetMask(nil)
+    styleIcon(Icon)
+    Icon:SetHeight(24)
+    Icon:SetWidth(24)
+    Icon:ClearAllPoints()
+    Icon:SetPoint("LEFT", back, "RIGHT", 0, 0)
+    local iconBack = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+    iconBack:SetPoint("TOPLEFT", Icon, "TOPLEFT", 0, 0)
+    iconBack:SetPoint("BOTTOMRIGHT", Icon, "BOTTOMRIGHT", 0, 0)
+    iconBack:SetFrameLevel(bar:GetFrameLevel() - 1)
+    iconBack.backdropInfo = cleanBarBackdrop
+    iconBack:ApplyBackdrop()
+    iconBack:SetBackdropBorderColor(0,0,0,1)
+    iconBack:SetBackdropColor(0,0,0,1)
+
+    bar.IconBG:Hide()
+  end
+end
 
 local function skinBar(bar)
   bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
@@ -20,8 +58,6 @@ local function skinBar(bar)
     bar.BorderLeft:SetAlpha(0)
     bar.BorderRight:SetAlpha(0)
   end
-
-  if bar.BarBG then print('eureka!') end
 
   -- Rilly Clean Border
   local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
@@ -33,6 +69,8 @@ local function skinBar(bar)
   back:SetBackdropBorderColor(0,0,0,1)
   back:SetBackdropColor(0,0,0,1)
 end
+
+hooksecurefunc("BonusObjectiveTrackerProgressBar_UpdateReward", skinProgressBar)
 
 local function skinBlizzardObjectiveTracker()
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", function(_, fontString)
