@@ -53,7 +53,7 @@ local function makeRillyCleanPortrait(frame)
     local unit = frame.unit
     local unitGuid = UnitGUID(unit)
 
-    if not unitGuid then return end
+    if not unitGuid or (unit == 'targettarget' and unitGuid == frame.portraitModel.guid) then return end -- Target of Target is spammy and needs this protection
 
     frame.portraitModel.guid = unitGuid
 
