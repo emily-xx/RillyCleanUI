@@ -15,6 +15,8 @@ local cleanBarBackdrop = {
 local function skinProgressBar(progressBar)
   local bar = progressBar.Bar
 
+  if not bar then return end
+
   bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
   bar.BarBG:Hide()
   bar.BarFrame:Hide()
