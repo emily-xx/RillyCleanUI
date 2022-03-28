@@ -1,3 +1,34 @@
+local cleanBarBackdrop = {
+  bgFile = SQUARE_TEXTURE,
+  edgeFile = SQUARE_TEXTURE,
+  tile = false,
+  tileSize = 0,
+  edgeSize = 2,
+  insets = {
+    left = -2,
+    right = -2,
+    top = -2,
+    bottom = -2
+  }
+}
+
+local function skinBar(bar)
+  bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+  bar.BorderMid:SetAlpha(0)
+  bar.BorderLeft:SetAlpha(0)
+  bar.BorderRight:SetAlpha(0)
+
+  -- Rilly Clean Border
+  local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+  back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+  back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+  back:SetFrameLevel(bar:GetFrameLevel() - 1)
+  back.backdropInfo = cleanBarBackdrop
+  back:ApplyBackdrop()
+  back:SetBackdropBorderColor(0,0,0,1)
+  back:SetBackdropColor(0,0,0,1)
+end
+
 local function skinBlizzardObjectiveTracker()
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", function(_, fontString)
     setDefaultFont(fontString)
@@ -12,6 +43,7 @@ local function skinBlizzardObjectiveTracker()
     end
 
     if (block.rightButton) then applyRillyCleanButtonSkin(block.rightButton) end
+    if (block.currentLine and block.currentLine.Bar) then skinBar(block.currentLine.Bar) end
   end
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderEnter", function(_, block) styleBlock(block) end)
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderLeave", function(_, block) styleBlock(block) end)
