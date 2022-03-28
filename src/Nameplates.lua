@@ -109,7 +109,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       if ( not frame.isNameplate ) then return end
 
       local healthBar = frame.healthBar
-      healthBar.barTexture:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
+      healthBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
       local castBar = frame.castBar
       if (castBar) then
