@@ -55,11 +55,11 @@ end
 local function skinBar(bar)
   bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
-  if bar.BorderMid then
-    bar.BorderMid:SetAlpha(0)
-    bar.BorderLeft:SetAlpha(0)
-    bar.BorderRight:SetAlpha(0)
-  end
+  if not bar.BorderMid then return end
+
+  bar.BorderMid:SetAlpha(0)
+  bar.BorderLeft:SetAlpha(0)
+  bar.BorderRight:SetAlpha(0)
 
   -- Rilly Clean Border
   local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
