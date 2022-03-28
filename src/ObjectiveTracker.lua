@@ -14,9 +14,14 @@ local cleanBarBackdrop = {
 
 local function skinBar(bar)
   bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-  bar.BorderMid:SetAlpha(0)
-  bar.BorderLeft:SetAlpha(0)
-  bar.BorderRight:SetAlpha(0)
+
+  if bar.BorderMid then
+    bar.BorderMid:SetAlpha(0)
+    bar.BorderLeft:SetAlpha(0)
+    bar.BorderRight:SetAlpha(0)
+  end
+
+  if bar.BarBG then print('eureka!') end
 
   -- Rilly Clean Border
   local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
@@ -74,7 +79,12 @@ local function skinBlizzardObjectiveTracker()
       if #tracker.MODULES then
         for i = 1, #tracker.MODULES do
           local trackerModule = tracker.MODULES[i]
-          if ( trackerModule.Header ) then setDefaultFont(trackerModule.Header.Text) end
+          local Header = trackerModule.Header
+          if ( Header ) then
+            setDefaultFont(Header.Text)
+            Header.Background:Hide()
+          end
+
           local blocks = trackerModule:GetActiveBlocks()
           for i, v in pairs(blocks) do
             styleBlock(v)
