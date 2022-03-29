@@ -12,27 +12,38 @@ local cleanBarBackdrop = {
   }
 }
 
-local function skinProgressBar(progressBar)
-  local bar = progressBar.Bar
-
+local function skinProgressBar(bar)
   if not bar then return end
 
+  if bar.BorderMid then
+    bar.BorderMid:SetAlpha(0)
+    bar.BorderLeft:SetAlpha(0)
+    bar.BorderRight:SetAlpha(0)
+  end
+
   bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-  bar.BarBG:Hide()
-  bar.BarFrame:Hide()
+
+  if bar.BarBG then
+    bar.BarBG:Hide()
+    bar.BarFrame:Hide()
+  end
 
   -- Rilly Clean Border
-  local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
-  back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
-  back:SetFrameLevel(bar:GetFrameLevel() - 1)
-  back.backdropInfo = cleanBarBackdrop
-  back:ApplyBackdrop()
-  back:SetBackdropBorderColor(0,0,0,1)
-  back:SetBackdropColor(0,0,0,1)
+  if not bar.back then
+    local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+    back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+    back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+    back:SetFrameLevel(bar:GetFrameLevel() - 1)
+    back.backdropInfo = cleanBarBackdrop
+    back:ApplyBackdrop()
+    back:SetBackdropBorderColor(0,0,0,1)
+    back:SetBackdropColor(0,0,0,1)
+
+    bar.back = back
+  end
 
   local Icon = bar.Icon
-  if (Icon) then
+  if (Icon and not bar.iconBack) then
     Icon:SetMask(nil)
     styleIcon(Icon)
     Icon:SetHeight(24)
@@ -47,32 +58,15 @@ local function skinProgressBar(progressBar)
     iconBack:ApplyBackdrop()
     iconBack:SetBackdropBorderColor(0,0,0,1)
     iconBack:SetBackdropColor(0,0,0,1)
+    bar.iconBack = iconBack
 
     bar.IconBG:Hide()
   end
 end
 
-local function skinBar(bar)
-  bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-
-  if not bar.BorderMid then return end
-
-  bar.BorderMid:SetAlpha(0)
-  bar.BorderLeft:SetAlpha(0)
-  bar.BorderRight:SetAlpha(0)
-
-  -- Rilly Clean Border
-  local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
-  back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
-  back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
-  back:SetFrameLevel(bar:GetFrameLevel() - 1)
-  back.backdropInfo = cleanBarBackdrop
-  back:ApplyBackdrop()
-  back:SetBackdropBorderColor(0,0,0,1)
-  back:SetBackdropColor(0,0,0,1)
-end
-
-hooksecurefunc("BonusObjectiveTrackerProgressBar_UpdateReward", skinProgressBar)
+hooksecurefunc("BonusObjectiveTrackerProgressBar_UpdateReward", function(progressBar)
+  skinProgressBar(progressBar.Bar)
+end)
 
 local function skinBlizzardObjectiveTracker()
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", function(_, fontString)
@@ -88,7 +82,7 @@ local function skinBlizzardObjectiveTracker()
     end
 
     if (block.rightButton) then applyRillyCleanButtonSkin(block.rightButton) end
-    if (block.currentLine and block.currentLine.Bar) then skinBar(block.currentLine.Bar) end
+    if (block.currentLine and block.currentLine.Bar) then skinProgressBar(block.currentLine.Bar) end
   end
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderEnter", function(_, block) styleBlock(block) end)
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderLeave", function(_, block) styleBlock(block) end)
