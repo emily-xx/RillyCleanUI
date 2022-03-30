@@ -32,6 +32,9 @@ f:SetScript("OnEvent", function(self, event, ...)
 	-- Clean Skins
 	local function SkinRaidFrame(prefix)
 		local bar = _G[prefix .. "HealthBar"]
+
+		if not bar then return end
+
 		local rbar = _G[prefix .. "PowerBar"]
 		local rbarBg = _G[prefix .. "PowerBarBackground"]
 		local Divider = _G[prefix .. "HorizDivider"]
@@ -42,21 +45,20 @@ f:SetScript("OnEvent", function(self, event, ...)
 		local roleIcon = _G[prefix .. "RoleIcon"]
 		local healthBackground = _G[prefix .. "HealthBarBackground"]
 		local background = _G[prefix .. "Background"]
-		if bar then
-			--STATUSBAR
-			bar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Fill")
-			rbar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Fill")
-			rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
-			Divider:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-			vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-			vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
-			htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-			hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-			roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
-			healthBackground:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Bg")
-			background:SetTexture(SQUARE_TEXTURE)
-			background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
-		end
+
+		--STATUSBAR
+		bar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Fill")
+		rbar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Fill")
+		rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
+		Divider:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+		vleftseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+		vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
+		htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+		hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
+		roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
+		healthBackground:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Bg")
+		background:SetTexture(SQUARE_TEXTURE)
+		background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
 
 		return bar
 	end
@@ -95,14 +97,15 @@ f:SetScript("OnEvent", function(self, event, ...)
 				bar = SkinRaidFrame(prefix)
 				i = i + 1
 			until not bar
-		else
-			local i, bar = 1
-			repeat
-				local prefix = ("CompactRaidFrame" .. i)
-				bar = SkinRaidFrame(prefix)
-				i = i + 1
-			until not bar
 		end
+
+		-- Always check this because regardless of group settings, main tanks come up as CompactRaidFrameX
+		local i, bar = 1
+		repeat
+			local prefix = ("CompactRaidFrame" .. i)
+			bar = SkinRaidFrame(prefix)
+			i = i + 1
+		until not bar
 	end
 
 	if CompactRaidFrameContainer_AddUnitFrame then
