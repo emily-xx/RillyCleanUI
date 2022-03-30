@@ -39,7 +39,6 @@ f:SetScript("OnEvent", function(self, event, ...)
 		local vrightseparator = _G[prefix .. "VertRightBorder"]
 		local htopseparator = _G[prefix .. "HorizTopBorder"]
 		local hbotseparator = _G[prefix .. "HorizBottomBorder"]
-		local roleIcon = _G[prefix .. "RoleIcon"]
 		local healthBackground = _G[prefix .. "HealthBarBackground"]
 		local background = _G[prefix .. "Background"]
 		if bar then
@@ -52,7 +51,6 @@ f:SetScript("OnEvent", function(self, event, ...)
 			vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
 			htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
 			hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-			roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
 			healthBackground:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Bg")
 			background:SetTexture(SQUARE_TEXTURE)
 			background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
