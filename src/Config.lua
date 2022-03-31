@@ -569,6 +569,13 @@ local function rcui_options()
   SlashCmdList["rcui"] = function()
     openRcuiConfig()
   end
+
+  hooksecurefunc("OptionsFrame_OnHide", function(self) -- Ensure some settings are not randomly reverted when closing/saving Interface Options
+    local frameName = self:GetName()
+    if frameName ~= 'InterfaceOptionsFrame' then return end
+
+    SetFriendlyNameplateSize()
+  end)
 end
 
 GameMenuFrame.Header:Hide()
