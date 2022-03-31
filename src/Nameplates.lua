@@ -1,7 +1,19 @@
 RillyCleanNameplates = CreateFrame("Frame", "RillyCleanNameplates")
 RillyCleanNameplates:RegisterEvent("PLAYER_LOGIN")
 
+local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
+
+function SetFriendlyNameplateSize()
+  if RCUIDB.nameplateFriendlySmall then
+    C_NamePlate.SetNamePlateFriendlySize((defaultFriendlyWidth / 2), defaultFriendlyHeight)
+  else
+    C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
+  end
+end
+
 RillyCleanNameplates:SetScript("OnEvent", function()
+  SetFriendlyNameplateSize()
+
   -------------------------------------------------------
   -- Red color when below 30% on Personal Resource Bar --
   -------------------------------------------------------

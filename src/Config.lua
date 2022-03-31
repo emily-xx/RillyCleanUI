@@ -27,11 +27,13 @@ RCUIDBDefaults = {
   nameplateHideServerNames = true,
   nameplateNameLength = 20, -- Set to nil for no abbreviation
   nameplateFriendlyNamesClassColor = true,
+  nameplateFriendlySmall = true,
   nameplateHideCastText = false,
   nameplateShowLevel = true,
   nameplateCastFontSize = 6,
   nameplateHealthPercent = true,
   nameplateShowCastTime = true,
+  nameplateFriendlySmall = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
@@ -453,6 +455,18 @@ local function rcui_options()
     RCUI_Nameplates
   )
 
+  local nameplateFriendlySmall = newCheckbox(
+    "Smaller Friendly Nameplates",
+    "Reduce size of friendly nameplates to more easily distinguish friend from foe",
+    RCUIDB.nameplateFriendlySmall,
+    function(self, value)
+      RCUIDB.nameplateFriendlySmall = value
+      SetNamePlateFriendlySize()
+    end,
+    nameplateFriendlyNamesClassColor,
+    RCUI_Nameplates
+  )
+
   local nameplateShowLevel = newCheckbox(
     "Show Level",
     "Show player/mob level on nameplate",
@@ -460,7 +474,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.nameplateShowLevel = value
     end,
-    nameplateFriendlyNamesClassColor,
+    nameplateFriendlySmall,
     RCUI_Nameplates
   )
 
