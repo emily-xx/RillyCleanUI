@@ -33,7 +33,6 @@ RCUIDBDefaults = {
   nameplateCastFontSize = 6,
   nameplateHealthPercent = true,
   nameplateShowCastTime = true,
-  nameplateFriendlySmall = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   hideMinimapZoneText = false, -- True = hide zone text, False = show zone text
