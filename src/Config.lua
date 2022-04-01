@@ -12,7 +12,7 @@ RCUIDBDefaults = {
   arenaNumbers = false,
 
   hideAltPower = false,
-  lootSpecDisplay = true, -- Display loot spec under the player frame
+  lootSpecDisplay = true, -- Display loot spec icon in the player frame
   showItemLevels = true,
   afkScreen = true,
 
@@ -22,10 +22,10 @@ RCUIDBDefaults = {
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 
   -- Nameplate Settings
-  modNamePlates = true, -- Set to false to ignore all nameplate customization
+  modNamePlates = true,
   nameplateNameFontSize = 9,
   nameplateHideServerNames = true,
-  nameplateNameLength = 20, -- Set to nil for no abbreviation
+  nameplateNameLength = 20,
   nameplateFriendlyNamesClassColor = true,
   nameplateFriendlySmall = true,
   nameplateHideCastText = false,
