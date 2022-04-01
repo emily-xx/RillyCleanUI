@@ -6,7 +6,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
   function SetFriendlyNameplateSize()
     if RCUIDB.nameplateFriendlySmall then
-      C_NamePlate.SetNamePlateFriendlySize((defaultFriendlyWidth / 2), defaultFriendlyHeight)
+      C_NamePlate.SetNamePlateFriendlySize((0.7 * defaultFriendlyWidth), defaultFriendlyHeight)
     else
       C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
     end
