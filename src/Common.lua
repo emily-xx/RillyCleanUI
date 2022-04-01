@@ -138,6 +138,16 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
   border:SetBackdropBorderColor(0,0,0,1)
   bu.border = border
 
+  -- Background
+  local background = CreateFrame("Frame", nil, bu, "BackdropTemplate")
+  background:SetPoint("TOPLEFT", bu, "TOPLEFT", 0, 0)
+  background:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 0, 0)
+  background:SetFrameLevel(bu:GetFrameLevel() - 1)
+  background.backdropInfo = RILLY_CLEAN_BACKDROP
+  background:ApplyBackdrop()
+  background:SetBackdropBorderColor(0,0,0,1)
+  background:SetBackdropColor(0,0,0,0.6)
+
   bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
   local nt = bu:GetNormalTexture()
