@@ -271,7 +271,7 @@ function createStatusBar(name, parentFrame, width, height, color)
 	tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
 	statusBar:SetStatusBarTexture(tex)
 	statusBar:SetSize(barBorder:GetWidth() - 4, barBorder:GetHeight() - 2)
-	statusBar:SetStatusBarColor(color.r, color.g, color.b, 1)
+	statusBar:SetStatusBarColor(color.r, color.g, color.b, color.a or 1)
 
 	local bg = statusBar:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(statusBar)
