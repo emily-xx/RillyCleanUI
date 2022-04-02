@@ -360,16 +360,11 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		xpBar:SetFrameStrata("medium")
 		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
 
-		local restedXpBar = CreateFrame("StatusBar", "RestedXpBar", xBar)
-		restedXpBar:SetFrameStrata("LOW")
-		restedXpBar:SetOrientation("Vertical")
-		restedXpBar:SetAllPoints(xpBar)
-		-- restedXpBar:SetPoint("BOTTOM", xpBar, "BOTTOM")
-		local tex = restedXpBar:CreateTexture()
-		tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
-		restedXpBar:SetStatusBarTexture(tex)
-		restedXpBar:SetSize(xpBar:GetWidth() - 4, xpBar:GetHeight() - 2)
-		restedXpBar:SetStatusBarColor(0.6, 0.6, 0.6, 1)
+		local restedXpBar = addStatusBarToFrame(
+			xpBar,
+			"RestedXpBar",
+			{ r = 0.6, g = 0, b = 0.6, a = 0.4 }
+		)
 
 		xpBar:SetScript("OnEnter", function()
 			GameTooltip:SetOwner(xpBar);
@@ -407,7 +402,6 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			if (xpInfo.restedXp) then
 				restedXpBar:SetMinMaxValues(0, xpInfo.totalLevelXP)
 				local restedBarProgress = math.min((xpInfo.xp + xpInfo.restedXp), xpInfo.totalLevelXP)
-				print(restedBarProgress)
 				restedXpBar:SetValue(restedBarProgress)
 				restedXpBar:Show()
 			else

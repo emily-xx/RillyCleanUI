@@ -248,6 +248,23 @@ function setDefaultFont(textObject, size, outlinestyle)
   textObject:SetFont(RILLY_CLEAN_FONTS.standard, size, outlinestyle)
 end
 
+function addStatusBarToFrame(frame, name, color)
+  local statusBar = CreateFrame("StatusBar", (name .. "Bar"), frame)
+	statusBar:SetOrientation("Vertical")
+	statusBar:SetPoint("CENTER", 0, 0)
+	local tex = statusBar:CreateTexture()
+	tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
+	statusBar:SetStatusBarTexture(tex)
+	statusBar:SetSize(frame:GetWidth() - 4, frame:GetHeight() - 2)
+	statusBar:SetStatusBarColor(color.r, color.g, color.b, color.a or 1)
+
+	local bg = statusBar:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(statusBar)
+  bg:SetColorTexture(0, 0, 0, 0.7)
+
+  return statusBar
+end
+
 function createStatusBar(name, parentFrame, width, height, color)
   local barBorder = CreateFrame("Frame", (name .. "Border"), parentFrame, "BackdropTemplate")
 	barBorder:SetFrameLevel(0)
@@ -264,18 +281,7 @@ function createStatusBar(name, parentFrame, width, height, color)
 	barBorder:SetBackdropBorderColor(0,0,0,1)
 	barBorder:Show()
 
-	local statusBar = CreateFrame("StatusBar", (name .. "Bar"), barBorder)
-	statusBar:SetOrientation("Vertical")
-	statusBar:SetPoint("CENTER", 0, 0)
-	local tex = statusBar:CreateTexture()
-	tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
-	statusBar:SetStatusBarTexture(tex)
-	statusBar:SetSize(barBorder:GetWidth() - 4, barBorder:GetHeight() - 2)
-	statusBar:SetStatusBarColor(color.r, color.g, color.b, color.a or 1)
-
-	local bg = statusBar:CreateTexture(nil, "BACKGROUND")
-	bg:SetAllPoints(statusBar)
-  bg:SetColorTexture(0, 0, 0, 0.7)
+  local statusBar = addStatusBarToFrame(barBorder, name, color)
 
   barBorder.Status = statusBar
   return barBorder
