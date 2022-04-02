@@ -9,12 +9,15 @@ function setActionBarOffset(actionBarOffset)
   PetActionButton1:SetPoint("BOTTOMLEFT", ActionButton2, "TOP", 4, 56)
   PetActionButton1.SetPoint = function() end
 
-  ExtraActionButton1:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (actionBarOffset -60))
-  ExtraActionButton1:SetFrameStrata("MEDIUM")
-  ExtraActionButton1:SetFrameLevel(5)
+  ExtraAbilityContainer:SetMovable(true)
+  ExtraAbilityContainer:ClearAllPoints()
+  ExtraAbilityContainer:SetPoint("BOTTOM", MainMenuBar, "BOTTOM", 0, -10)
+  ExtraAbilityContainer:SetFrameLevel(5)
+  ExtraAbilityContainer:SetUserPlaced(true)
+  ExtraAbilityContainer:SetMovable(false)
 
   ZoneAbilityFrame.Style:Hide()
-  ZoneAbilityFrame.SpellButtonContainer:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (actionBarOffset -60))
+  ZoneAbilityFrame.SpellButtonContainer:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, (actionBarOffset - 60))
   ZoneAbilityFrame.SpellButtonContainer:SetFrameStrata("MEDIUM")
   ZoneAbilityFrame.SpellButtonContainer:SetFrameLevel(5)
 
