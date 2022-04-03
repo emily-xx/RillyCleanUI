@@ -347,7 +347,8 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			xp = 0,
 			totalLevelXP = 0,
 			xpToNextLevel = 0,
-			tPercent = 0
+			tPercent = 0,
+			restedXp
 		}
 
 		local xpBar = createStatusBar(
@@ -359,10 +360,23 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		xpBar:SetFrameStrata("medium")
 		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
 
+		local restedXpBarColors = copyTable(xpColors.rested)
+		restedXpBarColors.a = 0.4
+
+		local restedXpBar = addStatusBarToFrame(
+			xpBar,
+			"RestedXpBar",
+			restedXpBarColors
+		)
+
 		xpBar:SetScript("OnEnter", function()
 			GameTooltip:SetOwner(xpBar);
 			GameTooltip:AddLine("Experience")
 			GameTooltip:AddLine(abbrNumber(xpInfo.xp) .. "/" .. abbrNumber(xpInfo.totalLevelXP) .. " (" .. round(xpInfo.tPercent, 1) .. "%)", 1, 1, 1)
+			if (xpInfo.restedXp) then
+				GameTooltip:AddLine("Rested XP")
+				GameTooltip:AddLine(xpInfo.restedXp .. " (" .. abbrNumber(xpInfo.restedXp / xpInfo.totalLevelXP * 100) .. "%)", 1, 1, 1)
+			end
 			GameTooltip:Show()
 		end)
 
@@ -376,6 +390,8 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 				return
 			end
 			local xp = UnitXP("player")
+			xpInfo.restedXp = GetXPExhaustion()
+
 			local totalLevelXP = UnitXPMax("player")
 			xpInfo.xpToNextLevel = totalLevelXP - xp
 
@@ -385,6 +401,18 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 
 			xpBar.Status:SetMinMaxValues(0, xpInfo.totalLevelXP)
 			xpBar.Status:SetValue(xpInfo.xp)
+
+			if (xpInfo.restedXp) then
+				xpBar.Status:SetStatusBarColor(xpColors.rested.r, xpColors.rested.g, xpColors.rested.b, 1)
+				restedXpBar:SetMinMaxValues(0, xpInfo.totalLevelXP)
+				local restedBarProgress = math.min((xpInfo.xp + xpInfo.restedXp), xpInfo.totalLevelXP)
+				restedXpBar:SetValue(restedBarProgress)
+				restedXpBar:Show()
+			else
+				xpBar.Status:SetStatusBarColor(xpColors.normal.r, xpColors.normal.g, xpColors.normal.b, 1)
+				restedXpBar:Hide()
+			end
+
 			xpBar:Show()
 		end
 

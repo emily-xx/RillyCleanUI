@@ -43,22 +43,24 @@ local function skinProgressBar(bar)
   end
 
   local Icon = bar.Icon
-  if (Icon and not bar.iconBack) then
+  if Icon then
     Icon:SetMask(nil)
-    styleIcon(Icon)
     Icon:SetHeight(24)
     Icon:SetWidth(24)
     Icon:ClearAllPoints()
-    Icon:SetPoint("LEFT", back, "RIGHT", 0, 0)
-    local iconBack = CreateFrame("Frame", nil, bar, "BackdropTemplate")
-    iconBack:SetPoint("TOPLEFT", Icon, "TOPLEFT", 0, 0)
-    iconBack:SetPoint("BOTTOMRIGHT", Icon, "BOTTOMRIGHT", 0, 0)
-    iconBack:SetFrameLevel(bar:GetFrameLevel() - 1)
-    iconBack.backdropInfo = cleanBarBackdrop
-    iconBack:ApplyBackdrop()
-    iconBack:SetBackdropBorderColor(0,0,0,1)
-    iconBack:SetBackdropColor(0,0,0,1)
-    bar.iconBack = iconBack
+    Icon:SetPoint("LEFT", bar, "RIGHT", 0, 0)
+    styleIcon(Icon)
+    if not bar.iconBack then
+      local iconBack = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+      iconBack:SetPoint("TOPLEFT", Icon, "TOPLEFT", 0, 0)
+      iconBack:SetPoint("BOTTOMRIGHT", Icon, "BOTTOMRIGHT", 0, 0)
+      iconBack:SetFrameLevel(bar:GetFrameLevel() - 1)
+      iconBack.backdropInfo = cleanBarBackdrop
+      iconBack:ApplyBackdrop()
+      iconBack:SetBackdropBorderColor(0,0,0,1)
+      iconBack:SetBackdropColor(0,0,0,1)
+      bar.iconBack = iconBack
+    end
 
     bar.IconBG:Hide()
   end
