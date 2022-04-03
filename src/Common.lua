@@ -248,6 +248,11 @@ function setDefaultFont(textObject, size, outlinestyle)
   textObject:SetFont(RILLY_CLEAN_FONTS.standard, size, outlinestyle)
 end
 
+xpColors = {
+  normal = { r = 0.58, g = 0.0, b = 0.55 },
+  rested = { r = 0.0, g = 0.39, b = 0.88 },
+}
+
 function addStatusBarToFrame(frame, name, color)
   local statusBar = CreateFrame("StatusBar", (name .. "Bar"), frame)
 	statusBar:SetOrientation("Vertical")
@@ -300,4 +305,12 @@ function abbrNumber(number)
   end
 
   return round(number, 1) .. punit[unitcp]
+end
+
+function copyTable(t)
+  local t2 = {}
+  for k,v in pairs(t) do
+    t2[k] = v
+  end
+  return t2
 end

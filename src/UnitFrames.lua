@@ -360,10 +360,13 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		xpBar:SetFrameStrata("medium")
 		xpBar:SetPoint("RIGHT", PlayerFrame, "LEFT", 41, 6)
 
+		local restedXpBarColors = copyTable(xpColors.rested)
+		restedXpBarColors.a = 0.4
+
 		local restedXpBar = addStatusBarToFrame(
 			xpBar,
 			"RestedXpBar",
-			{ r = 0.6, g = 0, b = 0.6, a = 0.4 }
+			restedXpBarColors
 		)
 
 		xpBar:SetScript("OnEnter", function()
@@ -400,11 +403,13 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 			xpBar.Status:SetValue(xpInfo.xp)
 
 			if (xpInfo.restedXp) then
+				xpBar.Status:SetStatusBarColor(xpColors.rested.r, xpColors.rested.g, xpColors.rested.b, 1)
 				restedXpBar:SetMinMaxValues(0, xpInfo.totalLevelXP)
 				local restedBarProgress = math.min((xpInfo.xp + xpInfo.restedXp), xpInfo.totalLevelXP)
 				restedXpBar:SetValue(restedBarProgress)
 				restedXpBar:Show()
 			else
+				xpBar.Status:SetStatusBarColor(xpColors.normal.r, xpColors.normal.g, xpColors.normal.b, 1)
 				restedXpBar:Hide()
 			end
 
