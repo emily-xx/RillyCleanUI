@@ -12,10 +12,10 @@ RCUI:SetScript("OnEvent", function(self, event)
 
   if not RCUIDB.customFonts then return end
 
-  STANDARD_TEXT_FONT          = RILLY_CLEAN_FONTS.standard
-  UNIT_NAME_FONT              = RILLY_CLEAN_FONTS.standard
-  NAMEPLATE_FONT              = RILLY_CLEAN_FONTS.standard
-  NAMEPLATE_SPELLCAST_FONT    = RILLY_CLEAN_FONTS.standard
+  STANDARD_TEXT_FONT          = RCUIDB.font
+  UNIT_NAME_FONT              = RCUIDB.font
+  NAMEPLATE_FONT              = RCUIDB.font
+  NAMEPLATE_SPELLCAST_FONT    = RCUIDB.font
 
   local ForcedFontSize = { 10, 14, 20, 64, 64 }
 
@@ -38,13 +38,7 @@ RCUI:SetScript("OnEvent", function(self, event)
     SystemFont_Shadow_Large2, SystemFont_Shadow_Huge1, SystemFont_Huge2, SystemFont_Shadow_Huge2, SystemFont_Shadow_Huge3, SystemFont_Shadow_Outline_Huge3,
     SystemFont_Shadow_Outline_Huge2, SystemFont_Med1, SystemFont_WTF2, SystemFont_Outline_WTF2,
     GameTooltipHeader, System_IME,
-  }
 
-  for i, FontObject in pairs(BlizFontObjects) do
-    updateFontObject(FontObject, RILLY_CLEAN_FONTS.standard, ForcedFontSize[i])
-  end
-
-  local NumberFontObjects = {
     ChatBubbleFont, ChatFontNormal, NumberFont_GameNormal, NumberFont_Shadow_Small, NumberFont_Shadow_Tiny,
     NumberFont_OutlineThick_Mono_Small, NumberFont_Shadow_Med, NumberFont_Normal_Med,
     NumberFont_Outline_Med, NumberFont_Outline_Large, NumberFont_Outline_Huge, Number12Font_o1, NumberFont_Small,
@@ -52,8 +46,8 @@ RCUI:SetScript("OnEvent", function(self, event)
     FriendsFont_UserText, EditBoxFont_Large, WhiteNormalNumberFont, GameFontHighlightLarge
   }
 
-  for i, FontObject in pairs(NumberFontObjects) do
-    updateFontObject(FontObject, RILLY_CLEAN_FONTS.number)
+  for i, FontObject in pairs(BlizFontObjects) do
+    updateFontObject(FontObject, RCUIDB.font, ForcedFontSize[i])
   end
 
   BlizFontObjects = nil

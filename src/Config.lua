@@ -18,6 +18,7 @@ RCUIDBDefaults = {
 
   damageFont = true, -- Change damage font to something cooler
   customFonts = true, -- Update all fonts to something cooler
+  font = RILLY_CLEAN_FONTS.standard,
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
 
@@ -252,6 +253,17 @@ local function rcui_options()
     end,
     hideAltPower
   )
+
+  -- local fontChooser = newDropdown(
+  --   "Font",
+  --   { [RILLY_CLEAN_FONTS.retina] = "Retina", [RILLY_CLEAN_FONTS.andika] = "Andika" },
+  --   RCUIDB.font,
+  --   100,
+  --   function(value)
+  --     RCUIDB.font = value
+  --   end
+  -- )
+  -- fontChooser:SetPoint("LEFT", customFonts, "RIGHT", 300, 0)
 
   local damageFont = newCheckbox(
     "Use Custom Damage Font (Requires Game Restart)",
