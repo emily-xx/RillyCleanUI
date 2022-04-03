@@ -23,12 +23,6 @@ end)
 
 local f = CreateFrame("Frame") -- Skin raid frames
 f:SetScript("OnEvent", function(self, event, ...)
-	-- HIDE RAIDFRAMERESIZE
-	local n, w, h = "CompactUnitFrameProfilesGeneralOptionsFrame"
-	h, w = _G[n .. "HeightSlider"], _G[n .. "WidthSlider"]
-	h:SetMinMaxValues(1, 200)
-	w:SetMinMaxValues(1, 200)
-
 	-- Clean Skins
 	local function SkinRaidFrame(prefix)
 		local bar = _G[prefix .. "HealthBar"]
