@@ -47,9 +47,22 @@ RILLY_CLEAN_TEXTURES = {
 }
 
 RILLY_CLEAN_FONTS = {
-  standard = FontsDir.."\\Andika.ttf",
-  damage = FontsDir.."\\Bangers-Regular.ttf",
+  Andika = FontsDir.."\\Andika.ttf",
+  Fira = FontsDir.."\\FiraSans.ttf",
+  SourceSans = FontsDir.."\\SourceSans3.ttf",
+  Marmelad = FontsDir.."\\Marmelad.ttf",
 }
+
+function tableToWowDropdown(table)
+  local wowTable = {}
+  for k, v in pairs(table) do
+    wowTable[v] = k
+  end
+
+  return wowTable
+end
+
+RILLY_CLEAN_DAMAGE_FONT = FontsDir.."\\Bangers-Regular.ttf"
 
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
