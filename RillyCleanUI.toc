@@ -23,6 +23,7 @@ src\Buffs.lua
 src\Castbars.lua
 src\UnitFrames.lua
 src\Portrait.lua
+src\LossOfControl.lua
 src\RaidFrames.lua
 src\Minimap.lua
 src\Nameplates.lua
