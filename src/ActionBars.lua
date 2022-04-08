@@ -71,6 +71,9 @@ local function init()
       }
 
       hideElements(microButonsAndBags)
+
+      -- Store button needs moved off screen as it does not have Hide() for some reason.
+      StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
     end
 
     -- Hide stuff
@@ -148,9 +151,6 @@ local function init()
     if not AchievementMicroButton_Update then
         AchievementMicroButton_Update = function() end
     end
-
-    -- Store button needs moved off screen as it does not have Hide() for some reason.
-    StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
   end
 
   ---------------------------------------
