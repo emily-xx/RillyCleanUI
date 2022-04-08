@@ -2,9 +2,9 @@
 -- COLORING FRAMES --
 ---------------------
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("PLAYER_LOGIN")
 
-frame:SetScript("OnEvent", function(self, event, addon) -- Darken Raid Panel
+frame:SetScript("OnEvent", function(self, event) -- Darken Raid Panel
 		for _, region in pairs({CompactRaidFrameManager:GetRegions()}) do
 			if region:IsObjectType("Texture") then
 				region:SetVertexColor(0, 0, 0)
@@ -17,11 +17,12 @@ frame:SetScript("OnEvent", function(self, event, addon) -- Darken Raid Panel
 			end
 		end
 
-  	self:UnregisterEvent("ADDON_LOADED")
+  	self:UnregisterEvent("PLAYER_LOGIN")
   	frame:SetScript("OnEvent", nil)
 end)
 
 local f = CreateFrame("Frame") -- Skin raid frames
+f:RegisterEvent("PLAYER_LOGIN")
 f:SetScript("OnEvent", function(self, event, ...)
 	-- Clean Skins
 	local function SkinRaidFrame(prefix)
@@ -48,7 +49,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 		vrightseparator:SetTexture(TextureDir.."\\raidframe\\Raid-VSeparator")
 		htopseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
 		hbotseparator:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
-		healthBackground:Hide()
+		healthBackground:SetVertexColor(0, 0, 0, 0)
 		background:SetTexture(SQUARE_TEXTURE)
 		background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
 
