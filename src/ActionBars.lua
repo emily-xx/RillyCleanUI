@@ -74,6 +74,12 @@ local function init()
 
       -- Store button needs moved off screen as it does not have Hide() for some reason.
       StoreMicroButton:SetPoint("TOPLEFT",-250,-50000)
+    else
+      MicroButtonAndBagsBar.MicroBagBar:Hide()
+      MainMenuBarBackpackButton:Hide()
+      for i = 0, 3 do
+        _G["CharacterBag" .. i .. "Slot"]:Hide()
+      end
     end
 
     -- Hide stuff
