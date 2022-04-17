@@ -32,6 +32,14 @@ function init(self, event)
 	-- Square Minimap
 	Minimap:SetMaskTexture(SQUARE_TEXTURE)
 
+	-- Hide Quest Circles that look weird
+	Minimap:SetArchBlobRingScalar(0)
+	Minimap:SetArchBlobRingAlpha(0)
+	Minimap:SetQuestBlobRingScalar(0)
+	Minimap:SetQuestBlobRingAlpha(0)
+	-- Minimap:SetQuestBlobRingTexture(SQUARE_TEXTURE)
+
+
 	-- Better looking mail icon
 	MiniMapMailIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	MiniMapMailIcon:SetScale(0.9)
