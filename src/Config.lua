@@ -472,7 +472,7 @@ local function rcui_options()
     RCUIDB.nameplateFriendlySmall,
     function(self, value)
       RCUIDB.nameplateFriendlySmall = value
-      SetFriendlyNameplateSize()
+      SetFriendlyNameplateSize(true)
     end,
     nameplateFriendlyNamesClassColor,
     RCUI_Nameplates

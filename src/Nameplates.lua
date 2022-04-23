@@ -4,10 +4,10 @@ RillyCleanNameplates:RegisterEvent("PLAYER_LOGIN")
 RillyCleanNameplates:SetScript("OnEvent", function()
   local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
 
-  function SetFriendlyNameplateSize()
+  function SetFriendlyNameplateSize(isChange)
     if RCUIDB.nameplateFriendlySmall then
       C_NamePlate.SetNamePlateFriendlySize((0.7 * defaultFriendlyWidth), defaultFriendlyHeight)
-    else
+    elseif isChange then
       C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
     end
   end
