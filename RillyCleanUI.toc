@@ -1,4 +1,4 @@
-## Interface: 90200
+## Interface: 90207
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Emily
