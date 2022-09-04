@@ -194,7 +194,7 @@ local function rcui_options()
 
   local portraitSelect, portraitDropdown = newDropdown(
     "Portrait Style",
-    {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class"},
+    {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class", ["default"] = "Default"},
     RCUIDB.portraitStyle,
     50,
     function(value)

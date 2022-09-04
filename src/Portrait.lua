@@ -23,9 +23,11 @@ end
 local function makeRillyCleanPortrait(frame)
   if not frame.portrait then return end
 
+  local unit = frame.unit
+
   if ( RCUIDB.portraitStyle == "class" ) then -- Flat class icons
-    if ( UnitIsPlayer(frame.unit) ) then
-      local t = CLASS_ICON_TCOORDS[select(2, UnitClass(frame.unit))]
+    if ( UnitIsPlayer(unit) ) then
+      local t = CLASS_ICON_TCOORDS[select(2, UnitClass(unit))]
       if t then
         frame.portrait:SetTexture("Interface\\TargetingFrame\\UI-Classes-Circles")
         frame.portrait:SetTexCoord(unpack(t))
@@ -50,7 +52,6 @@ local function makeRillyCleanPortrait(frame)
       frame.portraitModel = portraitModel
     end
 
-    local unit = frame.unit
     local unitGuid = UnitGUID(unit)
 
     if not unitGuid or (unit == 'targettarget' and unitGuid == frame.portraitModel.guid) then return end -- Target of Target is spammy and needs this protection
@@ -81,5 +82,7 @@ end
 local CF=CreateFrame("Frame")
 CF:RegisterEvent("PLAYER_LOGIN")
 CF:SetScript("OnEvent", function(self, event)
+  if (RCUIDB.portraitStyle == "default") then return end
+
   hooksecurefunc("UnitFramePortrait_Update", makeRillyCleanPortrait)
 end)
