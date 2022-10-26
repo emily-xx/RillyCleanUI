@@ -188,16 +188,16 @@ local function rcui_options()
   rcuiTitle:SetPoint("TOPLEFT", 16, -16)
   rcuiTitle:SetText("RillyCleanUI ("..version..")")
 
-  -- local portraitSelect, portraitDropdown = newDropdown(
-  --   "Portrait Style",
-  --   {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class", ["default"] = "Default"},
-  --   RCUIDB.portraitStyle,
-  --   50,
-  --   function(value)
-  --     RCUIDB.portraitStyle = value
-  --   end
-  -- )
-  -- portraitSelect:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
+  local portraitSelect, portraitDropdown = newDropdown(
+    "Portrait Style",
+    {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class", ["default"] = "Default"},
+    RCUIDB.portraitStyle,
+    50,
+    function(value)
+      RCUIDB.portraitStyle = value
+    end
+  )
+  portraitSelect:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
 
   local tooltipAnchor = newDropdown(
     "Tooltip Cursor Anchor",
@@ -208,7 +208,7 @@ local function rcui_options()
       RCUIDB.tooltipAnchor = value
     end
   )
-  tooltipAnchor:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
+  tooltipAnchor:SetPoint("LEFT", portraitSelect, "RIGHT", 200, 0)
 
   local lootSpecDisplay = newCheckbox(
     "Display Loot Spec Indicator",
@@ -218,6 +218,16 @@ local function rcui_options()
       RCUIDB.lootSpecDisplay = value
     end,
     tooltipAnchor
+  )
+
+  local hideAltPower = newCheckbox(
+    "Hide Alt Power (Requires reload)",
+    "Hides alt power bars on character frame such as combo points or holy power to clean it up, when preferring WeakAura or etc.",
+    RCUIDB.hideAltPower,
+    function(self, value)
+      RCUIDB.hideAltPower = value
+    end,
+    lootSpecDisplay
   )
 
   local customFonts = newCheckbox(
@@ -251,26 +261,16 @@ local function rcui_options()
     customFonts
   )
 
-  local hideMinimapZoneText = newCheckbox(
-    "Hide Minimap Zone Text",
-    "Hides the Zone text at the top of the Minimap.",
-    RCUIDB.hideMinimapZoneText,
-    function(self, value)
-      RCUIDB.hideMinimapZoneText = value
-      handleMinimapZoneText()
-    end,
-    damageFont
-  )
-
-  local showItemLevels = newCheckbox(
-    "Show Item Levels",
-    "Show Item Levels for gear in bags/Character window",
-    RCUIDB.showItemLevels,
-    function(self, value)
-      RCUIDB.showItemLevels = value
-    end,
-    hideMinimapZoneText
-  )
+  -- local hideMinimapZoneText = newCheckbox(
+  --   "Hide Minimap Zone Text",
+  --   "Hides the Zone text at the top of the Minimap.",
+  --   RCUIDB.hideMinimapZoneText,
+  --   function(self, value)
+  --     RCUIDB.hideMinimapZoneText = value
+  --     handleMinimapZoneText()
+  --   end,
+  --   damageFont
+  -- )
 
   ----------------
   -- Action Bars --

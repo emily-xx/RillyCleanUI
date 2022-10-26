@@ -8,16 +8,17 @@ local function resetGUID(portraitModel)
 end
 
 local function makePortraitBG(frame, r, g, b)
-  frame.portraitBG = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+  frame.portraitBG = CreateFrame("Frame", nil, frame)
   frame.portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
   frame.portraitBG:SetFrameStrata("background")
   frame.portraitBG:SetAllPoints(frame.portrait)
-
-  frame.portraitBG.backdropInfo = RILLY_CLEAN_BACKDROP
-  frame.portraitBG:ApplyBackdrop()
-  frame.portraitBG:SetBackdropColor(r,g,b,1)
-  frame.portraitBG:SetBackdropBorderColor(r,g,b,1)
-  frame.portraitBG:Show()
+  local backLayer = frame.portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1) --drawLayer=="OVERLAY" and "ARTWORK" or drawLayer)
+	backLayer:Hide()
+	backLayer:SetTexture("Interface\\AddOns\\RillyCleanUI\\media\\textures\\Portrait-ModelBack")
+  backLayer:SetVertexColor(0, 0, 0)
+  backLayer:SetAllPoints(frame.portraitBG)
+  backLayer:Show()
+  frame.portraitBG.backlayer = backlayer
 end
 
 local function makeRillyCleanPortrait(frame)
@@ -38,6 +39,7 @@ local function makeRillyCleanPortrait(frame)
     end
   elseif (RCUIDB.portraitStyle == "3D") then
     if ( not frame.portraitModel ) then -- Initialize 3D Model Container
+      local portrait = frame.portrait
       local portraitModel = CreateFrame("PlayerModel", nil, frame)
       portraitModel:SetScript("OnShow", resetCamera)
       portraitModel:SetScript("OnHide", resetGUID)
@@ -46,7 +48,13 @@ local function makeRillyCleanPortrait(frame)
 
       makePortraitBG(frame,0.05,0.05,0.05)
 
-      portraitModel:SetAllPoints(frame.portrait)
+      -- Round portraits
+      local coeff = 0.14
+      xoff = coeff*portrait:GetWidth() -- circle portrait has model slightly smaller
+      yoff = coeff*portrait:GetHeight()
+      portraitModel:SetAllPoints(portrait)
+      portraitModel:SetPoint("TOPLEFT", portrait,"TOPLEFT",xoff,-yoff)
+      portraitModel:SetPoint("BOTTOMRIGHT",portrait,"BOTTOMRIGHT",-xoff,yoff)
       portraitModel:Show()
       frame.portrait:Hide()
       frame.portraitModel = portraitModel
@@ -74,8 +82,6 @@ local function makeRillyCleanPortrait(frame)
       frame.portraitModel:SetAnimation(804)
       frame.portraitModel:Show()
     end
-  else -- Standard 2D character image, but made square
-    frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
   end
 end
 

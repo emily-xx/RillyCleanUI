@@ -2,7 +2,7 @@
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Emily
-## Version: 3.3.7
+## Version: 4.0.0
 ## SavedVariables: RCUIDB
 ## Email: emlywind@gmail.com
 
@@ -17,6 +17,8 @@ src\Config.lua
 src\Fonts.lua
 src\Nameplates.lua
 src\Tooltips.lua
+src\UnitFrames.lua
+src\Portrait.lua
 src\EasyDelete.lua
 src\LFGTimer.lua
 src\AutoKeystone.lua
