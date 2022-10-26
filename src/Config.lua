@@ -217,7 +217,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.lootSpecDisplay = value
     end,
-    tooltipAnchor
+    portraitDropdown
   )
 
   local hideAltPower = newCheckbox(
