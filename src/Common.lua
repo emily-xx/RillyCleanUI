@@ -326,3 +326,15 @@ function copyTable(t)
   end
   return t2
 end
+
+function addCastbarTimer(castingFrame, fontSize, xOffset, yOffset, point, relativePoint)
+  if ( not point ) then point = "LEFT" end
+  if ( not relativePoint ) then relativePoint = "RIGHT" end
+
+  castingFrame.timer = castingFrame:CreateFontString(nil)
+  setDefaultFont(castingFrame.timer, fontSize)
+  castingFrame.timer:SetPoint(point, castingFrame, relativePoint, xOffset, yOffset)
+  castingFrame.update = 0.1
+
+  castingFrame:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
+end

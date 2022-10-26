@@ -31,7 +31,7 @@ RillyCleanNameplates:SetScript("OnEvent", function()
 
     if frame.isNameplate and not frame:IsForbidden() then
       if not frame.healthPercentage then
-        frame.healthPercentage = frame.healthBar:CreateFontString(nil)
+        frame.healthPercentage = frame.healthBar:CreateFontString(frame.healthPercentage, "OVERLAY", "GameFontNormalSmall")
         setDefaultFont(frame.healthPercentage, RCUIDB.nameplateNameFontSize - 1)
         frame.healthPercentage:SetTextColor( 1, 1, 1 )
         frame.healthPercentage:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
@@ -42,47 +42,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       else
         frame.healthPercentage:SetText('')
       end
-    end
-  end)
-
-  hooksecurefunc("CompactUnitFrame_SetUnit", function(frame, unit)
-    local castFrame = frame.castBar
-    if ( not frame.isNameplate or not castFrame or frame:IsForbidden() ) then return end
-
-    if ( not castFrame.timer ) then
-      addCastbarTimer(castFrame, RCUIDB.nameplateNameFontSize, 2, 0)
-    end
-
-    if ( not unit or UnitIsFriend("player", unit) ) then
-      castFrame.timer:Hide()
-    else
-      castFrame.timer:Show()
-    end
-  end)
-
-  hooksecurefunc("CompactUnitFrame_UpdatePower", function(frame)
-    if ( not frame.isNameplate or frame:IsForbidden() ) then return end
-    local unit = frame.displayedUnit
-    local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
-
-    if ( not isPersonal or not frame.powerBar) then
-      if ( frame.powerPercentage ) then
-        frame.powerPercentage:SetText('')
-      end
-      return
-    end
-
-    local powerPercentage = ceil((UnitPower(unit) / UnitPowerMax(unit) * 100))
-    if ( not frame.powerPercentage ) then
-      frame.powerPercentage = frame.powerBar:CreateFontString(nil, "HIGH", "GameFontNormal")
-      frame.powerPercentage:SetTextColor( 1, 1, 1 )
-      frame.powerPercentage:SetPoint("CENTER", frame.powerBar, "CENTER", 0, 0)
-    end
-
-    if (powerPercentage ~= 100) then
-      frame.powerPercentage:SetText(powerPercentage .. '%')
-    else
-      frame.powerPercentage:SetText('')
     end
   end)
 
@@ -182,12 +141,12 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       frame.name:SetTextColor(classR, classG, classB, 1)
     end
 
-    if not frame.levelText then
-      frame.levelText = frame.healthBar:CreateFontString(nil, "HIGH", "GameFontNormalSmall")
-      local isLargeNameplates = tonumber(GetCVar("nameplateVerticalScale")) >= 2.7
-      frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
-    end
     if (RCUIDB.nameplateShowLevel) then
+      if not frame.levelText then
+        frame.levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        local isLargeNameplates = tonumber(GetCVar("nameplateVerticalScale")) >= 2.7
+        frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
+      end
       frame.unitLevel = UnitEffectiveLevel(frame.unit)
       local c = GetCreatureDifficultyColor(frame.unitLevel)
       local unitClassification = UnitClassification(frame.unit)
@@ -219,8 +178,10 @@ RillyCleanNameplates:SetScript("OnEvent", function()
       frame.levelText:SetText(levelText .. levelSuffix)
       frame.levelText:Show()
     elseif (not RCUIDB.nameplateShowLevel) then
-      frame.levelText:SetText('')
-      frame.levelText:Hide()
+      if (frame.levelText) then
+        frame.levelText:SetText('')
+        frame.levelText:Hide()
+      end
     end
 
     if not hasArenaNumber and (RCUIDB.nameplateHideServerNames or RCUIDB.nameplateNameLength > 0) then
