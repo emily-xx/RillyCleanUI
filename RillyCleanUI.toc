@@ -1,4 +1,4 @@
-## Interface: 90207
+## Interface: 100000
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Emily
@@ -14,18 +14,7 @@ lib\embeds.xml
 
 src\Common.lua
 src\Config.lua
-src\Fonts.lua
-src\ActionBars.lua
-src\Range.lua
-src\DisableAutoAddSpells.lua
-src\Auras.lua
-src\Buffs.lua
-src\Castbars.lua
-src\UnitFrames.lua
-src\Portrait.lua
-src\LossOfControl.lua
-src\RaidFrames.lua
-src\Minimap.lua
+# src\Fonts.lua
 src\Nameplates.lua
 src\Tooltips.lua
 src\FriendsList.lua
@@ -36,11 +25,8 @@ src\SafeQueue.lua
 src\DampeningDisplay.lua
 src\SpellNotifications.lua
 src\SpellNotifications.xml
-src\SimpleItemLevel.lua
-src\ObjectiveTracker.lua
 src\TabBinder.lua
 src\Media.lua
 src\AfkCam.lua
-src\eAlignUpdated.lua
 src\BigDebuffsSkin.lua
 src\sArenaLayout.lua
