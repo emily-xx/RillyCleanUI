@@ -104,14 +104,10 @@ local function rcui_options()
   rcui.panel = CreateFrame( "Frame", "rcuiPanel", UIParent )
   rcui.panel.name = "RillyCleanUI";
   InterfaceOptions_AddCategory(rcui.panel);
-  rcui.childpanel = CreateFrame( "Frame", "rcuiChild", rcui.panel)
-  rcui.childpanel:SetPoint("TOPLEFT",rcuiPanel,0,0)
-  rcui.childpanel:SetPoint("BOTTOMRIGHT",rcuiPanel,0,0)
-  InterfaceOptions_AddCategory(rcui.childpanel)
 
   local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame)
     if ( not frame ) then
-      frame = rcui.childpanel
+      frame = rcui.panel
     end
 
     local check = CreateFrame("CheckButton", "RCUICheck" .. label, frame, "InterfaceOptionsCheckButtonTemplate")
@@ -138,10 +134,10 @@ local function rcui_options()
   end
 
   local function newDropdown(label, options, initialValue, width, onChange)
-    local dropdownText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    local dropdownText = rcui.panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     dropdownText:SetText(label)
 
-    local dropdown = CreateFrame("Frame", "RCUIDropdown" .. label, rcui.childpanel, "UIDropdownMenuTemplate")
+    local dropdown = CreateFrame("Frame", "RCUIDropdown" .. label, rcui.panel, "UIDropdownMenuTemplate")
     _G[dropdown:GetName() .. "Middle"]:SetWidth(width)
     dropdown:SetPoint("TOPLEFT", dropdownText, "BOTTOMLEFT", 0, -8)
     local displayText = _G[dropdown:GetName() .. "Text"]
@@ -188,20 +184,20 @@ local function rcui_options()
 
   local version = GetAddOnMetadata("RillyCleanUI", "Version")
 
-  local rcuiTitle = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  local rcuiTitle = rcui.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   rcuiTitle:SetPoint("TOPLEFT", 16, -16)
   rcuiTitle:SetText("RillyCleanUI ("..version..")")
 
-  local portraitSelect, portraitDropdown = newDropdown(
-    "Portrait Style",
-    {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class", ["default"] = "Default"},
-    RCUIDB.portraitStyle,
-    50,
-    function(value)
-      RCUIDB.portraitStyle = value
-    end
-  )
-  portraitSelect:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
+  -- local portraitSelect, portraitDropdown = newDropdown(
+  --   "Portrait Style",
+  --   {["3D"] = "3D", ["2D"] = "2D", ["class"] = "Class", ["default"] = "Default"},
+  --   RCUIDB.portraitStyle,
+  --   50,
+  --   function(value)
+  --     RCUIDB.portraitStyle = value
+  --   end
+  -- )
+  -- portraitSelect:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
 
   local tooltipAnchor = newDropdown(
     "Tooltip Cursor Anchor",
@@ -212,17 +208,7 @@ local function rcui_options()
       RCUIDB.tooltipAnchor = value
     end
   )
-  tooltipAnchor:SetPoint("LEFT", portraitSelect, "RIGHT", 200, 0)
-
-  local hideTalkingHeads = newCheckbox(
-    "Hide Talking Head Frame",
-    "Hide box with npc dialog that comes up during world quests and etc.",
-    RCUIDB.hideTalkingHeads,
-    function(self, value)
-      RCUIDB.hideTalkingHeads = value
-    end,
-    portraitDropdown
-  )
+  tooltipAnchor:SetPoint("TOPLEFT", rcuiTitle, "BOTTOMLEFT", 0, -16)
 
   local lootSpecDisplay = newCheckbox(
     "Display Loot Spec Indicator",
@@ -231,17 +217,7 @@ local function rcui_options()
     function(self, value)
       RCUIDB.lootSpecDisplay = value
     end,
-    hideTalkingHeads
-  )
-
-  local hideAltPower = newCheckbox(
-    "Hide Alt Power (Requires reload)",
-    "Hides alt power bars on character frame such as combo points or holy power to clean it up, preferring their view on personal resource display.",
-    RCUIDB.hideAltPower,
-    function(self, value)
-      RCUIDB.hideAltPower = value
-    end,
-    lootSpecDisplay
+    tooltipAnchor
   )
 
   local customFonts = newCheckbox(
@@ -296,119 +272,69 @@ local function rcui_options()
     hideMinimapZoneText
   )
 
-  local afkScreen = newCheckbox(
-    "Show AFK Screen",
-    "Show special screen for when you are AFK",
-    RCUIDB.afkScreen,
-    function(self, value)
-      RCUIDB.afkScreen = value
-    end,
-    showItemLevels
-  )
-
-  ------------
-  -- Layout --
-  ------------
-  local layoutText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  layoutText:SetText("Layout Options")
-  layoutText:SetPoint("TOPLEFT", showItemLevels, "BOTTOMLEFT", 0, -12)
-
-  -- Action Bar Offset
-  local actionBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  actionBarOffsetText:SetText("Action Bar Offset (Vertical)")
-  actionBarOffsetText:SetTextColor( 1, 1, 1 )
-  actionBarOffsetText:SetPoint("TOPLEFT", layoutText, "BOTTOMLEFT", 6, -12)
-
-  local actionBarOffset = newSlider(
-    "RCUI_ActionbaroffsetSlider",
-    "Offset: %d px",
-    'actionBarOffset',
-    0,
-    600,
-    actionBarOffsetText,
-    rcui.childpanel,
-    setActionBarOffset
-  )
-
-  -- Castbar Offset
-  local castBarOffsetText = rcui.childpanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  castBarOffsetText:SetText("CastBar Offset (Vertical, relative to action bars)")
-  castBarOffsetText:SetTextColor( 1, 1, 1 )
-  castBarOffsetText:SetPoint("TOPLEFT", actionBarOffset, "BOTTOMLEFT", 0, -16)
-
-  local castBarOffset = newSlider(
-    "RCUI_CastbaroffsetSlider",
-    "Offset: %d px",
-    'castbarOffset',
-    0,
-    600,
-    castBarOffsetText,
-    rcui.childpanel
-  )
-
   ----------------
   -- Action Bars --
   ----------------
-  makePanel("RCUI_ActionBars", rcui.panel, "Action Bars")
+  -- makePanel("RCUI_ActionBars", rcui.panel, "Action Bars")
 
-  local actionbarText = RCUI_ActionBars:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  actionbarText:SetText("Action Bars")
-  actionbarText:SetPoint("TOPLEFT", 16, -16)
+  -- local actionbarText = RCUI_ActionBars:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  -- actionbarText:SetText("Action Bars")
+  -- actionbarText:SetPoint("TOPLEFT", 16, -16)
 
-  local hideHotkeys = newCheckbox(
-    "Hide Hotkeys on Action Bars",
-    "Hides keybinding text on your action bar buttons.",
-    RCUIDB.hideHotkeys,
-    function(self, value)
-      RCUIDB.hideHotkeys = value
-    end,
-    actionbarText,
-    RCUI_ActionBars
-  )
+  -- local hideHotkeys = newCheckbox(
+  --   "Hide Hotkeys on Action Bars",
+  --   "Hides keybinding text on your action bar buttons.",
+  --   RCUIDB.hideHotkeys,
+  --   function(self, value)
+  --     RCUIDB.hideHotkeys = value
+  --   end,
+  --   actionbarText,
+  --   RCUI_ActionBars
+  -- )
 
-  local hideMacroText = newCheckbox(
-    "Hide Macro Text on Action Bars",
-    "Hides macro text on your action bar buttons.",
-    RCUIDB.hideMacroText,
-    function(self, value)
-      RCUIDB.hideMacroText = value
-    end,
-    hideHotkeys,
-    RCUI_ActionBars
-  )
+  -- local hideMacroText = newCheckbox(
+  --   "Hide Macro Text on Action Bars",
+  --   "Hides macro text on your action bar buttons.",
+  --   RCUIDB.hideMacroText,
+  --   function(self, value)
+  --     RCUIDB.hideMacroText = value
+  --   end,
+  --   hideHotkeys,
+  --   RCUI_ActionBars
+  -- )
 
-  local hideMicroButtonsAndBags = newCheckbox(
-    "Hide Micro Buttons and Bags (Requires reload)",
-    "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
-    RCUIDB.hideMicroButtonsAndBags,
-    function(self, value)
-      RCUIDB.hideMicroButtonsAndBags = value
-    end,
-    hideMacroText,
-    RCUI_ActionBars
-  )
+  -- local hideMicroButtonsAndBags = newCheckbox(
+  --   "Hide Micro Buttons and Bags (Requires reload)",
+  --   "Hides micro buttons and bags to increase screen real-estate and cleanliness.",
+  --   RCUIDB.hideMicroButtonsAndBags,
+  --   function(self, value)
+  --     RCUIDB.hideMicroButtonsAndBags = value
+  --   end,
+  --   hideMacroText,
+  --   RCUI_ActionBars
+  -- )
 
-  local hideStanceBar = newCheckbox(
-    "Hide Stance Bar (Requires reload)",
-    "Hides stance bar in favour of binding stances to action bars.",
-    RCUIDB.hideStanceBar,
-    function(self, value)
-      RCUIDB.hideStanceBar = value
-    end,
-    hideMicroButtonsAndBags,
-    RCUI_ActionBars
-  )
+  -- local hideStanceBar = newCheckbox(
+  --   "Hide Stance Bar (Requires reload)",
+  --   "Hides stance bar in favour of binding stances to action bars.",
+  --   RCUIDB.hideStanceBar,
+  --   function(self, value)
+  --     RCUIDB.hideStanceBar = value
+  --   end,
+  --   hideMicroButtonsAndBags,
+  --   RCUI_ActionBars
+  -- )
 
-  local disableAutoAddSpells = newCheckbox(
-    "Disable Auto Adding of Spells",
-    "Disables automatic adding of spells to action bars when learning new spells.",
-    RCUIDB.disableAutoAddSpells,
-    function(self, value)
-      RCUIDB.disableAutoAddSpells = value
-    end,
-    hideStanceBar,
-    RCUI_ActionBars
-  )
+  -- local disableAutoAddSpells = newCheckbox(
+  --   "Disable Auto Adding of Spells",
+  --   "Disables automatic adding of spells to action bars when learning new spells.",
+  --   RCUIDB.disableAutoAddSpells,
+  --   function(self, value)
+  --     RCUIDB.disableAutoAddSpells = value
+  --   end,
+  --   hideStanceBar,
+  --   RCUI_ActionBars
+  -- )
 
   ----------------
   -- Nameplates --
@@ -567,8 +493,8 @@ local function rcui_options()
   ------------------
   --Reload Button --
   ------------------
-  local reload = CreateFrame("Button", "reload", rcui.childpanel, "UIPanelButtonTemplate")
-  reload:SetPoint("BOTTOMRIGHT", rcui.childpanel, "BOTTOMRIGHT", -10, 10)
+  local reload = CreateFrame("Button", "reload", rcui.panel, "UIPanelButtonTemplate")
+  reload:SetPoint("BOTTOMRIGHT", rcui.panel, "BOTTOMRIGHT", -10, 10)
   reload:SetSize(100,22)
   reload:SetText("Reload")
   reload:SetScript("OnClick", function()
@@ -600,7 +526,6 @@ frame:SetPoint("TOP", 0, -11)
 frame:RegisterForClicks("AnyUp")
 frame:SetScript("OnClick", function()
 	openRcuiConfig()
-	ToggleGameMenu();
 end)
 
 local rc_catch = CreateFrame("Frame")
