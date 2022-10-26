@@ -87,9 +87,6 @@ RillyCleanNameplates:SetScript("OnEvent", function()
           castBar.Text:Hide()
         end
 
-        castBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-        castBar.Flash:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
-
         if (castBar.rillyClean) then return end
 
         setDefaultFont(castBar.Text, RCUIDB.nameplateNameFontSize - 1)

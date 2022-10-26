@@ -2,9 +2,6 @@
 ..\FrameXML\UI.xsd">
     <!--@non-debug@-->
     <Script file="LibStub\LibStub.lua"/>
-    <Include file="LibItemLevel-1.0\lib.xml"/>
-    <Include file="LibAppropriateItems-1.0\lib.xml"/>
     <Include file="LibSharedMedia-3.0\lib.xml"/>
-    <Include file="AceAddon-3.0\AceAddon-3.0.xml"/>
     <!--@end-non-debug@-->
 </Ui>
