@@ -21,6 +21,20 @@ local function makePortraitBG(frame, r, g, b)
   frame.portraitBG.backlayer = backlayer
 end
 
+local function make3DPortraitFG(frame)
+  frame.portraitFG = CreateFrame("Frame", nil, frame)
+  frame.portraitFG:SetFrameLevel(frame:GetFrameLevel())
+  frame.portraitFG:SetFrameStrata("LOW")
+  frame.portraitFG:SetAllPoints(frame.portrait)
+  local foreground = frame.portraitFG:CreateTexture("foreLayer", "OVERLAY", nil)
+  foreground:Hide()
+  foreground:SetTexture("Interface\\AddOns\\RillyCleanUI\\media\\textures\\portrait-modelfront")
+  -- foreground:SetVertexColor(0, 0, 0)
+  foreground:SetAllPoints(frame.portraitFG)
+  foreground:Show()
+  frame.portraitFG.forelayer = foreground
+end
+
 local function makeRillyCleanPortrait(frame)
   if not frame.portrait then return end
 
@@ -58,6 +72,9 @@ local function makeRillyCleanPortrait(frame)
       portraitModel:Show()
       frame.portrait:Hide()
       frame.portraitModel = portraitModel
+
+      -- Add foreground mask
+      make3DPortraitFG(frame)
     end
 
     local unitGuid = UnitGUID(unit)
