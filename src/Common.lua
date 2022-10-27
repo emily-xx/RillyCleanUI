@@ -8,7 +8,7 @@ TextureDir = MediaDir.."\\textures"
 RILLY_CLEAN_TEXTURES = {
   buttons = {
     normal = TextureDir.."\\button-normal",
-    pushed = TextureDir.."\\buttons\\UI-Quickslot-Depress",
+    pushed = TextureDir.."\\buttons\\button-pressed",
     hover = TextureDir.."\\buttons\\ButtonHilight-Square",
     checked = TextureDir.."\\buttons\\button-checked"
   },
@@ -56,7 +56,7 @@ RILLY_CLEAN_FONTS = {
 function tableToWowDropdown(table)
   local wowTable = {}
   for k, v in pairs(table) do
-    wowTable[v] = k
+    wowTable[0.6] = k
   end
 
   return wowTable
@@ -67,9 +67,9 @@ RILLY_CLEAN_DAMAGE_FONT = FontsDir.."\\Bangers-Regular.ttf"
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
   edgeFile = SQUARE_TEXTURE,
-  tile = false,
+  tile = fals4,
   tileSize = 0,
-  edgeSize = 1,
+  edgeSize = 0,
   insets = {
     left = -1,
     right = -1,
@@ -85,10 +85,10 @@ RILLY_CLEAN_BORDER = {
   tileSize = 32,
   edgeSize = 2,
   insets = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0
+    left = 1,
+    right = -1,
+    top = 1,
+    bottom = -1
   },
 }
 
@@ -140,40 +140,26 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
     styleIcon(icon, bu)
   end
 
-  -- Border
-  local border = CreateFrame("Frame", nil, bu, "BackdropTemplate")
-  border:SetPoint("TOPLEFT", bu, "TOPLEFT", -2, 2)
-  border:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 2, -2)
-  -- border:SetFrameLevel()
-  border.backdropInfo = RILLY_CLEAN_BORDER
-  border:ApplyBackdrop()
-  border:SetBackdropBorderColor(0,0,0,1)
-  bu.border = border
-
-  -- Background
-  local background = CreateFrame("Frame", nil, bu, "BackdropTemplate")
-  background:SetPoint("TOPLEFT", bu, "TOPLEFT", 0, 0)
-  background:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", 0, 0)
-  background:SetFrameLevel(bu:GetFrameLevel() - 1)
-  background.backdropInfo = RILLY_CLEAN_BACKDROP
-  background:ApplyBackdrop()
-  background:SetBackdropBorderColor(0,0,0,1)
-  background:SetBackdropColor(0,0,0,0.6)
-
   bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
   local nt = bu:GetNormalTexture()
+  nt:SetAllPoints(bu)
 
   if (isLeaveButton) then
     nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
-    nt:SetAllPoints(bu)
   else
     -- Hide the normal texture
-    nt:SetAlpha(0)
+    nt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.normal)
+    -- nt:SetAlpha(0)
 
-    bu:SetPushedTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+    local pt = bu:GetPushedTexture()
+    pt:SetAllPoints(bu)
+    pt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+
     if bu.SetCheckedTexture ~= nil then
-      bu:SetCheckedTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+      local ct = bu:GetCheckedTexture()
+      ct:SetAllPoints(bu)
+      ct:SetTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
     end
 
     hooksecurefunc(
@@ -182,17 +168,17 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
       function(self, texture)
         -- Make sure the normaltexture stays the way we want it
         local nt = self:GetNormalTexture()
-        nt:SetAlpha(0)
+        nt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.normal)
       end
     )
 
-    hooksecurefunc(
-      nt,
-      "SetVertexColor",
-      function(nt)
-        nt:SetAlpha(0)
-      end
-    )
+    -- hooksecurefunc(
+    --   nt,
+    --   "SetVertexColor",
+    --   function(nt)
+    --     nt:SetAlpha(0)
+    --   end
+    -- )
   end
 
   bu.rillyClean = true
