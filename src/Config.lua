@@ -275,33 +275,33 @@ local function rcui_options()
   ----------------
   -- Action Bars --
   ----------------
-  -- makePanel("RCUI_ActionBars", rcui.panel, "Action Bars")
+  makePanel("RCUI_ActionBars", rcui.panel, "Action Bars")
 
-  -- local actionbarText = RCUI_ActionBars:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-  -- actionbarText:SetText("Action Bars")
-  -- actionbarText:SetPoint("TOPLEFT", 16, -16)
+  local actionbarText = RCUI_ActionBars:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+  actionbarText:SetText("Action Bars")
+  actionbarText:SetPoint("TOPLEFT", 16, -16)
 
-  -- local hideHotkeys = newCheckbox(
-  --   "Hide Hotkeys on Action Bars",
-  --   "Hides keybinding text on your action bar buttons.",
-  --   RCUIDB.hideHotkeys,
-  --   function(self, value)
-  --     RCUIDB.hideHotkeys = value
-  --   end,
-  --   actionbarText,
-  --   RCUI_ActionBars
-  -- )
+  local hideHotkeys = newCheckbox(
+    "Hide Hotkeys on Action Bars",
+    "Hides keybinding text on your action bar buttons.",
+    RCUIDB.hideHotkeys,
+    function(self, value)
+      RCUIDB.hideHotkeys = value
+    end,
+    actionbarText,
+    RCUI_ActionBars
+  )
 
-  -- local hideMacroText = newCheckbox(
-  --   "Hide Macro Text on Action Bars",
-  --   "Hides macro text on your action bar buttons.",
-  --   RCUIDB.hideMacroText,
-  --   function(self, value)
-  --     RCUIDB.hideMacroText = value
-  --   end,
-  --   hideHotkeys,
-  --   RCUI_ActionBars
-  -- )
+  local hideMacroText = newCheckbox(
+    "Hide Macro Text on Action Bars",
+    "Hides macro text on your action bar buttons.",
+    RCUIDB.hideMacroText,
+    function(self, value)
+      RCUIDB.hideMacroText = value
+    end,
+    hideHotkeys,
+    RCUI_ActionBars
+  )
 
   -- local hideMicroButtonsAndBags = newCheckbox(
   --   "Hide Micro Buttons and Bags (Requires reload)",
@@ -325,16 +325,16 @@ local function rcui_options()
   --   RCUI_ActionBars
   -- )
 
-  -- local disableAutoAddSpells = newCheckbox(
-  --   "Disable Auto Adding of Spells",
-  --   "Disables automatic adding of spells to action bars when learning new spells.",
-  --   RCUIDB.disableAutoAddSpells,
-  --   function(self, value)
-  --     RCUIDB.disableAutoAddSpells = value
-  --   end,
-  --   hideStanceBar,
-  --   RCUI_ActionBars
-  -- )
+  local disableAutoAddSpells = newCheckbox(
+    "Disable Auto Adding of Spells",
+    "Disables automatic adding of spells to action bars when learning new spells.",
+    RCUIDB.disableAutoAddSpells,
+    function(self, value)
+      RCUIDB.disableAutoAddSpells = value
+    end,
+    hideMacroText,
+    RCUI_ActionBars
+  )
 
   ----------------
   -- Nameplates --
