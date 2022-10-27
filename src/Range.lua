@@ -117,6 +117,9 @@ for i = 1, NUM_ACTIONBAR_BUTTONS do
     Module:RegisterButtonRange(_G["ActionButton" .. i])
     Module:RegisterButtonRange(_G["MultiBarBottomLeftButton" .. i])
     Module:RegisterButtonRange(_G["MultiBarBottomRightButton" .. i])
+    for k = 5, 7 do
+      Module:RegisterButtonRange(_G["MultiBar" .. k .. "Button" .. i])
+    end
     Module:RegisterButtonRange(_G["MultiBarRightButton" .. i])
     Module:RegisterButtonRange(_G["MultiBarLeftButton" .. i])
 end
