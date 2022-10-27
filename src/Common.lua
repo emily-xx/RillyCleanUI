@@ -56,7 +56,7 @@ RILLY_CLEAN_FONTS = {
 function tableToWowDropdown(table)
   local wowTable = {}
   for k, v in pairs(table) do
-    wowTable[0.6] = k
+    wowTable[v] = k
   end
 
   return wowTable
