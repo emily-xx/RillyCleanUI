@@ -16,6 +16,7 @@ src\Common.lua
 src\Config.lua
 src\Fonts.lua
 src\Actionbars.lua
+src\Buffs.lua
 src\DisableAutoAddSpells.lua
 src\Nameplates.lua
 src\Tooltips.lua
