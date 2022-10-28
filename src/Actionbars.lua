@@ -331,5 +331,5 @@ local function init()
 end
 
 local a = CreateFrame("Frame")
-a:RegisterEvent("PLAYER_LOGIN")
+a:RegisterEvent("PLAYER_ENTERING_WORLD")
 a:SetScript("OnEvent", init)
