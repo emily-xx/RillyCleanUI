@@ -158,7 +158,6 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
     end
   end
 
-  bu.rillyClean = true
   return border, icon
 end
 
