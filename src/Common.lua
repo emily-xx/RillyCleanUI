@@ -144,9 +144,8 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
   if (isLeaveButton) then
     nt:SetTexCoord(0.2, 0.8, 0.2, 0.8)
   else
-    -- Hide the normal texture
+    -- Simple button border
     nt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.normal)
-    -- nt:SetAlpha(0)
 
     local pt = bu:GetPushedTexture()
     pt:SetAllPoints(bu)
