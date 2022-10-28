@@ -21,6 +21,7 @@ src\DisableAutoAddSpells.lua
 src\Nameplates.lua
 src\Tooltips.lua
 src\UnitFrames.lua
+src\RaidFrames.lua
 src\Portrait.lua
 src\EasyDelete.lua
 src\LFGTimer.lua
