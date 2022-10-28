@@ -1,127 +1,125 @@
--- [ Range plugin from SUI - Great addon, if you don't like this one then try it out! ]
+-- [ Range plugin from SUI ]
 
 local RCUI=CreateFrame("Frame")
 RCUI:RegisterEvent("PLAYER_LOGIN")
 RCUI:SetScript("OnEvent", function(self, event)
+    local Module = CreateFrame('Frame')
+    local _G = _G
+    local next = _G.next
+    local pairs = _G.pairs
+    local unpack = _G.unpack
 
-local Module = CreateFrame('Frame')
-local _G = _G
-local next = _G.next
-local pairs = _G.pairs
-local unpack = _G.unpack
+    local HasAction = _G.HasAction
+    local IsActionInRange = _G.IsActionInRange
+    local IsUsableAction = _G.IsUsableAction
 
-local HasAction = _G.HasAction
-local IsActionInRange = _G.IsActionInRange
-local IsUsableAction = _G.IsUsableAction
+    local UPDATE_DELAY = .2
+    local buttonColors, buttonsToUpdate = {}, {}
+    local updater = CreateFrame("Frame")
 
-local UPDATE_DELAY = .2
-local buttonColors, buttonsToUpdate = {}, {}
-local updater = CreateFrame("Frame")
+    local colors = {
+        ["normal"] = {1, 1, 1},
+        ["oor"] = {.8, .1, .1},
+        ["oom"] = {.5, .5, 1},
+        ["unusable"] = {.3, .3, .3}
+    }
 
-local colors = {
-    ["normal"] = {1, 1, 1},
-    ["oor"] = {.8, .1, .1},
-    ["oom"] = {.5, .5, 1},
-    ["unusable"] = {.3, .3, .3}
-}
+    function Module:OnUpdateRange(elapsed)
+        self.elapsed = (self.elapsed or UPDATE_DELAY) - elapsed
+        if self.elapsed <= 0 then
+            self.elapsed = UPDATE_DELAY
 
-function Module:OnUpdateRange(elapsed)
-    self.elapsed = (self.elapsed or UPDATE_DELAY) - elapsed
-    if self.elapsed <= 0 then
-        self.elapsed = UPDATE_DELAY
-
-        if not Module:UpdateButtons() then
-            self:Hide()
+            if not Module:UpdateButtons() then
+                self:Hide()
+            end
         end
     end
-end
-updater:SetScript("OnUpdate", Module.OnUpdateRange)
+    updater:SetScript("OnUpdate", Module.OnUpdateRange)
 
-function Module:UpdateButtons()
-    if next(buttonsToUpdate) then
-        for button in pairs(buttonsToUpdate) do
-            self.UpdateButtonUsable(button)
+    function Module:UpdateButtons()
+        if next(buttonsToUpdate) then
+            for button in pairs(buttonsToUpdate) do
+                self.UpdateButtonUsable(button)
+            end
+            return true
         end
-        return true
+
+        return false
     end
 
-    return false
-end
+    function Module:UpdateButtonStatus()
+        local action = self.action
 
-function Module:UpdateButtonStatus()
-    local action = self.action
-
-    if action and self:IsVisible() and HasAction(action) then
-        buttonsToUpdate[self] = true
-    else
-        buttonsToUpdate[self] = nil
-    end
-
-    if next(buttonsToUpdate) then
-        updater:Show()
-    end
-end
-
-function Module:UpdateButtonUsable(force)
-    if force then
-        buttonColors[self] = nil
-    end
-
-    local action = self.action
-    local isUsable, notEnoughMana = IsUsableAction(action)
-
-    if isUsable then
-        local inRange = IsActionInRange(action)
-        if inRange == false then
-            Module.SetButtonColor(self, "oor")
+        if action and self:IsVisible() and HasAction(action) then
+            buttonsToUpdate[self] = true
         else
-            Module.SetButtonColor(self, "normal")
+            buttonsToUpdate[self] = nil
         end
-    elseif notEnoughMana then
-        Module.SetButtonColor(self, "oom")
-    else
-        Module.SetButtonColor(self, "unusable")
+
+        if next(buttonsToUpdate) then
+            updater:Show()
+        end
     end
-end
 
-function Module:SetButtonColor(colorIndex)
-    if buttonColors[self] == colorIndex then
-        return
+    function Module:UpdateButtonUsable(force)
+        if force then
+            buttonColors[self] = nil
+        end
+
+        local action = self.action
+        local isUsable, notEnoughMana = IsUsableAction(action)
+
+        if isUsable then
+            local inRange = IsActionInRange(action)
+            if inRange == false then
+                Module.SetButtonColor(self, "oor")
+            else
+                Module.SetButtonColor(self, "normal")
+            end
+        elseif notEnoughMana then
+            Module.SetButtonColor(self, "oom")
+        else
+            Module.SetButtonColor(self, "unusable")
+        end
     end
-    buttonColors[self] = colorIndex
 
-    local r, g, b = unpack(colors[colorIndex])
-    self.icon:SetVertexColor(r, g, b)
-end
+    function Module:SetButtonColor(colorIndex)
+        if buttonColors[self] == colorIndex then
+            return
+        end
+        buttonColors[self] = colorIndex
 
-function Module:Register()
-    self:HookScript("OnShow", Module.UpdateButtonStatus)
-    self:HookScript("OnHide", Module.UpdateButtonStatus)
-    self:SetScript("OnUpdate", nil)
-    Module.UpdateButtonStatus(self)
-end
-
-local function button_UpdateUsable(button)
-    Module.UpdateButtonUsable(button, true)
-end
-
-function Module:RegisterButtonRange(button)
-    if button.Update then
-        Module.Register(button)
-        hooksecurefunc(button, "Update", Module.UpdateButtonStatus)
-        hooksecurefunc(button, "UpdateUsable", button_UpdateUsable)
+        local r, g, b = unpack(colors[colorIndex])
+        self.icon:SetVertexColor(r, g, b)
     end
-end
 
-for i = 1, NUM_ACTIONBAR_BUTTONS do
-    Module:RegisterButtonRange(_G["ActionButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarBottomLeftButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarBottomRightButton" .. i])
-    for k = 5, 7 do
-      Module:RegisterButtonRange(_G["MultiBar" .. k .. "Button" .. i])
+    function Module:Register()
+        self:HookScript("OnShow", Module.UpdateButtonStatus)
+        self:HookScript("OnHide", Module.UpdateButtonStatus)
+        self:SetScript("OnUpdate", nil)
+        Module.UpdateButtonStatus(self)
     end
-    Module:RegisterButtonRange(_G["MultiBarRightButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarLeftButton" .. i])
-end
 
+    local function button_UpdateUsable(button)
+        Module.UpdateButtonUsable(button, true)
+    end
+
+    function Module:RegisterButtonRange(button)
+        if button.Update then
+            Module.Register(button)
+            hooksecurefunc(button, "Update", Module.UpdateButtonStatus)
+            hooksecurefunc(button, "UpdateUsable", button_UpdateUsable)
+        end
+    end
+
+    for i = 1, NUM_ACTIONBAR_BUTTONS do
+        Module:RegisterButtonRange(_G["ActionButton" .. i])
+        Module:RegisterButtonRange(_G["MultiBarBottomLeftButton" .. i])
+        Module:RegisterButtonRange(_G["MultiBarBottomRightButton" .. i])
+        for k = 5, 7 do
+        Module:RegisterButtonRange(_G["MultiBar" .. k .. "Button" .. i])
+        end
+        Module:RegisterButtonRange(_G["MultiBarRightButton" .. i])
+        Module:RegisterButtonRange(_G["MultiBarLeftButton" .. i])
+    end
 end)
