@@ -10,7 +10,6 @@ PVPReadyDialog.leaveButton:Hide()
 PVPReadyDialog.leaveButton.Show = function() end -- Prevent other mods from showing the button
 PVPReadyDialog.enterButton:ClearAllPoints()
 PVPReadyDialog.enterButton:SetPoint("BOTTOM", PVPReadyDialog, "BOTTOM", 0, 25)
--- PVPReadyDialog.label:SetPoint("TOP", 0, -22)
 
 local function Print(msg)
 	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99SafeQueue|r: " .. msg)
