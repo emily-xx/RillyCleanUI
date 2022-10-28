@@ -83,7 +83,10 @@ local function skinBlizzardObjectiveTracker()
       setDefaultFont(line.Text)
     end
 
-    if (block.rightButton) then applyRillyCleanButtonSkin(block.rightButton) end
+    if (block.rightButton) then
+      applyRillyCleanButtonSkin(block.rightButton)
+      block.rightButton.rillyClean = true
+    end
     if (block.currentLine and block.currentLine.Bar) then skinProgressBar(block.currentLine.Bar) end
   end
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderEnter", function(_, block) styleBlock(block) end)
