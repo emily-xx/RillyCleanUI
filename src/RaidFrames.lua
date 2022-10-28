@@ -11,12 +11,6 @@ frame:SetScript("OnEvent", function(self, event) -- Darken Raid Panel
 			end
 		end
 
-		for _, region in pairs({CompactRaidFrameManagerContainerResizeFrame:GetRegions()}) do
-			if region:GetName():find("Border") then
-				region:SetVertexColor(0, 0, 0)
-			end
-		end
-
   	self:UnregisterEvent("PLAYER_LOGIN")
   	frame:SetScript("OnEvent", nil)
 end)
@@ -41,7 +35,7 @@ f:SetScript("OnEvent", function(self, event, ...)
 		local background = _G[prefix .. "Background"]
 
 		--STATUSBAR
-		bar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Hp-Fill")
+		bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 		rbar:SetStatusBarTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Fill")
 		rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
 		Divider:SetTexture(TextureDir.."\\raidframe\\Raid-HSeparator")
