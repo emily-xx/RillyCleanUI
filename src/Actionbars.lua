@@ -52,17 +52,6 @@ local function init()
       "SingleBarSmallUpper"
     }
 
-    -- for _, statusBar in pairs(statusBars) do
-    --   _G["StatusTrackingBarManager"][statusBar]:SetAlpha(0)
-    -- end
-
-    -- StatusTrackingBarManager:ClearAllPoints()
-    -- StatusTrackingBarManager:SetPoint("TOP", Screen, "TOP", 0, 0)
-
-    -- -- Remove obtrusive artwork from Stance bar when only bottom bar enabled
-    -- SlidingActionBarTexture0:SetAlpha(0)
-    -- SlidingActionBarTexture1:SetAlpha(0)
-
     -- Fix issue with Blizzard trying to call this
     if not AchievementMicroButton_Update then
         AchievementMicroButton_Update = function() end
@@ -252,7 +241,7 @@ local function init()
   if not dominos and not bartender and (RCUIDB.hideHotkeys) then
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("UPDATE_BINDINGS")
-    frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    frame:RegisterEvent("PLAYER_LOGIN")
     frame:SetScript("OnEvent", function()
         for i = 1, 12 do
             updateHotkey(_G["ActionButton"..i])
@@ -331,5 +320,5 @@ local function init()
 end
 
 local a = CreateFrame("Frame")
-a:RegisterEvent("PLAYER_ENTERING_WORLD")
+a:RegisterEvent("PLAYER_LOGIN")
 a:SetScript("OnEvent", init)
