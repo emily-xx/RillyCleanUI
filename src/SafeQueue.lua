@@ -1,4 +1,4 @@
--- SafeQueue by Jordon
+-- Modified version of SafeQueue by Jordon
 
 local SafeQueue = CreateFrame("Frame")
 local queueTime
@@ -10,7 +10,7 @@ PVPReadyDialog.leaveButton:Hide()
 PVPReadyDialog.leaveButton.Show = function() end -- Prevent other mods from showing the button
 PVPReadyDialog.enterButton:ClearAllPoints()
 PVPReadyDialog.enterButton:SetPoint("BOTTOM", PVPReadyDialog, "BOTTOM", 0, 25)
-PVPReadyDialog.label:SetPoint("TOP", 0, -22)
+-- PVPReadyDialog.label:SetPoint("TOP", 0, -22)
 
 local function Print(msg)
 	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99SafeQueue|r: " .. msg)
@@ -67,14 +67,56 @@ end)
 SafeQueue:SetScript("OnUpdate", function(self)
 	if not RCUIDB.safeQueue then return end
 
-	if PVPReadyDialog_Showing(queue) then
-		local secs = GetBattlefieldPortExpiration(queue)
-		if secs and secs > 0 and remaining ~= secs then
-			remaining = secs
-			local color = secs > 20 and "f20ff20" or secs > 10 and "fffff00" or "fff0000"
-			PVPReadyDialog.label:SetText("Expires in |cf"..color.. SecondsToTime(secs) .. "|r")
-		end
+	local timerBar = PVPReadyDialog.timerBar
+
+	if not PVPReadyDialog_Showing(queue) then return end
+
+	if not timerBar then
+		timerBar = CreateFrame("StatusBar", nil, PVPReadyDialog)
+		timerBar:SetPoint("TOP", PVPReadyDialog, "BOTTOM", 0, -5)
+		local tex = timerBar:CreateTexture()
+		tex:SetTexture(RILLY_CLEAN_TEXTURES.statusBar)
+		timerBar:SetStatusBarTexture(tex, "BORDER")
+		timerBar:SetStatusBarColor(1, 0.1, 0)
+		timerBar:SetSize(194, 14)
+
+		local bg = timerBar:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(timerBar)
+		bg:SetColorTexture(0, 0, 0, 0.7)
+
+		timerBar.Spark = timerBar:CreateTexture(nil, "OVERLAY")
+		timerBar.Spark:SetTexture(RILLY_CLEAN_TEXTURES.castSpark)
+		timerBar.Spark:SetSize(32, 32)
+		timerBar.Spark:SetBlendMode("ADD")
+		timerBar.Spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 3)
+
+		timerBar.Border = timerBar:CreateTexture(nil, "ARTWORK")
+		timerBar.Border:SetTexture(RILLY_CLEAN_TEXTURES.castBorder)
+		timerBar.Border:SetSize(256, 64)
+		timerBar.Border:SetPoint("TOP", timerBar, 0, 27)
+
+		timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
+		timerBar.Text:SetFontObject(GameFontHighlight)
+		timerBar.Text:SetPoint("CENTER", timerBar, "CENTER")
+
+		local timeout = GetBattlefieldPortExpiration(queue)
+		timerBar:SetMinMaxValues(0, timeout)
 	end
+
+	local function barUpdate(self, elapsed)
+		local timeLeft = GetBattlefieldPortExpiration(queue)
+		if (timeLeft <= 0) then return self:Hide() end
+
+		self:SetValue(timeLeft)
+		self.Text:SetFormattedText("%.1f", timeLeft)
+	end
+	timerBar:SetScript("OnUpdate", barUpdate)
+
+	local function OnEvent(self, event, ...)
+		timerBar:Show()
+	end
+
+	PVPReadyDialog.timerBar = timerBar
 end)
 
 SlashCmdList.SafeQueue = function(msg)
