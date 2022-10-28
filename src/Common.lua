@@ -157,24 +157,6 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
       ct:SetAllPoints(bu)
       ct:SetTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
     end
-
-    hooksecurefunc(
-      bu,
-      "SetNormalTexture",
-      function(self, texture)
-        -- Make sure the normaltexture stays the way we want it
-        local nt = self:GetNormalTexture()
-        nt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.normal)
-      end
-    )
-
-    -- hooksecurefunc(
-    --   nt,
-    --   "SetVertexColor",
-    --   function(nt)
-    --     nt:SetAlpha(0)
-    --   end
-    -- )
   end
 
   bu.rillyClean = true
