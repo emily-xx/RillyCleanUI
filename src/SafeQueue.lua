@@ -1,4 +1,4 @@
--- Modified version of SafeQueue by Jordon
+-- Enhanced version of SafeQueue by Jordon
 
 local SafeQueue = CreateFrame("Frame")
 local queueTime
