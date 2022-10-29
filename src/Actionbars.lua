@@ -82,16 +82,16 @@ local function init()
     local ho = _G[name .. "HotKey"]
 
     -- remove the style background theme
-    style:SetTexture(nil)
-    hooksecurefunc(
-      style,
-      "SetTexture",
-      function(self, texture)
-        if texture then
-          self:SetTexture(nil)
-        end
-      end
-    )
+    -- style:SetTexture(nil)
+    -- hooksecurefunc(
+    --   style,
+    --   "SetTexture",
+    --   function(self, texture)
+    --     if texture then
+    --       self:SetTexture(nil)
+    --     end
+    --   end
+    -- )
 
     --icon
     styleIcon(icon, bu)

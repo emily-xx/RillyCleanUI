@@ -150,11 +150,13 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
     local pt = bu:GetPushedTexture()
     pt:SetAllPoints(bu)
     pt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.pushed)
+    pt:SetDrawLayer("OVERLAY")
 
     if bu.SetCheckedTexture ~= nil then
       local ct = bu:GetCheckedTexture()
       ct:SetAllPoints(bu)
       ct:SetTexture(RILLY_CLEAN_TEXTURES.buttons.checked)
+      ct:SetDrawLayer("OVERLAY")
     end
   end
 
