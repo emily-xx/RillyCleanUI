@@ -322,4 +322,5 @@ end
 local a = CreateFrame("Frame")
 a:RegisterEvent("PLAYER_LOGIN")
 a:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+a:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
 a:SetScript("OnEvent", init)
