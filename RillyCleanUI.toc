@@ -2,7 +2,7 @@
 ## Title: RillyCleanUI
 ## Notes: Simple skinnning modifications for the default interface to make it cleaner and unobtrusive.
 ## Author: Emily
-## Version: 4.0.5
+## Version: 4.0.6
 ## SavedVariables: RCUIDB
 ## Email: emlywind@gmail.com
 
