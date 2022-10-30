@@ -212,9 +212,9 @@ local function init()
     skinButton(bu, ic)
   end
 
-  -- for i = 1, NUM_STANCE_SLOTS do
-  --   styleStanceButton(_G["StanceButton" .. i])
-  -- end
+  for i = 1, StanceBar.numButtons do
+    styleStanceButton(_G["StanceButton" .. i])
+  end
 
   -- Style possess buttons
   local function stylePossessButton(bu)
