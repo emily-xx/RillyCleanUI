@@ -321,4 +321,5 @@ end
 
 local a = CreateFrame("Frame")
 a:RegisterEvent("PLAYER_LOGIN")
+a:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 a:SetScript("OnEvent", init)
