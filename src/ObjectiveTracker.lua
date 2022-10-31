@@ -83,10 +83,7 @@ local function skinBlizzardObjectiveTracker()
       setDefaultFont(line.Text)
     end
 
-    if (block.rightButton) then
-      applyRillyCleanButtonSkin(block.rightButton)
-      block.rightButton.rillyClean = true
-    end
+    if (block.rightButton) then applyRillyCleanButtonSkin(block.rightButton) end
     if (block.currentLine and block.currentLine.Bar) then skinProgressBar(block.currentLine.Bar) end
   end
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderEnter", function(_, block) styleBlock(block) end)
@@ -113,23 +110,25 @@ local function skinBlizzardObjectiveTracker()
   hooksecurefunc("ScenarioTrackerProgressBar_SetValue", skinProgressBar)
   hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", skinProgressBar)
 
-  local function rcui_ObjectiveTracker_Update()
-      local tracker = ObjectiveTrackerFrame
-      if #tracker.MODULES then
-        for i = 1, #tracker.MODULES do
-          local trackerModule = tracker.MODULES[i]
-          local Header = trackerModule.Header
-          if ( Header ) then
-            setDefaultFont(Header.Text)
-            Header.Background:Hide()
-          end
+  local function rcui_ObjectiveTracker_Update(reason, id, moduleWhoseCollapseChanged)
+    local tracker = ObjectiveTrackerFrame
 
-          local blocks = trackerModule:GetActiveBlocks()
-          for i, v in pairs(blocks) do
-            styleBlock(v)
+    if not #tracker.MODULES then return end
+
+    for i = 1, #tracker.MODULES do
+      local trackerModule = tracker.MODULES[i]
+      local Header = trackerModule.Header
+      if ( Header ) then
+        setDefaultFont(Header.Text)
+        Header.Background:Hide()
+
+        for k, v in pairs(trackerModule.usedBlocks) do
+          for i, block in pairs(v) do
+            styleBlock(block)
           end
         end
       end
+    end
   end
   hooksecurefunc("ObjectiveTracker_Update", rcui_ObjectiveTracker_Update)
 end
