@@ -122,8 +122,8 @@ local function skinBlizzardObjectiveTracker()
         setDefaultFont(Header.Text)
         Header.Background:Hide()
 
-        for k, v in pairs(trackerModule.usedBlocks) do
-          for i, block in pairs(v) do
+        for _, blocks in pairs(trackerModule.usedBlocks) do
+          for _, block in pairs(blocks) do
             styleBlock(block)
           end
         end
