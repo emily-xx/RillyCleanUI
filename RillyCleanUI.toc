@@ -16,6 +16,7 @@ src\Common.lua
 src\Config.lua
 src\Fonts.lua
 src\Actionbars.lua
+src\TimerTracker.lua
 src\Buffs.lua
 src\ChatFrame.lua
 src\DisableAutoAddSpells.lua

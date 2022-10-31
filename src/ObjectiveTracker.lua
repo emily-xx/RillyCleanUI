@@ -12,7 +12,7 @@ local cleanBarBackdrop = {
   }
 }
 
-local function skinProgressBar(bar)
+function skinProgressBar(bar)
   if not bar then return end
 
   if bar.BorderMid then
@@ -64,6 +64,8 @@ local function skinProgressBar(bar)
 
     bar.IconBG:Hide()
   end
+
+  bar.rillyClean = true
 end
 
 hooksecurefunc("BonusObjectiveTrackerProgressBar_UpdateReward", function(progressBar)
