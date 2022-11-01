@@ -42,6 +42,10 @@ RCUIDBDefaults = {
   safeQueue = true,
   tabBinder = true,
   dampeningDisplay = true,
+
+  -- Quest Tracker
+  objectivesTextOutline = true,
+  objectivesHideHeaders = true,
 }
 
 local function rcui_defaults()
@@ -259,6 +263,26 @@ local function rcui_options()
       RCUIDB.damageFont = value
     end,
     customFonts
+  )
+
+  local objectivesTextOutline = newCheckbox(
+    "Outline Quest Tracker Text",
+    "Add an outline to Quest Tracker text",
+    RCUIDB.objectivesTextOutline,
+    function(self, value)
+      RCUIDB.objectivesTextOutline = value
+    end,
+    damageFont
+  )
+
+  local objectivesHideHeaders = newCheckbox(
+    "Hide Quest Tracker Header Backgrounds",
+    "Simplify visual appearance of the Quest Tracker by hiding header art.",
+    RCUIDB.objectivesHideHeaders,
+    function(self, value)
+      RCUIDB.objectivesHideHeaders = value
+    end,
+    objectivesTextOutline
   )
 
   -- local hideMinimapZoneText = newCheckbox(

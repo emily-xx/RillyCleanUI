@@ -2,17 +2,26 @@ hooksecurefunc("BonusObjectiveTrackerProgressBar_UpdateReward", function(progres
   skinProgressBar(progressBar.Bar)
 end)
 
+local function setQuestTrackerFont(textObject)
+  local outline = ""
+  if RCUIDB.objectivesTextOutline then
+    outline = "THINOUTLINE"
+  end
+
+  setDefaultFont(textObject, nil, outline)
+end
+
 local function skinBlizzardObjectiveTracker()
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "SetStringText", function(_, fontString)
-    setDefaultFont(fontString)
+    setQuestTrackerFont(fontString)
   end)
 
   local function styleBlock(block)
-    if ( block.HeaderText ) then
-      setDefaultFont(block.HeaderText)
+    if block.HeaderText then
+      setQuestTrackerFont(block.HeaderText)
     end
     for objectiveKey, line in pairs(block.lines) do
-      setDefaultFont(line.Text)
+      setQuestTrackerFont(line.Text)
     end
 
     if (block.rightButton) then applyRillyCleanButtonSkin(block.rightButton) end
@@ -22,7 +31,7 @@ local function skinBlizzardObjectiveTracker()
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "OnBlockHeaderLeave", function(_, block) styleBlock(block) end)
 
   local function setTrackerHeaderFont()
-    setDefaultFont(ObjectiveTrackerFrame.HeaderMenu.Title)
+    setQuestTrackerFont(ObjectiveTrackerFrame.HeaderMenu.Title)
   end
   hooksecurefunc("ObjectiveTracker_Collapse", setTrackerHeaderFont)
 
@@ -30,14 +39,14 @@ local function skinBlizzardObjectiveTracker()
     styleBlock(block)
     local line = self:GetLine(block, objectiveKey, lineType);
     if ( line.Dash ) then
-      setDefaultFont(line.Dash)
+      setQuestTrackerFont(line.Dash)
     end
   end
   hooksecurefunc(DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddObjective", rcui_AddObjective)
 
 
   local function skinProgressBar(self)
-    setDefaultFont(self.Bar.Label)
+    setQuestTrackerFont(self.Bar.Label)
   end
   hooksecurefunc("ScenarioTrackerProgressBar_SetValue", skinProgressBar)
   hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", skinProgressBar)
@@ -51,8 +60,10 @@ local function skinBlizzardObjectiveTracker()
       local trackerModule = tracker.MODULES[i]
       local Header = trackerModule.Header
       if ( Header ) then
-        setDefaultFont(Header.Text)
-        Header.Background:Hide()
+        setQuestTrackerFont(Header.Text)
+        if RCUIDB.objectivesHideHeaders then
+          Header.Background:Hide()
+        end
 
         for _, blocks in pairs(trackerModule.usedBlocks) do
           for _, block in pairs(blocks) do
