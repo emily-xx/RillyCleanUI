@@ -142,6 +142,7 @@ local function init()
     bo:SetTexture(nil) --hide the border (plain ugly, sry blizz)
 
     --hotkey
+    ho:SetTextColor(1, 1, 1, 1)
     if RCUIDB.hideHotkeys then
       ho:Hide()
     end
