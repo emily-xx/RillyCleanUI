@@ -142,9 +142,6 @@ local function init()
     bo:SetTexture(nil) --hide the border (plain ugly, sry blizz)
 
     --hotkey
-    ho:ClearAllPoints()
-    ho:SetPoint("TOP", bu, 0, 0)
-    ho:SetPoint("TOP", bu, 0, 0)
     if RCUIDB.hideHotkeys then
       ho:Hide()
     end
