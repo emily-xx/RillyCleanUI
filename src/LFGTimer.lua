@@ -15,20 +15,13 @@ function init()
   timerBar:SetStatusBarColor(1, 0.1, 0)
   timerBar:SetSize(194, 14)
 
-  local bg = timerBar:CreateTexture(nil, "BACKGROUND")
-  bg:SetAllPoints(timerBar)
-  bg:SetColorTexture(0, 0, 0, 0.7)
+  skinProgressBar(timerBar)
 
   timerBar.Spark = timerBar:CreateTexture(nil, "OVERLAY")
   timerBar.Spark:SetTexture(RILLY_CLEAN_TEXTURES.castSpark)
   timerBar.Spark:SetSize(32, 32)
   timerBar.Spark:SetBlendMode("ADD")
   timerBar.Spark:SetPoint("LEFT", timerBar:GetStatusBarTexture(), "RIGHT", -15, 3)
-
-  timerBar.Border = timerBar:CreateTexture(nil, "ARTWORK")
-  timerBar.Border:SetTexture(RILLY_CLEAN_TEXTURES.castBorder)
-  timerBar.Border:SetSize(256, 64)
-  timerBar.Border:SetPoint("TOP", timerBar, 0, 27)
 
   if not bigWigs and not lfgProposalTime then
     timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")

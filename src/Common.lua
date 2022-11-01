@@ -268,6 +268,76 @@ function createStatusBar(name, parentFrame, width, height, color)
   return barBorder
 end
 
+local cleanBarBackdrop = {
+  bgFile = SQUARE_TEXTURE,
+  edgeFile = SQUARE_TEXTURE,
+  tile = false,
+  tileSize = 0,
+  edgeSize = 3,
+  insets = {
+    left = -2,
+    right = -2,
+    top = -2,
+    bottom = -2
+  }
+}
+
+function skinProgressBar(bar)
+  if not bar then return end
+
+  if bar.BorderMid then
+    bar.BorderMid:SetAlpha(0)
+    bar.BorderLeft:SetAlpha(0)
+    bar.BorderRight:SetAlpha(0)
+  end
+
+  bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+
+  if bar.BarBG then
+    bar.BarBG:Hide()
+    bar.BarFrame:Hide()
+  end
+
+  -- Rilly Clean Border
+  if not bar.back then
+    local back = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+    back:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+    back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 0, 0)
+    back:SetFrameLevel(bar:GetFrameLevel() - 1)
+    back.backdropInfo = cleanBarBackdrop
+    back:ApplyBackdrop()
+    back:SetBackdropBorderColor(0,0,0,1)
+    back:SetBackdropColor(0,0,0,1)
+
+    bar.back = back
+  end
+
+  local Icon = bar.Icon
+  if Icon then
+    Icon:SetMask(nil)
+    Icon:SetHeight(24)
+    Icon:SetWidth(24)
+    Icon:ClearAllPoints()
+    Icon:SetPoint("LEFT", bar, "RIGHT", 0, 0)
+    styleIcon(Icon)
+    if not bar.iconBack then
+      local iconBack = CreateFrame("Frame", nil, bar, "BackdropTemplate")
+      iconBack:SetPoint("TOPLEFT", Icon, "TOPLEFT", 0, 0)
+      iconBack:SetPoint("BOTTOMRIGHT", Icon, "BOTTOMRIGHT", 0, 0)
+      iconBack:SetFrameLevel(bar:GetFrameLevel() - 1)
+      iconBack.backdropInfo = cleanBarBackdrop
+      iconBack:ApplyBackdrop()
+      iconBack:SetBackdropBorderColor(0,0,0,1)
+      iconBack:SetBackdropColor(0,0,0,1)
+      bar.iconBack = iconBack
+    end
+
+    bar.IconBG:Hide()
+  end
+
+  bar.rillyClean = true
+end
+
 function round(what, precision)
   return math.floor(what*math.pow(10,precision)+0.5) / math.pow(10,precision)
 end
