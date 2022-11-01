@@ -17,10 +17,9 @@ end)
 
 -- Clean Skins
 local function SkinRaidFrame(prefix)
-	local frame = _G[prefix]
 	local bar = _G[prefix .. "HealthBar"]
 
-	if not bar or frame.rillyClean then return end
+	if not bar then return end
 
 	local rbar = _G[prefix .. "PowerBar"]
 	local rbarBg = _G[prefix .. "PowerBarBackground"]
@@ -35,27 +34,13 @@ local function SkinRaidFrame(prefix)
 
 	--STATUSBAR
 	bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-	bar.SetStatusBarTexture = function() end
-
 	rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-	rbar.SetStatusBarTexture = function() end
-
 	rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
-	rbarBg.SetTexture = function() end
-
 	healthBackground:SetVertexColor(0, 0, 0, 0)
-	healthBackground.SetVertexColor = function() end
-
 	background:SetTexture(SQUARE_TEXTURE)
-	background.SetTexture = function() end
 	background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
-	background.SetVertexColor = function() end
-
 	roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
-	roleIcon.SetTexture = function() end
 	roleIcon:SetDrawLayer("OVERLAY")
-
-	frame.rillyClean = true
 
 	return bar
 end
