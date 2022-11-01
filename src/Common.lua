@@ -146,6 +146,7 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
   else
     -- Simple button border
     nt:SetTexture(RILLY_CLEAN_TEXTURES.buttons.normal)
+    nt:SetDrawLayer("ARTWORK")
 
     local pt = bu:GetPushedTexture()
     pt:SetAllPoints(bu)
