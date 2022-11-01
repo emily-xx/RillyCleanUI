@@ -15,85 +15,100 @@ frame:SetScript("OnEvent", function(self, event) -- Darken Raid Panel
   	frame:SetScript("OnEvent", nil)
 end)
 
-local f = CreateFrame("Frame") -- Skin raid frames
-f:RegisterEvent("PLAYER_LOGIN")
-f:SetScript("OnEvent", function(self, event, ...)
-	-- Clean Skins
-	local function SkinRaidFrame(prefix)
-		local bar = _G[prefix .. "HealthBar"]
+-- Clean Skins
+local function SkinRaidFrame(prefix)
+	local frame = _G[prefix]
+	local bar = _G[prefix .. "HealthBar"]
 
-		if not bar then return end
+	if not bar or frame.rillyClean then return end
 
-		local rbar = _G[prefix .. "PowerBar"]
-		local rbarBg = _G[prefix .. "PowerBarBackground"]
-		local Divider = _G[prefix .. "HorizDivider"]
-		local vleftseparator = _G[prefix .. "VertLeftBorder"]
-		local vrightseparator = _G[prefix .. "VertRightBorder"]
-		local htopseparator = _G[prefix .. "HorizTopBorder"]
-		local hbotseparator = _G[prefix .. "HorizBottomBorder"]
-		local healthBackground = _G[prefix .. "HealthBarBackground"]
-		local background = _G[prefix .. "Background"]
-    local roleIcon = _G[prefix .. "RoleIcon"]
+	local rbar = _G[prefix .. "PowerBar"]
+	local rbarBg = _G[prefix .. "PowerBarBackground"]
+	local Divider = _G[prefix .. "HorizDivider"]
+	local vleftseparator = _G[prefix .. "VertLeftBorder"]
+	local vrightseparator = _G[prefix .. "VertRightBorder"]
+	local htopseparator = _G[prefix .. "HorizTopBorder"]
+	local hbotseparator = _G[prefix .. "HorizBottomBorder"]
+	local healthBackground = _G[prefix .. "HealthBarBackground"]
+	local background = _G[prefix .. "Background"]
+	local roleIcon = _G[prefix .. "RoleIcon"]
 
-		--STATUSBAR
-		bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-		rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
-		rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
-		healthBackground:SetVertexColor(0, 0, 0, 0)
-		background:SetTexture(SQUARE_TEXTURE)
-		background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
-    roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
-    roleIcon:SetDrawLayer("OVERLAY")
+	--STATUSBAR
+	bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+	bar.SetStatusBarTexture = function() end
 
-		return bar
-	end
+	rbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+	rbar.SetStatusBarTexture = function() end
 
-	local function SkinBorders(prefix)
-		_G[prefix.."BorderFrameBorderTopLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
-		_G[prefix.."BorderFrameBorderTop"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
-		_G[prefix.."BorderFrameBorderTopRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
-		_G[prefix.."BorderFrameBorderLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Left")
-		_G[prefix.."BorderFrameBorderRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Right")
-		_G[prefix.."BorderFrameBorderBottomLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomLeft")
-		_G[prefix.."BorderFrameBorderBottom"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomMiddle")
-		_G[prefix.."BorderFrameBorderBottomRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomRight")
-	end
+	rbarBg:SetTexture(TextureDir.."\\raidframe\\Raid-Bar-Resource-Background")
+	rbarBg.SetTexture = function() end
 
-	local function RaidFrameUpdate()
-		local g = 1
-		local isRaidGroup = _G["CompactRaidGroup1"] ~= nil
-		local isParty = _G["CompactPartyFrameMember1"] ~= nil
+	healthBackground:SetVertexColor(0, 0, 0, 0)
+	healthBackground.SetVertexColor = function() end
+
+	background:SetTexture(SQUARE_TEXTURE)
+	background.SetTexture = function() end
+	background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
+	background.SetVertexColor = function() end
+
+	roleIcon:SetTexture(RILLY_CLEAN_TEXTURES.lfg.portraitRoles)
+	roleIcon.SetTexture = function() end
+	roleIcon:SetDrawLayer("OVERLAY")
+
+	frame.rillyClean = true
+
+	return bar
+end
+
+local function SkinBorders(prefix)
+	_G[prefix.."BorderFrameBorderTopLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperLeft")
+	_G[prefix.."BorderFrameBorderTop"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperMiddle")
+	_G[prefix.."BorderFrameBorderTopRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-UpperRight")
+	_G[prefix.."BorderFrameBorderLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Left")
+	_G[prefix.."BorderFrameBorderRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-Right")
+	_G[prefix.."BorderFrameBorderBottomLeft"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomLeft")
+	_G[prefix.."BorderFrameBorderBottom"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomMiddle")
+	_G[prefix.."BorderFrameBorderBottomRight"]:SetTexture(TextureDir.."\\raidframe\\RaidBorder-BottomRight")
+end
+
+local function RaidFrameUpdate()
+	local g = 1
+	local isRaidGroup = _G["CompactRaidGroup1"] ~= nil
+	local isParty = _G["CompactPartyFrameMember1"] ~= nil
 
 
-		if isRaidGroup then
-			repeat
-				local i, bar = 1
-				local group = _G["CompactRaidGroup" .. g]
-				repeat
-					local prefix = ("CompactRaidGroup" .. g .. "Member" .. i)
-					bar = SkinRaidFrame(prefix)
-					i = i + 1
-				until not bar
-				g = g + 1
-			until not group
-    elseif isParty then
+	if isRaidGroup then
+		repeat
 			local i, bar = 1
+			local group = _G["CompactRaidGroup" .. g]
 			repeat
-				local prefix = ("CompactPartyFrameMember" .. i)
+				local prefix = ("CompactRaidGroup" .. g .. "Member" .. i)
 				bar = SkinRaidFrame(prefix)
 				i = i + 1
 			until not bar
-		end
-
-		-- Always check this because regardless of group settings, main tanks come up as CompactRaidFrameX
+			g = g + 1
+		until not group
+	elseif isParty then
 		local i, bar = 1
 		repeat
-			local prefix = ("CompactRaidFrame" .. i)
+			local prefix = ("CompactPartyFrameMember" .. i)
 			bar = SkinRaidFrame(prefix)
 			i = i + 1
 		until not bar
 	end
 
+	-- Always check this because regardless of group settings, main tanks come up as CompactRaidFrameX
+	local i, bar = 1
+	repeat
+		local prefix = ("CompactRaidFrame" .. i)
+		bar = SkinRaidFrame(prefix)
+		i = i + 1
+	until not bar
+end
+
+local f = CreateFrame("Frame") -- Skin raid frames
+f:RegisterEvent("PLAYER_LOGIN")
+f:SetScript("OnEvent", function(self, event, ...)
 	if CompactRaidFrameContainer.AddUnitFrame then
 		self:UnregisterAllEvents()
 		hooksecurefunc(CompactRaidFrameContainer, "AddUnitFrame", RaidFrameUpdate)
