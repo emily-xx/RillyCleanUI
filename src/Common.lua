@@ -20,6 +20,8 @@ RILLY_CLEAN_TEXTURES = {
   targetSmallNoMana = TextureDir.."\\target-small-nomana",
   targetOfTarget = TextureDir.."\\target-of-target",
 
+  circleTexture = TextureDir.."\\Portrait-ModelBack",
+
   minimap = {
     dungeonDifficulty = TextureDir.."\\minimap\\UI-DungeonDifficulty-Button"
   },
@@ -67,7 +69,7 @@ RILLY_CLEAN_DAMAGE_FONT = FontsDir.."\\Bangers-Regular.ttf"
 RILLY_CLEAN_BACKDROP = {
   bgFile = SQUARE_TEXTURE,
   edgeFile = SQUARE_TEXTURE,
-  tile = fals4,
+  tile = false,
   tileSize = 0,
   edgeSize = 0,
   insets = {
@@ -75,6 +77,20 @@ RILLY_CLEAN_BACKDROP = {
     right = -1,
     top = -1,
     bottom = -1
+  }
+}
+
+RILLY_CLEAN_CIRCLE_BORDER = {
+  bgFile = RILLY_CLEAN_TEXTURES.circleTexture,
+  -- edgeFile = RILLY_CLEAN_TEXTURES.circleTexture,
+  tile = false,
+  tileSize = 0,
+  edgeSize = 0,
+  insets = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0
   }
 }
 
