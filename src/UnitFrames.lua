@@ -27,73 +27,91 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 	-- --------------------------------------
 	-- ---      Class colored frames      ---
 	-- --------------------------------------
-	-- local function ClassColor(statusbar, unit)
-	-- 	local _, class, c
-  --   local TargetFrameHealthBar = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBar
-	-- 	if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
-	-- 		_, class = UnitClass(unit)
-	-- 		c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
-	-- 		statusbar:SetStatusBarColor(c.r, c.g, c.b)
-	-- 	end
-	-- 	if not UnitIsPlayer("target") then
-	-- 		color = FACTION_BAR_COLORS[UnitReaction("target", "player")]
-	-- 		if (not UnitPlayerControlled("target") and UnitIsTapDenied("target")) then
-	-- 			TargetFrameHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
-	-- 		else
-	-- 			if color then
-	-- 				TargetFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
-	-- 				TargetFrameHealthBar.lockColor = true
-	-- 			end
-	-- 		end
-	-- 	end
-	-- 	if not UnitIsPlayer("focus") then
-	-- 		color = FACTION_BAR_COLORS[UnitReaction("focus", "player")]
-	-- 		if (not UnitPlayerControlled("focus") and UnitIsTapDenied("focus")) then
-	-- 			FocusFrameHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
-	-- 		else
-	-- 			if color then
-	-- 				FocusFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
-	-- 				FocusFrameHealthBar.lockColor = true
-	-- 			end
-	-- 		end
-	-- 	end
-	-- 	if not UnitIsPlayer("targettarget") then
-	-- 		color = FACTION_BAR_COLORS[UnitReaction("targettarget", "player")]
-	-- 		if (not UnitPlayerControlled("targettarget") and UnitIsTapDenied("targettarget")) then
-	-- 			TargetFrameToTHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
-	-- 		else
-	-- 			if color then
-	-- 				TargetFrameToTHealthBar:SetStatusBarColor(color.r, color.g, color.b)
-	-- 				TargetFrameToTHealthBar.lockColor = true
-	-- 			end
-	-- 		end
-	-- 	end
-	-- 	if not UnitIsPlayer("focustarget") then
-	-- 		color = FACTION_BAR_COLORS[UnitReaction("focustarget", "player")]
-	-- 		if (not UnitPlayerControlled("focustarget") and UnitIsTapDenied("focustarget")) then
-	-- 			FocusFrameToTHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
-	-- 		else
-	-- 			if color then
-	-- 				FocusFrameToTHealthBar:SetStatusBarColor(color.r, color.g, color.b)
-	-- 				FocusFrameToTHealthBar.lockColor = true
-	-- 			end
-	-- 		end
-	-- 	end
-	-- end
+	local function ClassColor(statusbar, unit)
+		local _, class, c, color
+    local TargetFrameHealthBar = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBar
+		if not statusbar then statusbar = TargetFrameHealthBar end
+		statusbar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 
-	-- hooksecurefunc(
-	-- 	"UnitFrameHealthBar_Update",
-	-- 	function(self)
-	-- 		ClassColor(self, self.unit)
-	-- 	end
-	-- )
+		if UnitIsPlayer(unit) and UnitIsConnected(unit) and unit == statusbar.unit and UnitClass(unit) then
+			_, class = UnitClass(unit)
+			c = RAID_CLASS_COLORS[class]
+			statusbar:SetStatusBarColor(c.r, c.g, c.b)
+		end
 
-	-- hooksecurefunc(
-	-- 	"HealthBar_OnValueChanged",
-	-- 	function(self)
-	-- 		ClassColor(self, self.unit)
-	-- 	end
-	-- )
+		if not UnitIsPlayer("target") then
+			color = FACTION_BAR_COLORS[UnitReaction("target", "player")]
+			if (not UnitPlayerControlled("target") and UnitIsTapDenied("target")) then
+				TargetFrameHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
+			else
+				if color then
+					TargetFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
+					TargetFrameHealthBar.lockColor = true
+				end
+			end
+		end
+		if not UnitIsPlayer("focus") then
+			color = FACTION_BAR_COLORS[UnitReaction("focus", "player")]
+			if (not UnitPlayerControlled("focus") and UnitIsTapDenied("focus")) then
+				FocusFrameHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
+			else
+				if color then
+					FocusFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
+					FocusFrameHealthBar.lockColor = true
+				end
+			end
+		end
+		if not UnitIsPlayer("targettarget") then
+			color = FACTION_BAR_COLORS[UnitReaction("targettarget", "player")]
+			local bar = TargetFrameToT.HealthBar
+			-- bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
+			if (not UnitPlayerControlled("targettarget") and UnitIsTapDenied("targettarget")) then
+				bar:SetStatusBarColor(0.5, 0.5, 0.5)
+			else
+				if color then
+					bar:SetStatusBarColor(color.r, color.g, color.b)
+					bar.lockColor = true
+				end
+			end
+		end
+		if not UnitIsPlayer("focustarget") then
+			color = FACTION_BAR_COLORS[UnitReaction("focustarget", "player")]
+			if (not UnitPlayerControlled("focustarget") and UnitIsTapDenied("focustarget")) then
+				FocusFrameToTHealthBar:SetStatusBarColor(0.5, 0.5, 0.5)
+			else
+				if color then
+					FocusFrameToTHealthBar:SetStatusBarColor(color.r, color.g, color.b)
+					FocusFrameToTHealthBar.lockColor = true
+				end
+			end
+		end
+
+		color = FACTION_BAR_COLORS[UnitReaction("pet", "player")]
+		PetFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
+		PetFrameHealthBar.lockColor = true
+	end
+
+	hooksecurefunc(
+		"UnitFrameHealthBar_Update",
+		function(self)
+			ClassColor(self, self.unit)
+		end
+	)
+
+	hooksecurefunc(
+		TargetFrame,
+		"HealthUpdate",
+		function(elapsed, unit)
+			ClassColor(nil, unit)
+		end
+	)
+
+	hooksecurefunc(
+		"HealthBar_OnValueChanged",
+		function(self)
+			ClassColor(self, self.unit)
+		end
+	)
 	-----------------------
 	-- Loot Spec Display --
 	-----------------------
