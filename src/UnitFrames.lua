@@ -64,7 +64,6 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		if not UnitIsPlayer("targettarget") then
 			color = FACTION_BAR_COLORS[UnitReaction("targettarget", "player")]
 			local bar = TargetFrameToT.HealthBar
-			-- bar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 			if (not UnitPlayerControlled("targettarget") and UnitIsTapDenied("targettarget")) then
 				bar:SetStatusBarColor(0.5, 0.5, 0.5)
 			else
@@ -87,8 +86,10 @@ RillyCleanUnitFrames:SetScript("OnEvent", function()
 		end
 
 		color = FACTION_BAR_COLORS[UnitReaction("pet", "player")]
-		PetFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
-		PetFrameHealthBar.lockColor = true
+		if (color) then
+			PetFrameHealthBar:SetStatusBarColor(color.r, color.g, color.b)
+			PetFrameHealthBar.lockColor = true
+		end
 	end
 
 	hooksecurefunc(
