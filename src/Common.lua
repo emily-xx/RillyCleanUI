@@ -155,6 +155,8 @@ function applyRillyCleanButtonSkin(bu, icon, isLeaveButton)
   bu:SetHighlightTexture(RILLY_CLEAN_TEXTURES.buttons.hover)
 
   local nt = bu:GetNormalTexture()
+
+  if not nt then return end
   nt:SetAllPoints(bu)
 
   if (isLeaveButton) then

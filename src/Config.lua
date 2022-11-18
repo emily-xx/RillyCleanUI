@@ -83,10 +83,6 @@ local rc_catch = CreateFrame("Frame")
 rc_catch:RegisterEvent("PLAYER_LOGIN")
 rc_catch:SetScript("OnEvent", rcui_defaults)
 
--- Fix some bag jank
-SetSortBagsRightToLeft(true)
-SetInsertItemsLeftToRight(false)
-
 local onShow = function(frame)
 
 end
