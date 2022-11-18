@@ -65,7 +65,8 @@ CF:SetScript("OnEvent", function(self, event)
 	GameTooltipStatusBar:SetHeight(10)
 
 	-- Class colours
-	GameTooltip:HookScript("OnTooltipSetUnit", function(tooltip)
+	hooksecurefunc(GameTooltip, "SetUnit", function()
+    local tooltip = GameTooltip
 		local _, unit = tooltip:GetUnit()
 		if  not unit then return end
 		local level = UnitEffectiveLevel(unit)
