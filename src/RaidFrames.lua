@@ -58,9 +58,8 @@ end
 
 local function RaidFrameUpdate()
 	local g = 1
-	local isRaidGroup = _G["CompactRaidGroup1"] ~= nil
-	local isParty = _G["CompactPartyFrameMember1"] ~= nil
 
+  local isRaidGroup = UnitInRaid("player") and not CompactRaidFrameContainer:UseCombinedGroups()
 
 	if isRaidGroup then
 		repeat
@@ -93,11 +92,26 @@ end
 
 local f = CreateFrame("Frame") -- Skin raid frames
 f:RegisterEvent("PLAYER_LOGIN")
+f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(self, event, ...)
 	if CompactRaidFrameContainer.AddUnitFrame then
 		self:UnregisterAllEvents()
-		hooksecurefunc(CompactRaidFrameContainer, "AddUnitFrame", RaidFrameUpdate)
-		hooksecurefunc("CompactUnitFrame_UpdateAll", RaidFrameUpdate)
+
+    local setTexture = CreateFrame("Frame")
+		setTexture:RegisterEvent("ADDON_LOADED")
+		setTexture:RegisterEvent("PLAYER_LOGIN")
+		setTexture:RegisterEvent("VARIABLES_LOADED")
+		setTexture:RegisterEvent("PLAYER_ENTERING_WORLD")
+		setTexture:RegisterEvent("GROUP_ROSTER_UPDATE")
+		setTexture:RegisterEvent("PLAYER_REGEN_ENABLED")
+		setTexture:RegisterEvent("COMPACT_UNIT_FRAME_PROFILES_LOADED")
+		setTexture:RegisterEvent("UPDATE_EXPANSION_LEVEL")
+		setTexture:RegisterEvent("ARTIFACT_XP_UPDATE")
+		setTexture:RegisterEvent("AZERITE_ITEM_EXPERIENCE_CHANGED")
+		setTexture:RegisterUnitEvent("UNIT_LEVEL", "player")
+		setTexture:SetScript("OnEvent", RaidFrameUpdate)
+
+    hooksecurefunc(C_EditMode, "OnEditModeExit", RaidFrameUpdate)
 	end
 
 	--RAID BUFFS
@@ -155,6 +169,3 @@ f:SetScript("OnEvent", function(self, event, ...)
 	-- 	end
 	-- end
 end)
-
-f:RegisterEvent("PLAYER_LOGIN")
-f:RegisterEvent("ADDON_LOADED")
