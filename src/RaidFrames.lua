@@ -60,6 +60,7 @@ local function RaidFrameUpdate()
 	local g = 1
 
   local isRaidGroup = UnitInRaid("player") and not CompactRaidFrameContainer:UseCombinedGroups()
+	local isParty = UnitInParty("player")
 
 	if isRaidGroup then
 		repeat
