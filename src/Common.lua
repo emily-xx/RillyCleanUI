@@ -333,7 +333,7 @@ function skinProgressBar(bar)
 
   local Icon = bar.Icon
   if Icon then
-    Icon:SetMask(nil)
+    -- Icon:SetMask(nil)
     Icon:SetHeight(24)
     Icon:SetWidth(24)
     Icon:ClearAllPoints()

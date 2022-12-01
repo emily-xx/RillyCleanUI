@@ -59,9 +59,9 @@ CF:SetScript("OnEvent", function(self, event)
 	-- Gametooltip statusbar
 	GameTooltipStatusBar:SetStatusBarTexture(RILLY_CLEAN_TEXTURES.statusBar)
 	GameTooltipStatusBar:ClearAllPoints()
-	GameTooltipStatusBar:SetPoint("LEFT", 5, 0)
-	GameTooltipStatusBar:SetPoint("RIGHT", -5, 0)
-	GameTooltipStatusBar:SetPoint("BOTTOM", 0, 5)
+	GameTooltipStatusBar:SetPoint("LEFT", 3, 0)
+	GameTooltipStatusBar:SetPoint("RIGHT", -3, 0)
+	GameTooltipStatusBar:SetPoint("BOTTOM", 0, -5)
 	GameTooltipStatusBar:SetHeight(10)
 
 	-- Class colours
@@ -129,12 +129,17 @@ CF:SetScript("OnEvent", function(self, event)
 	end)
 
 	GameTooltipStatusBar:HookScript("OnValueChanged", function(self, hp)
-		TextStatusBar_UpdateTextString(self)
-	  local unit = "mouseover"
+		local unit = "mouseover"
 	  local focus = GetMouseFocus()
 	  if (focus and focus.unit) then
 	      unit = focus.unit
 	  end
+
+		local value = UnitHealth(unit)
+		local valueMax = UnitHealthMax(unit)
+		local percent = math.floor(value / valueMax * 100)
+
+		self.TextString:SetText(abbrNumber(value) .. ' / ' .. abbrNumber(valueMax) .. ' (' .. percent .. '%)')
 
 	  local r, g, b = getUnitHealthColor(unit)
 
