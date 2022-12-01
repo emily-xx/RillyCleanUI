@@ -136,11 +136,10 @@ CF:SetScript("OnEvent", function(self, event)
 	  end
 
 		local value = UnitHealth(unit)
-		local valueMin = 0
 		local valueMax = UnitHealthMax(unit)
 		local percent = math.floor(value / valueMax * 100)
 
-		TextStatusBar_UpdateTextStringWithValues(self, self.TextString, value, valueMin, valueMax)
+		TextStatusBar_UpdateTextStringWithValues(self, self.TextString, value, 0, valueMax)
 
 	  local r, g, b = getUnitHealthColor(unit)
 
